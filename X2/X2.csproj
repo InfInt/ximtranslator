@@ -60,7 +60,6 @@
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="InfoTextManager.cs" />
-    <Compile Include="Input\DxInput.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
