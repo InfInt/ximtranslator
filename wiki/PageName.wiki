@@ -1,0 +1,22 @@
+#summary Installation process
+#labels Phase-Deploy
+
+= Introduction =
+
+X2 is very simple to install manually and just piggy backs on the current xim360 software installation.
+
+= Details =
+
+Firstly you will need to have the .net framework 3.5 or later installed, available here: http://www.microsoft.com/downloads/details.aspx?FamilyId=333325FD-AE52-4E35-B531-508D977D32A6&displaylang=en
+
+Download the latest X2.exe here: http://code.google.com/p/ximtranslator/downloads/list
+
+Once downloaded place the file into your xim360 installation folder:
+
+for Vista users this will likely be: C:\Program Files(x86)\xim360\
+for non-vista users this will likely be: C:\Program Files\xim360\
+
+Once the X2 file is here your ready to go.  Just double click or create a link for easy access.
+
+
+
