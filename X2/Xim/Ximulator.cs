@@ -5,26 +5,29 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Threading;
 
-
 namespace X2
 {
     public class UtilThread
     {
         public bool m_fConnected = false;
+        public bool m_fConnecting = false;
         public Xim.Status m_StatusMsg = Xim.Status.OK;
+        private XimDyn ximDyn;
 
         public UtilThread()
         {
-            
+            ximDyn = XimDyn.Instance;
         }
 
         public void Connect()
         {
             if (!m_fConnected)
             {
+                m_fConnecting = true;
                 m_StatusMsg = Xim.Status.Hung;
-                m_StatusMsg = Xim.Connect();
+                m_StatusMsg = this.ximDyn.Connect();
                 m_fConnected = m_StatusMsg == Xim.Status.OK;
+                m_fConnecting = false;
             }
 
             while (m_fConnected)
@@ -32,7 +35,7 @@ namespace X2
                 Thread.Sleep(500);
             }
 
-            Xim.Disconnect();
+            this.ximDyn.Disconnect();
         }
     };
 
@@ -71,8 +74,13 @@ namespace X2
         private VarManager.Var m_useXimApiMouseMath;
         private VarManager.Var m_diagonalDampen;
 
+        private XimDyn ximDyn;
+
+
         public Ximulator(X2 form)
         {
+            this.ximDyn = XimDyn.Instance;
+
             m_form = form;
 
             m_varManager = VarManager.Instance;
@@ -111,11 +119,12 @@ namespace X2
                 Log("Connecting...");
                 Thread thread = new Thread(new ThreadStart(m_utilThread.Connect));
                 thread.Start();
+                Thread.Sleep(100);
 
                 System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 
                 watch.Start();
-                while (watch.ElapsedMilliseconds < 5000 && !m_utilThread.m_fConnected)
+                while (watch.ElapsedMilliseconds < 5000 && m_utilThread.m_fConnecting && !m_utilThread.m_fConnected)
                 {
                     System.Windows.Forms.Application.DoEvents();
                     Thread.Sleep(100);
@@ -166,8 +175,8 @@ namespace X2
                 System.Drawing.Point cursorPosition = Cursor.Position;
                 Xim.Input input = new Xim.Input();
                 Xim.Input startState = new Xim.Input();
-                Xim.SetMode((bool)m_autoAnalogDisconnect.value ? Xim.Mode.AutoAnalogDisconnect : Xim.Mode.None);
-                Xim.SendInput(ref input, 0);
+                ximDyn.SetMode((bool)m_autoAnalogDisconnect.value ? Xim.Mode.AutoAnalogDisconnect : Xim.Mode.None);
+                ximDyn.SendInput(ref input, 0);
                 System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
                 bool bTextMode = false;
                 bool done = false;
@@ -226,11 +235,11 @@ namespace X2
 
                     if (m_form.ContainsFocus)
                     {
-                        Xim.SendInput(ref input, 0);
+                        ximDyn.SendInput(ref input, 0);
                     }
                     else
                     {
-                        Xim.SendInput(ref m_blankInput, 0);
+                        ximDyn.SendInput(ref m_blankInput, 0);
                     }
                 }
                 m_fXimRunning = false;
@@ -344,33 +353,42 @@ namespace X2
                 mouseDelta.X = mouseDelta.X / m_prevMouseStates.Count;
                 mouseDelta.Y = mouseDelta.Y / m_prevMouseStates.Count;
 
-                mouseDelta.Y = mouseDelta.Y * yxratio;
+                CalculateMouseToXbox(mouseDelta, sensitivity, deadzoneFactor, transExp, yxratio, diagonalDampen, fCircularDeadzone, ref mouseDelta);
 
-                Vector2 deadzone = null;
-                if (fCircularDeadzone)
-                {
-                    deadzone = new Vector2(mouseDelta.X, mouseDelta.Y);
-                    deadzone.Normalize();
-                    deadzone.Scale(deadzoneFactor);
-                }
-                else
-                {
-                    deadzone = new Vector2(deadzoneFactor, deadzoneFactor);
-                }
-
-                double mouseVectorLen = Math.Sqrt(mouseDelta.X * mouseDelta.X + mouseDelta.Y * mouseDelta.Y);
-                mouseVectorLen = Math.Pow(mouseVectorLen, transExp);
-                mouseDelta.Normalize();
-                mouseDelta.Scale(mouseVectorLen);
-
-                mouseDelta.Scale(sensitivity);
-                mouseDelta.Add(deadzone);
-
-                mouseDelta.Cap(-(double)Xim.Stick.Max, (double)Xim.Stick.Max);
-
-                input.RightStickX = (short)mouseDelta.X;
-                input.RightStickY = (short)mouseDelta.Y;
+ 
             }
+        }
+
+        private void CalculateMouseToXbox(Vector2 mouseDelta, int sensitivity, int deadzoneFactor, double transExp, double yxratio, double diagonalDampen, bool fCircularDeadzone, ref Vector2 xboxDelta )
+        {
+            Vector2 delta = new Vector2(mouseDelta.X, mouseDelta.Y);
+
+            delta.Y = delta.Y * yxratio;
+
+            Vector2 deadzone = null;
+            if (fCircularDeadzone)
+            {
+                deadzone = new Vector2(delta.X, delta.Y);
+                deadzone.Normalize();
+                deadzone.Scale(deadzoneFactor);
+            }
+            else
+            {
+                deadzone = new Vector2(deadzoneFactor, deadzoneFactor);
+            }
+
+            double mouseVectorLen = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
+            mouseVectorLen = Math.Pow(mouseVectorLen, transExp);
+            delta.Normalize();
+            delta.Scale(mouseVectorLen);
+
+            delta.Scale(sensitivity);
+            delta.Add(deadzone);
+
+            delta.Cap(-(double)Xim.Stick.Max, (double)Xim.Stick.Max);
+
+            xboxDelta.X = delta.X;
+            xboxDelta.Y = delta.Y;
         }
 
         #endregion
