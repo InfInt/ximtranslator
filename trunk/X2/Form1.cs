@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using DxI = Microsoft.DirectX.DirectInput;
 
 namespace X2
 {
