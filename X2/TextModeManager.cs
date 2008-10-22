@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using DxI = Microsoft.DirectX.DirectInput;
 using System.Diagnostics;
 
 namespace X2
