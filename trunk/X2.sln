@@ -1,7 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C# Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X2", "X2\X2.csproj", "{B7013D46-EF16-4EC7-AF97-E296D9223AD1}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{1AAB516B-2931-477F-910F-1EFB8BCE754D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{B7013D46-EF16-4EC7-AF97-E296D9223AD1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7013D46-EF16-4EC7-AF97-E296D9223AD1}.Release|x86.ActiveCfg = Release|x86
 		{B7013D46-EF16-4EC7-AF97-E296D9223AD1}.Release|x86.Build.0 = Release|x86
+		{1AAB516B-2931-477F-910F-1EFB8BCE754D}.Debug|Any CPU.ActiveCfg = Debug
+		{1AAB516B-2931-477F-910F-1EFB8BCE754D}.Debug|x86.ActiveCfg = Debug
+		{1AAB516B-2931-477F-910F-1EFB8BCE754D}.Release|Any CPU.ActiveCfg = Release
+		{1AAB516B-2931-477F-910F-1EFB8BCE754D}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

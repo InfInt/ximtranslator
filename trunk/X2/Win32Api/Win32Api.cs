@@ -1346,6 +1346,37 @@ namespace Win32Api
         public static extern bool BlockInput(bool fBlockIt);
     }
 
+    public class Kernel32
+    {
+        public const int LOGON32_LOGON_INTERACTIVE = 2;
+        public const int LOGON32_PROVIDER_DEFAULT = 0;
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr LoadLibrary(String dllname);
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetProcAddress(IntPtr hModule, String procname);
+
+        [DllImport("advapi32.dll")]
+        public static extern int LogonUserA(String lpszUserName,
+            String lpszDomain,
+            String lpszPassword,
+            int dwLogonType,
+            int dwLogonProvider,
+            ref IntPtr phToken);
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern int DuplicateToken(IntPtr hToken,
+            int impersonationLevel,
+            ref IntPtr hNewToken);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool RevertToSelf();
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        public static extern bool CloseHandle(IntPtr handle);
+
+    }
+
 
 #endregion
 }

@@ -29,6 +29,7 @@ namespace X2
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(X2));
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.infoText = new System.Windows.Forms.TextBox();
@@ -60,6 +61,7 @@ namespace X2
             this.labelDeadzone = new System.Windows.Forms.Label();
             this.rbCircular = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.calibration = new System.Windows.Forms.Button();
             this.gbSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -121,7 +123,7 @@ namespace X2
             this.cbAutoAnalogDisc.TabIndex = 4;
             this.cbAutoAnalogDisc.Text = "Auto Analog Disconnect";
             this.cbAutoAnalogDisc.UseVisualStyleBackColor = true;
-            this.cbAutoAnalogDisc.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.cbAutoAnalogDisc.CheckedChanged += new System.EventHandler(this.autoAnalogDisconnect_CheckedChanged);
             // 
             // gbSettings
             // 
@@ -337,6 +339,7 @@ namespace X2
             this.rbSquare.TabStop = true;
             this.rbSquare.Text = "Square";
             this.rbSquare.UseVisualStyleBackColor = true;
+            this.rbSquare.CheckedChanged += new System.EventHandler(this.rbDeadzoneType_CheckedChanged);
             // 
             // labelDeadzone
             // 
@@ -359,6 +362,16 @@ namespace X2
             this.rbCircular.UseVisualStyleBackColor = true;
             this.rbCircular.CheckedChanged += new System.EventHandler(this.rbDeadzoneType_CheckedChanged);
             // 
+            // calibration
+            // 
+            this.calibration.Location = new System.Drawing.Point(447, 389);
+            this.calibration.Name = "calibration";
+            this.calibration.Size = new System.Drawing.Size(75, 23);
+            this.calibration.TabIndex = 6;
+            this.calibration.Text = "Calibrate";
+            this.calibration.UseVisualStyleBackColor = true;
+            this.calibration.Click += new System.EventHandler(this.calibration_Click);
+            // 
             // X2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,6 +379,7 @@ namespace X2
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(863, 520);
+            this.Controls.Add(this.calibration);
             this.Controls.Add(this.gbSettings);
             this.Controls.Add(this.commandBox);
             this.Controls.Add(this.button3);
@@ -374,9 +388,9 @@ namespace X2
             this.Controls.Add(this.button1);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "X2";
-            this.ShowIcon = false;
             this.Text = "Xim Translator by Xod";
             this.gbSettings.ResumeLayout(false);
             this.gbSettings.PerformLayout();
@@ -418,6 +432,7 @@ namespace X2
         private System.Windows.Forms.TextBox tbTransExponent1;
         private System.Windows.Forms.TextBox tbSmoothness;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button calibration;
     }
 }
 

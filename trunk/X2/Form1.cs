@@ -22,6 +22,7 @@ namespace X2
 
             Singleton<InfoTextManager>.Instance.Init(ref infoText);
             Singleton<InputManager>.Instance.Init(Handle);
+            Singleton<XimDyn>.Instance.Init();
 
             m_commandParser = new CommandParser();
             m_ximulator = new Ximulator(this);
@@ -215,13 +216,18 @@ namespace X2
         private void rbDeadzoneType_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
-            m_varManager.SetVar("circulardeadzone", rb.Name == "rbCircular");
-
+            if(rb.Checked)
+                m_varManager.SetVar("circulardeadzone", rb == rbCircular);
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void autoAnalogDisconnect_CheckedChanged(object sender, EventArgs e)
         {
             m_varManager.SetVar("autoanalogdisconnect", ((CheckBox)sender).Checked);
+        }
+
+        private void calibration_Click(object sender, EventArgs e)
+        {
+            XimDyn.Instance.Calibrate();
         }
     }
 }
