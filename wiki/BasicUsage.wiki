@@ -2,9 +2,9 @@
 
 = Introduction =
 
-  #Calibration
-  #Basic Usage
-  #Loading a configuration
+  # Calibration
+  # Basic Usage
+  # Loading a configuration
 
 
 = Calibration =
