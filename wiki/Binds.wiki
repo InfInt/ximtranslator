@@ -43,7 +43,7 @@ The '+' modifier will press and hold an xbox key until it is released with a rel
 
 === Rapid Fire ("*") ===
  
- 'bind mouseleft "*"righttrigger'
+ 'bind mouseleft '*'righttrigger'
 
 The '"*"' modifier allows you to hold a key or mouse button down and the software will change the state of the button from off->on->off repeatedly untill you release, when you release it will leave the button in the off position. 
 
