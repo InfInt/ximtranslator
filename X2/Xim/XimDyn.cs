@@ -23,7 +23,7 @@ namespace X2
 
         private InfoTextManager infoTextManager;
         private IntPtr XIMCore;
-        private String ximPath;
+        public String ximPath;
 
         private XimDyn()
         {
@@ -42,16 +42,29 @@ namespace X2
             return procAddr != IntPtr.Zero;
         }
 
+        public static bool GetXim360Dir(out String ximPath)
+        {
+            RegistryKey key = Registry.CurrentUser;
+            key = key.OpenSubKey("Software");
+            ximPath = "";
+            if (key != null)
+            {
+                key = key.OpenSubKey("XIM");
+                if (key != null)
+                {
+                    ximPath = (String)key.GetValue("");
+                }
+            }
+            return ximPath.Length > 0;
+        }
+
         public void Init()
         {
             if (!this.fInit)
             {
                 this.infoTextManager = InfoTextManager.Instance;
-
-                RegistryKey key = Registry.CurrentUser;
-                key = key.OpenSubKey("Software");
-                key = key.OpenSubKey("XIM");
-                this.ximPath = (String)key.GetValue("");
+                
+                GetXim360Dir(out this.ximPath);
 
                 if (this.ximPath.Length == 0)
                 {
@@ -68,12 +81,18 @@ namespace X2
 
                     // Try again
                     this.XIMCore = Win32Api.Kernel32.LoadLibrary("ximcore.dll");
+
                 }
 
                 if (this.XIMCore == IntPtr.Zero)
                 {
                     MessageBox.Show("Could not load XIMCore.dll, please ensure that XIM360 is installed!");
                     return;
+                }
+
+                if (!File.Exists(Environment.CurrentDirectory+"\\XIMCalibrate.ini"))
+                {
+                    Calibrate();
                 }
 
                 // Load my functions
@@ -103,7 +122,7 @@ namespace X2
             {
                 Process p = new Process();
                 p.StartInfo.FileName = "xcopy.exe";
-                p.StartInfo.Arguments = this.ximPath + "\\XIMCalibrate.ini \\XIMCalibrate.ini";
+                p.StartInfo.Arguments = "\""+this.ximPath + "\\XIMCalibrate.ini\" \""+Environment.CurrentDirectory+"\\\" /Y /R";
                 p.StartInfo.Verb = "runas";
                 p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; 
                 p.StartInfo.CreateNoWindow = true;

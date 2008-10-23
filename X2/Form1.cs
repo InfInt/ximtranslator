@@ -16,7 +16,7 @@ namespace X2
         ConfigManager m_configManager;
         VarManager m_varManager;
 
-        public X2()
+        public X2(string[] args)
         {
             InitializeComponent();
 
@@ -29,9 +29,18 @@ namespace X2
 
             m_configManager = ConfigManager.Instance;
             m_varManager = VarManager.Instance;
-            m_configManager.LoadDefaultConfig();
+            if (args.Length == 0 || !m_configManager.LoadConfig(args[0]))
+            {
+                m_configManager.LoadDefaultConfig();
+            }
             SyncUI();
             SetTooltips();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            m_configManager.SaveDefaultConfig();
+            base.OnClosing(e);
         }
 
         private void SetTooltips()
@@ -59,6 +68,11 @@ namespace X2
 
         private void Connect(object sender, EventArgs e)
         {
+            string[] names =Enum.GetNames(typeof(Mouse.Button));
+            foreach (string name in names)
+            {
+                InfoTextManager.Instance.WriteLine("  * " + name);
+            }
             if (!m_ximulator.IsRunning())
             {
                 SetFormControlsEnabled(false);
@@ -147,7 +161,7 @@ namespace X2
 
         private void SaveConfig(object sender, EventArgs e)
         {
-            m_configManager.SaveDefaultConfig();
+            m_configManager.SaveFileDlg();
         }
 
 
