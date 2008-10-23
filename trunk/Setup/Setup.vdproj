@@ -49,6 +49,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -65,6 +73,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -131,7 +160,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_B19EE8EB7F90474F99CE3F7CDE1022C7"
                     {
-                    "Name" = "8:Xim Translator"
+                    "Name" = "8:X2"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -204,7 +233,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:X2"
         "ProductCode" = "8:{2C5252EE-5676-43E4-B373-90467B4F685A}"
-        "PackageCode" = "8:{02CA2B09-84B8-4994-BD30-32E0BCCBEA45}"
+        "PackageCode" = "8:{001BA02A-A912-4CFF-A9EA-E9735709FE25}"
         "UpgradeCode" = "8:{06C1EC59-F269-4AAE-8514-F112FD176E53}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -738,7 +767,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E7C4B9907A3B4D7FB29FE06AC18005EA"
             {
-            "SourcePath" = "8:..\\X2\\obj\\x86\\Debug\\X2.exe"
+            "SourcePath" = "8:..\\X2\\obj\\x86\\Release\\X2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"

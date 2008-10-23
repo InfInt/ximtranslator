@@ -363,6 +363,20 @@ namespace X2
             return true;
         }
 
+        public void SaveFileDlg()
+        {
+            SaveFileDialog saveFileDlg = new SaveFileDialog();
+            saveFileDlg.Filter = "Config Files|*.cfg|All Files|*.*";
+            if (saveFileDlg.ShowDialog() == DialogResult.OK)
+            {
+                String filename = saveFileDlg.FileName;
+                if (SaveConfig(saveFileDlg.FileName))
+                {
+
+                }
+            }
+        }
+
         public void LoadFileDlg()
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
@@ -418,7 +432,10 @@ namespace X2
             String cfgLoc = m_x2DataFolder + "\\default.cfg";
             if (!LoadConfig(cfgLoc))
             {
-                m_infoTextManager.WriteLine("Unable to load default config, be sure to load a config!");
+                if (!LoadConfig(XimDyn.Instance.ximPath + "\\default.xim"))
+                {
+                    m_infoTextManager.WriteLine("Unable to load default config, or default.xim, be sure to load a config!");
+                }
             }
         }
 
