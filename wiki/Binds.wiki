@@ -17,7 +17,7 @@ Manually editing a X2 config is currently the only way to access some of the bes
 
 Key can be one of a long laundry list of keyboard or mouse keys. The [http:code.google.com/p/ximtranslator/... key list] can be found on a seperate wiki page.
 
-The [http://code.google.com xbox buttons] can also be found on a seperate wiki page:
+The [http://code.google.com/p/ximtranslator/wiki/XboxButtons xbox buttons] can also be found on a seperate wiki page:
 
 == Button Moderators ==
 Button moderators change how the xbox button reacts to the key being pressed, these moderators include Tap, Hold, Press, Release, Rapid Fire, and Toggle.
