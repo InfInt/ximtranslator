@@ -41,11 +41,11 @@ The '.' modifier will cause the xbox key to be held down as long as the key is h
 
 The '+' modifier will press and hold an xbox key until it is released with a release event. In this example Up on the D-pad will be pressed when W is hit and released when E is hit.
 
-=== Rapid Fire (*) ===
+=== Rapid Fire (**) ===
  
- 'bind mouseleft *righttrigger'
+ 'bind mouseleft **righttrigger'
 
-The '*' modifier allows you to hold a key or mouse button down and the software will change the state of the button from off->on->off repeatedly untill you release, when you release it will leave the button in the off position. 
+The '**' modifier allows you to hold a key or mouse button down and the software will change the state of the button from off->on->off repeatedly untill you release, when you release it will leave the button in the off position. 
 
 This example is what i use for cod4 if i feel like autofiring :)
 
