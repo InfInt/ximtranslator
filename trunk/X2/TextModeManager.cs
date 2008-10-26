@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using XimApi;
+using Common;
 
 namespace X2
 {

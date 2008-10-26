@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 
-namespace X2
+namespace Common
 {
-    class Mouse
+    public class Mouse
     {
         public enum Button : int
         {

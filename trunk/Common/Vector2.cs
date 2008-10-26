@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace X2
+namespace Common
 {
-    class Vector2
+    public class Vector2
     {
         public double X;
         public double Y;
 
+        public Vector2(Vector2 v) { this.X = v.X; this.Y = v.Y; }
         public Vector2(double X, double Y) { this.X = X; this.Y = Y; }
 
         public double Length
@@ -35,6 +36,14 @@ namespace X2
         {
             this.X += other.X;
             this.Y += other.Y;
+        }
+
+        public void Pow(double e)
+        {
+            double mouseVectorLen = Math.Sqrt(this.X * this.X + this.Y * this.Y);
+            mouseVectorLen = Math.Pow(mouseVectorLen, e);
+            this.Normalize();
+            this.Scale(mouseVectorLen);
         }
 
         public static Vector2 operator+(Vector2 first, Vector2 other )

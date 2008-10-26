@@ -6,6 +6,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using Win32Api;
+using Common;
+using XimApi;
 
 namespace X2
 {
@@ -45,16 +48,15 @@ namespace X2
 
         private void SetTooltips()
         {
-            SetToolTip(tbDiagonalDampen);
-            SetToolTip(tbDeadzone);
-            SetToolTip(tbRate);
-            SetToolTip(tbSensitivity1);
-            SetToolTip(tbSensitivity2);
-            SetToolTip(tbSmoothness);
-            SetToolTip(tbTextModeRate);
-            SetToolTip(tbTransExponent1);
-            SetToolTip(tbTransExponent2);
-            SetToolTip(tbYxRatio);
+            SetToolTip(txDiagonalDampen);
+            SetToolTip(txDeadzone);
+            SetToolTip(txRate);
+            SetToolTip(txSensitivity1);
+            SetToolTip(txSensitivity2);
+            SetToolTip(txSmoothness);
+            SetToolTip(txTextModeRate);
+            SetToolTip(txTransExponent1);
+            SetToolTip(txYxRatio);
 
             toolTip1.SetToolTip(cbAutoAnalogDisc, "Autoanalogdisconnect... yea it does something");
             toolTip1.SetToolTip(rbCircular, "Use a circular deadzone when translating mouse movement.");
@@ -192,16 +194,16 @@ namespace X2
 
         private void SyncUI()
         {
-            tbDiagonalDampen.Text = m_varManager.GetVarStr("diagonaldampen");
-            tbDeadzone.Text = m_varManager.GetVarStr("deadzone");
-            tbRate.Text = m_varManager.GetVarStr("rate");
-            tbSensitivity1.Text = m_varManager.GetVarStr("sensitivity1");
-            tbSensitivity2.Text = m_varManager.GetVarStr("sensitivity2");
-            tbSmoothness.Text = m_varManager.GetVarStr("smoothness");
-            tbTextModeRate.Text = m_varManager.GetVarStr("textmoderate");
-            tbTransExponent1.Text = m_varManager.GetVarStr("transexponent1");
-            tbTransExponent2.Text = m_varManager.GetVarStr("transexponent2");
-            tbYxRatio.Text = m_varManager.GetVarStr("yxratio");
+
+            txDiagonalDampen.Text = m_varManager.GetVarStr("diagonaldampen");
+            txDeadzone.Text = m_varManager.GetVarStr("deadzone");
+            txRate.Text = m_varManager.GetVarStr("rate");
+            txSensitivity1.Text = m_varManager.GetVarStr("sensitivity1");
+            txSensitivity2.Text = m_varManager.GetVarStr("sensitivity2");
+            txSmoothness.Text = m_varManager.GetVarStr("smoothness");
+            txTextModeRate.Text = m_varManager.GetVarStr("textmoderate");
+            txTransExponent1.Text = m_varManager.GetVarStr("transexponent1");
+            txYxRatio.Text = m_varManager.GetVarStr("yxratio");
 
             bool circular;
             m_varManager.GetVar("circulardeadzone", out circular);
@@ -241,7 +243,7 @@ namespace X2
 
         private void calibration_Click(object sender, EventArgs e)
         {
-            XimDyn.Instance.Calibrate();
+            XimDyn.Instance.RunCalibrate();
         }
     }
 }

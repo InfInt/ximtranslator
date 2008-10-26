@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using XimApi;
+using Common;
 
 namespace X2
 {
@@ -262,10 +264,17 @@ namespace X2
                         {
                             cmdParser.ParseLine("set yxratio " + tokens[1]);
                         }
+                        else if (tokens[0] == "smoothness")
+                        {
+                            cmdParser.ParseLine("set smoothness " + tokens[1]);
+                        }
+                        else if (tokens[0] == "diagonaldampen")
+                        {
+                            cmdParser.ParseLine("set diagonaldampen " + tokens[1]);
+                        }
                         else if (tokens[0] == "translationexponent")
                         {
                             cmdParser.ParseLine("set transexponent1 " + tokens[1]);
-                            cmdParser.ParseLine("set transexponent2 " + tokens[1]);
                         }
                         else  if (tokens[0] == "sensitivityprimary" && onMouseBinding )
                         {

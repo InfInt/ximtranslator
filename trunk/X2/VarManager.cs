@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Common;
 
 namespace X2
 {
@@ -20,10 +21,9 @@ namespace X2
         {
             m_vars = new Dictionary<string, Var>();
 
-            InitVar("sensitivity1", typeof(int), (int)6000,"Primary sensitivity as defined by XIM api");
+            InitVar("sensitivity1", typeof(double), (double)6000,"Primary sensitivity as defined by XIM api");
             InitVar("sensitivity2", typeof(int), (int)8500,"Alternate sensitivity as defined by XIM api");
             InitVar("transexponent1", typeof(double), (double)0.35,"Translation Exponent as defined by XIM api");
-            InitVar("transexponent2", typeof(double), (double)0.35,"When using alternate sensitivity this transExponent will be used.");
             InitVar("diagonaldampen", typeof(double), (double)0, "Diagonal Dampen as defined by XIM api");
             InitVar("deadzone", typeof(int), (int)3000, "Deadzone as defined by XIM api");
             InitVar("yxratio", typeof(double), (double)2.0,"YXRatio as defined by XIM api");
@@ -36,7 +36,7 @@ namespace X2
             InitVar("circulardeadzone", typeof(bool), (bool)true, "Defines deadzone type: 'true' = circular deadzone, 'false' = square deadzone");
             InitVar("useximapimousemath", typeof(bool), (bool)true, "'true' = use the xim API mouse translation, 'false' = don't");
             InitVar("mousemoves", typeof(int), (int)1, "'0' = None, '1' = Rightstick, '2' = Leftstick, '3' = Both ( lol )");
-            InitVar("altsens", typeof(bool), (bool)false, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2 and transexp2");
+            InitVar("altsens", typeof(bool), (bool)false, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2");
         }
 
         private void InitVar(String varName, Type varType, Object value, String info)
