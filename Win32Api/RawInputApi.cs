@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Win32Api
 {
-    class RawInput
+    public class RawInput
     {
 
         #region UsagePage

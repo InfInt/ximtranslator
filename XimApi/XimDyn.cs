@@ -6,8 +6,9 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Forms;
+using Common;
 
-namespace X2
+namespace XimApi
 {
     public class XimDyn
     {
@@ -21,7 +22,6 @@ namespace X2
         public DAllocSmoothness AllocSmoothness;
         public DFreeSmoothness FreeSmoothness;
 
-        private InfoTextManager infoTextManager;
         private IntPtr XIMCore;
         public String ximPath;
 
@@ -62,13 +62,12 @@ namespace X2
         {
             if (!this.fInit)
             {
-                this.infoTextManager = InfoTextManager.Instance;
-                
                 GetXim360Dir(out this.ximPath);
 
                 if (this.ximPath.Length == 0)
                 {
-                    this.infoTextManager.WriteLine("Could not locate the XIM360 registry key, please ensure that Xim is installed ( www.xim360.com )");
+                    MessageBox.Show("Could not locate the XIM360 registry key, please ensure that Xim is installed ( www.xim360.com )");
+                    return;
                 }
 
                 // Load Xim core
@@ -92,7 +91,7 @@ namespace X2
 
                 if (!File.Exists(Environment.CurrentDirectory+"\\XIMCalibrate.ini"))
                 {
-                    Calibrate();
+                    CopyCalibrate();
                 }
 
                 // Load my functions
@@ -116,7 +115,7 @@ namespace X2
             }
         }
 
-        public void Calibrate()
+        public void CopyCalibrate()
         {
             if (File.Exists(this.ximPath + "\\XIMCalibrate.ini"))
             {
@@ -135,15 +134,19 @@ namespace X2
                 DialogResult dlgResult =  MessageBox.Show("Could not locate a XIMCalibrate ini file.  If you would like to run XIMCalibrate then plug both Xbox controller cables into the computer and hit OK, hit Cancel to avoid that :)", "Want to Calibrate?", MessageBoxButtons.OKCancel);
                 if (dlgResult == DialogResult.OK)
                 {
-                    Process p = new Process();
-                    p.StartInfo.FileName = this.ximPath+"\\XIMCalibrate.exe";
-                    p.StartInfo.Verb = "runas";
-                    p.Start();
-
-                    p.WaitForExit();
+                    RunCalibrate();
                 }
             }
-            
+        }
+
+        public void RunCalibrate()
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = this.ximPath + "\\XIMCalibrate.exe";
+            p.StartInfo.Verb = "runas";
+            p.Start();
+
+            p.WaitForExit();
         }
 
 

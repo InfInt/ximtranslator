@@ -5,10 +5,12 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using Win32Api;
+using Common;
+using XimApi;
 
 namespace X2
 {
-    class InputManager
+    public class InputManager
     {
         private bool m_fInit = false;
         private RawInput.RAWINPUTDEVICE m_keyboardDevice;

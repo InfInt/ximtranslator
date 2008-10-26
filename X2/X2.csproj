@@ -75,7 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingManager.cs" />
-    <Compile Include="Common.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="InfoTextManager.cs" />
@@ -91,11 +90,8 @@
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="TextModeManager.cs" />
     <Compile Include="VarManager.cs" />
-    <Compile Include="Win32Api\RawInputApi.cs" />
-    <Compile Include="Win32Api\Win32Api.cs" />
-    <Compile Include="Xim\XimDyn.cs" />
+    <Compile Include="Xim\MouseMath.cs" />
     <Compile Include="Xim\Ximulator.cs" />
-    <Compile Include="Vector2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -112,7 +108,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Xim\Xim.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
@@ -143,6 +138,23 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2B38F149-180B-4B26-9BF9-AA6C6E52E86B}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Win32Api\Win32Api.csproj">
+      <Project>{09495E69-BC10-4CCB-839B-FBBFA4EAA218}</Project>
+      <Name>Win32Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XimApi\XimApi.csproj">
+      <Project>{FBB71894-216D-45FF-BCDD-06F7112138DB}</Project>
+      <Name>XimApi</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Win32Api\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
