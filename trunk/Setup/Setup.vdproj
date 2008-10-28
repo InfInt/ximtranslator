@@ -15,36 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1EEC710A0D8F3301474ABACA6D3CF29B"
-        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AD115D8B96A1F91C40EC2C8E80D9CB3D"
-        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AD115D8B96A1F91C40EC2C8E80D9CB3D"
-        "OwnerKey" = "8:_1EEC710A0D8F3301474ABACA6D3CF29B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DAEE6C73660554B9E779025F5A963282"
-        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DAEE6C73660554B9E779025F5A963282"
-        "OwnerKey" = "8:_1EEC710A0D8F3301474ABACA6D3CF29B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -58,30 +28,28 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DAEE6C73660554B9E779025F5A963282"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1EEC710A0D8F3301474ABACA6D3CF29B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AD115D8B96A1F91C40EC2C8E80D9CB3D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
     "Configurations"
     {
+        "All Debug"
+        {
+        "DisplayName" = "8:All Debug"
+        "IsDebugOnly" = "11:FALSE"
+        "IsReleaseOnly" = "11:FALSE"
+        "OutputFilename" = "8:All Debug\\Setup.msi"
+        "PackageFilesAs" = "3:2"
+        "PackageFileSize" = "3:-2147483648"
+        "CabType" = "3:1"
+        "Compression" = "3:2"
+        "SignOutput" = "11:FALSE"
+        "CertificateFile" = "8:"
+        "PrivateKeyFile" = "8:"
+        "TimeStampServer" = "8:"
+        "InstallerBootstrapper" = "3:2"
+        }
         "Debug"
         {
         "DisplayName" = "8:Debug"
@@ -184,99 +152,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1EEC710A0D8F3301474ABACA6D3CF29B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:XimApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_1EEC710A0D8F3301474ABACA6D3CF29B"
-                    {
-                    "Name" = "8:XimApi.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:XimApi.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AD115D8B96A1F91C40EC2C8E80D9CB3D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Win32Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_AD115D8B96A1F91C40EC2C8E80D9CB3D"
-                    {
-                    "Name" = "8:Win32Api.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Win32Api.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DAEE6C73660554B9E779025F5A963282"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_DAEE6C73660554B9E779025F5A963282"
-                    {
-                    "Name" = "8:Common.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Common.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F3AACCF78EC0483F8831980E6731A588"
             {
             "SourcePath" = "8:..\\..\\..\\..\\..\\Downloads\\Xbox icon.ico"
@@ -943,7 +818,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EDA95D03476047E99F7D4A57A3936C8B"
             {
-            "SourcePath" = "8:..\\xemulate\\obj\\x86\\Release\\X2.exe"
+            "SourcePath" = "8:..\\xemulate\\obj\\x86\\All Debug\\X2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
