@@ -4,8 +4,10 @@ using System.Text;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Threading;
+using XimApi;
+using Common;
 
-namespace X2
+namespace xEmulate
 {
     public class UtilThread
     {
@@ -49,30 +51,20 @@ namespace X2
         private InputManager m_inputManager;
         private UtilThread m_utilThread;
         private InfoTextManager m_infoTextManager;
-        private IntPtr m_mouseSmoothPtr = (IntPtr)0;
-
+       
         private Queue<Vector2> m_prevMouseStates;
         
         private X2 m_form;
         private bool m_connected = false;
         private bool m_fXimRunning = false;
 
-        private VarManager.Var m_sensitivity1;
-        private VarManager.Var m_sensitivity2;
-        private VarManager.Var m_altSens;
-        private VarManager.Var m_transExp1;
-        private VarManager.Var m_transExp2;
-        private VarManager.Var m_deadzone;
-        private VarManager.Var m_circularDeadzone;
-        private VarManager.Var m_yxratio;
-        private VarManager.Var m_mouseSmooth;
-        private VarManager.Var m_clearSmoothOnStop;
         private VarManager.Var m_rate;
         private VarManager.Var m_textMode;
         private VarManager.Var m_textModeRate;
         private VarManager.Var m_autoAnalogDisconnect;
         private VarManager.Var m_useXimApiMouseMath;
-        private VarManager.Var m_diagonalDampen;
+
+        private MouseMath mouseMath;
 
         private XimDyn ximDyn;
 
@@ -92,22 +84,13 @@ namespace X2
             m_prevMouseStates = new Queue<Vector2>();
            
             // Init the vars so we dont have to get them again.
-            m_varManager.GetVar("sensitivity1", out m_sensitivity1);
-            m_varManager.GetVar("sensitivity2", out m_sensitivity2);
-            m_varManager.GetVar("altsens", out m_altSens);
-            m_varManager.GetVar("deadzone", out m_deadzone);
-            m_varManager.GetVar("yxratio", out m_yxratio);
-            m_varManager.GetVar("transexponent1", out m_transExp1);
-            m_varManager.GetVar("transexponent2", out m_transExp2);
-            m_varManager.GetVar("smoothness", out m_mouseSmooth);
-            m_varManager.GetVar("clearsmoothonstop", out m_clearSmoothOnStop);
             m_varManager.GetVar("rate", out m_rate);
             m_varManager.GetVar("textmode", out m_textMode);
             m_varManager.GetVar("textmoderate", out m_textModeRate);
             m_varManager.GetVar("autoanalogdisconnect", out m_autoAnalogDisconnect);
-            m_varManager.GetVar("circulardeadzone", out m_circularDeadzone);
             m_varManager.GetVar("useximapimousemath", out m_useXimApiMouseMath);
-            m_varManager.GetVar("diagonaldampen", out m_diagonalDampen);
+
+            this.mouseMath = new MouseMath();
 
             m_utilThread = new UtilThread();
         }
@@ -168,6 +151,19 @@ namespace X2
             return m_fXimRunning;
         }
 
+        public void Test(int xVal)
+        {
+            if (Connect())
+            {
+                Xim.Input input = new Xim.Input();
+                input.RightStickX = (short)xVal;
+                Xim.SendInput(ref input, 0);
+                Thread.Sleep(10000);
+
+                Disconnect();
+            }
+        }
+
         public void Go()
         {
             if (Connect())
@@ -175,7 +171,7 @@ namespace X2
                 System.Drawing.Point cursorPosition = Cursor.Position;
                 Xim.Input input = new Xim.Input();
                 Xim.Input startState = new Xim.Input();
-                ximDyn.SetMode((bool)m_autoAnalogDisconnect.value ? Xim.Mode.AutoAnalogDisconnect : Xim.Mode.None);
+                ximDyn.SetMode((bool)m_autoAnalogDisconnect.Value ? Xim.Mode.AutoAnalogDisconnect : Xim.Mode.None);
                 ximDyn.SendInput(ref input, 0);
                 System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
                 bool bTextMode = false;
@@ -184,13 +180,15 @@ namespace X2
                 watch.Start();
 
                 m_fXimRunning = true;
-                m_textMode.value = false;
+                m_textMode.Value = false;
                 TimeSpan prevTick = watch.Elapsed;
                 Log("Press ESCAPE to stop X2 processing");
+
+                // Main Processing Loop
                 while (!done)
                 {
                     System.Windows.Forms.Application.DoEvents();
-                    double wait = (bool)m_textMode.value ? (1000 / (double)m_textModeRate.value) : (1000 / (double)m_rate.value);
+                    double wait = (bool)m_textMode.Value ? (1000 / (double)m_textModeRate.Value) : (1000 / (double)m_rate.Value);
                     while (watch.Elapsed.TotalMilliseconds - prevTick.TotalMilliseconds < wait) 
                     {
                         if (m_form.ContainsFocus)
@@ -205,7 +203,7 @@ namespace X2
                     double delay = thisTick.TotalMilliseconds - prevTick.TotalMilliseconds;
                     prevTick = thisTick;
 
-                    if ((bool)m_textMode.value)
+                    if ((bool)m_textMode.Value)
                     {
                         if (!bTextMode)
                         {
@@ -217,14 +215,21 @@ namespace X2
                         if (m_inputManager.IsKeyDown(Win32Api.VirtualKeys.End))
                         {
                             m_textModeManager.Reset();
-                            m_textMode.value = false;
+                            m_textMode.Value = false;
                             bTextMode = false;
                             Log("Exiting Text Mode");
                         }
                     }
                     else
                     {
-                        ProcessMouseMovement(ref input, ref startState);
+                        if ((bool)m_useXimApiMouseMath.Value)
+                        {
+                            this.mouseMath.ProcessMouseMovement(ref input, ref startState);
+                        }
+                        else
+                        {
+                            this.mouseMath.XSoftMouseMovement(ref input, ref startState);
+                        }
                         m_eventManager.ProcessEvents(delay, ref input, ref startState);
                     }
 
@@ -251,7 +256,7 @@ namespace X2
 
         public bool ProcessChar(char ch)
         {
-            if ((bool)m_textMode.value && m_fXimRunning)
+            if ((bool)m_textMode.Value && m_fXimRunning)
             {
                 Debug.Write(ch);
                 m_textModeManager.ProcessInput(ch);
@@ -267,128 +272,7 @@ namespace X2
 
         public bool ProcessMessage(ref System.Windows.Forms.Message m)
         {
-            return m_inputManager.ProcessMessage(ref m, m_fXimRunning && !(bool)m_textMode.value);
-        }
-
-        private void ProcessMouseMovement(ref Xim.Input input, ref Xim.Input startState)
-        {
-            int sensitivity;
-            int deadzoneFactor;
-            double yxratio;
-            double transExp;
-            double mouseSmooth;
-            double diagonalDampen;
-            bool fClearSmoothOnStop;
-            bool fCircularDeadzone;
-            bool fUseXimMath;
-
-            Vector2 delta;
-            m_inputManager.GetAndResetMouseDelta(out delta);
-
-            if ((bool)m_altSens.value)
-            {
-                VarManager.GetVarValue(m_sensitivity2, out sensitivity);
-                VarManager.GetVarValue(m_transExp2, out transExp);
-            }
-            else
-            {
-                VarManager.GetVarValue(m_sensitivity1, out sensitivity);
-                VarManager.GetVarValue(m_transExp1, out transExp);
-            }
-
-            VarManager.GetVarValue(m_deadzone, out deadzoneFactor);
-            VarManager.GetVarValue(m_yxratio, out yxratio);
-            VarManager.GetVarValue(m_mouseSmooth, out mouseSmooth);
-            VarManager.GetVarValue(m_clearSmoothOnStop, out fClearSmoothOnStop);
-            VarManager.GetVarValue(m_circularDeadzone, out fCircularDeadzone);
-            VarManager.GetVarValue(m_useXimApiMouseMath, out fUseXimMath);
-            VarManager.GetVarValue(m_diagonalDampen, out diagonalDampen);
-
-            if (fUseXimMath)
-            {
-                if (m_mouseSmoothPtr == (IntPtr)0)
-                {
-                    // Alloc the smooth ptr.
-                    m_mouseSmoothPtr = Xim.AllocSmoothness((float)mouseSmooth, (int)(1000 / Xim.Delay), (float)yxratio, (float)transExp, (float)sensitivity);
-                }
-
-                Xim.ComputeStickValues((float)delta.X,
-                    (float)-delta.Y,
-                    (float)yxratio,
-                    (float)transExp,
-                    sensitivity,
-                    (float)diagonalDampen,
-                    m_mouseSmoothPtr,
-                    fCircularDeadzone ? Xim.Deadzone.Circular : Xim.Deadzone.Square,
-                    deadzoneFactor,
-                    ref input.RightStickX,
-                    ref input.RightStickY);
-            }
-            else
-            {
-                if (mouseSmooth == 0)
-                    mouseSmooth++;
-
-                if (fClearSmoothOnStop && delta.X == 0 && delta.Y == 0)
-                {
-                    m_prevMouseStates.Clear();
-                    input.RightStickX = 0;
-                    input.RightStickY = 0;
-                    return;
-                }
-                else if (m_prevMouseStates.Count == mouseSmooth)
-                {
-                    m_prevMouseStates.Dequeue();
-                }
-
-                m_prevMouseStates.Enqueue(delta);
-
-                Vector2 mouseDelta = new Vector2(0, 0);
-                foreach (Vector2 curState in m_prevMouseStates)
-                {
-                    mouseDelta.X += curState.X;
-                    mouseDelta.Y -= curState.Y;
-                }
-
-                mouseDelta.X = mouseDelta.X / m_prevMouseStates.Count;
-                mouseDelta.Y = mouseDelta.Y / m_prevMouseStates.Count;
-
-                CalculateMouseToXbox(mouseDelta, sensitivity, deadzoneFactor, transExp, yxratio, diagonalDampen, fCircularDeadzone, ref mouseDelta);
-
- 
-            }
-        }
-
-        private void CalculateMouseToXbox(Vector2 mouseDelta, int sensitivity, int deadzoneFactor, double transExp, double yxratio, double diagonalDampen, bool fCircularDeadzone, ref Vector2 xboxDelta )
-        {
-            Vector2 delta = new Vector2(mouseDelta.X, mouseDelta.Y);
-
-            delta.Y = delta.Y * yxratio;
-
-            Vector2 deadzone = null;
-            if (fCircularDeadzone)
-            {
-                deadzone = new Vector2(delta.X, delta.Y);
-                deadzone.Normalize();
-                deadzone.Scale(deadzoneFactor);
-            }
-            else
-            {
-                deadzone = new Vector2(deadzoneFactor, deadzoneFactor);
-            }
-
-            double mouseVectorLen = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
-            mouseVectorLen = Math.Pow(mouseVectorLen, transExp);
-            delta.Normalize();
-            delta.Scale(mouseVectorLen);
-
-            delta.Scale(sensitivity);
-            delta.Add(deadzone);
-
-            delta.Cap(-(double)Xim.Stick.Max, (double)Xim.Stick.Max);
-
-            xboxDelta.X = delta.X;
-            xboxDelta.Y = delta.Y;
+            return m_inputManager.ProcessMessage(ref m, m_fXimRunning && !(bool)m_textMode.Value);
         }
 
         #endregion

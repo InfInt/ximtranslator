@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using XimApi;
+using Common;
 
-namespace X2
+namespace xEmulate
 {
     class CommandParser
     {
@@ -106,8 +108,8 @@ namespace X2
                 {
                     VarManager.Var v;
                     m_varManager.GetVar(line, out v);
-                    m_infoTextManager.Write(" = " + v.value + Environment.NewLine +
-                                            v.info);
+                    m_infoTextManager.Write(" = " + v.Value + Environment.NewLine +
+                                            v.Info);
                     return true;
                 }
                 else
@@ -130,34 +132,13 @@ namespace X2
 
         private bool CreateSetVarEvent(VarManager.Var v, String val, out SetVarEvent e)
         {
-            if (v.varType == typeof(double))
+            Object valAsObject;
+            if (v.CanSetValue(val, out valAsObject))
             {
-                double value;
-                if (double.TryParse(val, out value))
-                {
-                    e = new SetVarEvent(v, (object)value);
-                    return true;
-                }
+                e = new SetVarEvent(v, valAsObject);
+                return true;
             }
-            else if (v.varType == typeof(int))
-            {
-                int value;
-                if (int.TryParse(val, out value))
-                {
-                    e = new SetVarEvent(v, (object)value);
-                    return true;
-                }
-            }
-            else if (v.varType == typeof(bool))
-            {
-                bool value;
-                if (bool.TryParse(val, out value))
-                {
-                    e = new SetVarEvent(v, (object)value);
-                    return true;
-                }
-            }
-            e = new SetVarEvent(v, null);
+            e = new SetVarEvent(null, null);
             return false;
         }
 
@@ -197,8 +178,8 @@ namespace X2
                         if (m_varManager.GetVar(setTokens[1], out v))
                         {
                             SetVarEvent setVarEvent;
-                            CreateSetVarEvent(v, setTokens[2], out setVarEvent);
-                            events.Add(setVarEvent);
+                            if(CreateSetVarEvent(v, setTokens[2], out setVarEvent))
+                                events.Add(setVarEvent);
                         }
                     }
                 }
@@ -245,7 +226,7 @@ namespace X2
                         // Toggle var events must be applied to bools.
                         VarManager.Var v;
                         m_varManager.GetVar(token, out v);
-                        if (v.varType == typeof(bool))
+                        if (v.VarType == typeof(bool))
                         {
                             events.Add(new HoldVarEvent(ref v, true));
                         }
@@ -264,7 +245,7 @@ namespace X2
                         // Toggle var events must be applied to bools.
                         VarManager.Var v;
                         m_varManager.GetVar(token, out v);
-                        if (v.varType == typeof(bool))
+                        if (v.VarType == typeof(bool))
                         {
                             events.Add(new ToggleVarEvent(ref v));
                         }
@@ -296,8 +277,8 @@ namespace X2
                         if (m_varManager.GetVar(setTokens[0], out v))
                         {
                             SetVarEvent setVarEvent;
-                            CreateSetVarEvent(v, setTokens[1], out setVarEvent);
-                            events.Add(setVarEvent);
+                            if( CreateSetVarEvent(v, setTokens[1], out setVarEvent) )
+                                events.Add(setVarEvent);
                         }
                     }
                 }

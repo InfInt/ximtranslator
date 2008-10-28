@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using XimApi;
 
-namespace X2
+namespace xEmulate
 {
     
 
@@ -208,7 +209,7 @@ namespace X2
 
         public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
         {
-            m_var.value = m_value;
+            m_var.Value = m_value;
             return Status.Complete;
         }
 
@@ -228,7 +229,7 @@ namespace X2
 
         public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
         {
-            m_var.value = !(bool)m_var.value;
+            m_var.Value = !(bool)m_var.Value;
             return Status.Complete;
         }
 
@@ -258,12 +259,12 @@ namespace X2
         {
             if (firstRun)
             {
-                m_oldValue = m_var.value;
-                m_var.value = m_newValue;
+                m_oldValue = m_var.Value;
+                m_var.Value = m_newValue;
             }
             if (!keyStillPressed)
             {
-                m_var.value = m_oldValue;
+                m_var.Value = m_oldValue;
             }
 
             return keyStillPressed ? Status.Running : Status.Complete;
@@ -271,7 +272,7 @@ namespace X2
 
         public override string ToString()
         {
-            return "." + m_var.varName.ToString().ToLower();
+            return "." + m_var.VarName.ToString().ToLower();
         }
     }
 

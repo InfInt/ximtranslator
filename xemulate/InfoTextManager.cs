@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using Common;
 
-namespace X2
+namespace xEmulate
 {
     class InfoTextManager
     {
@@ -34,6 +35,13 @@ namespace X2
             m_textBox.Text += s;
             m_textBox.SelectionStart = m_textBox.Text.Length;
             m_textBox.ScrollToCaret();
+        }
+
+        public void WriteLineDebug(String s)
+        {
+#if !DEBUG
+            WriteLine(s);
+#endif
         }
 
     }

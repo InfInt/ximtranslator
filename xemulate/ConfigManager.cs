@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using XimApi;
+using Common;
 
-namespace X2
+namespace xEmulate
 {
     class ConfigManager
     {
@@ -13,9 +15,9 @@ namespace X2
         Dictionary<String, Mouse.Button> m_mouse;
         Dictionary<String, Xim.Button> m_xim;
 
-        String m_x2DataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\X2";
+        String m_x2DataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\xEmulate";
+        String m_x2MyDocs = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Xim Configs";
                 
-
         private ConfigManager()
         {
             m_infoTextManager = InfoTextManager.Instance;
@@ -262,10 +264,17 @@ namespace X2
                         {
                             cmdParser.ParseLine("set yxratio " + tokens[1]);
                         }
+                        else if (tokens[0] == "smoothness")
+                        {
+                            cmdParser.ParseLine("set smoothness " + tokens[1]);
+                        }
+                        else if (tokens[0] == "diagonaldampen")
+                        {
+                            cmdParser.ParseLine("set diagonaldampen " + tokens[1]);
+                        }
                         else if (tokens[0] == "translationexponent")
                         {
                             cmdParser.ParseLine("set transexponent1 " + tokens[1]);
-                            cmdParser.ParseLine("set transexponent2 " + tokens[1]);
                         }
                         else  if (tokens[0] == "sensitivityprimary" && onMouseBinding )
                         {
@@ -367,6 +376,8 @@ namespace X2
         {
             SaveFileDialog saveFileDlg = new SaveFileDialog();
             saveFileDlg.Filter = "Config Files|*.cfg|All Files|*.*";
+            saveFileDlg.RestoreDirectory = true;
+            saveFileDlg.InitialDirectory = m_x2MyDocs;
             if (saveFileDlg.ShowDialog() == DialogResult.OK)
             {
                 String filename = saveFileDlg.FileName;
@@ -381,6 +392,8 @@ namespace X2
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
             openFileDlg.Filter = "Config Files|*.cfg;*.xim|All Files|*.*";
+            openFileDlg.RestoreDirectory = true;
+            openFileDlg.InitialDirectory = m_x2MyDocs;
             if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
                 String filename = openFileDlg.FileName;
