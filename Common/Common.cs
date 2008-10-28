@@ -32,5 +32,4 @@ namespace Common
                                  BindingFlags.NonPublic,
                                  null, null, null) as T;
     }
-
 }
