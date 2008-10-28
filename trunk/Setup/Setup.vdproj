@@ -15,7 +15,37 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_E7C4B9907A3B4D7FB29FE06AC18005EA"
+        "MsmKey" = "8:_1EEC710A0D8F3301474ABACA6D3CF29B"
+        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AD115D8B96A1F91C40EC2C8E80D9CB3D"
+        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AD115D8B96A1F91C40EC2C8E80D9CB3D"
+        "OwnerKey" = "8:_1EEC710A0D8F3301474ABACA6D3CF29B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DAEE6C73660554B9E779025F5A963282"
+        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DAEE6C73660554B9E779025F5A963282"
+        "OwnerKey" = "8:_1EEC710A0D8F3301474ABACA6D3CF29B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -28,7 +58,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E7C4B9907A3B4D7FB29FE06AC18005EA"
+        "OwnerKey" = "8:_DAEE6C73660554B9E779025F5A963282"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1EEC710A0D8F3301474ABACA6D3CF29B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AD115D8B96A1F91C40EC2C8E80D9CB3D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -56,6 +104,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -123,6 +184,99 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1EEC710A0D8F3301474ABACA6D3CF29B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:XimApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_1EEC710A0D8F3301474ABACA6D3CF29B"
+                    {
+                    "Name" = "8:XimApi.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:XimApi.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AD115D8B96A1F91C40EC2C8E80D9CB3D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Win32Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_AD115D8B96A1F91C40EC2C8E80D9CB3D"
+                    {
+                    "Name" = "8:Win32Api.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Win32Api.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DAEE6C73660554B9E779025F5A963282"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_DAEE6C73660554B9E779025F5A963282"
+                    {
+                    "Name" = "8:Common.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F3AACCF78EC0483F8831980E6731A588"
             {
             "SourcePath" = "8:..\\..\\..\\..\\..\\Downloads\\Xbox icon.ico"
@@ -160,7 +314,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_B19EE8EB7F90474F99CE3F7CDE1022C7"
                     {
-                    "Name" = "8:X2"
+                    "Name" = "8:xEmulate"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -193,7 +347,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_754AA7E6723A474B906D463CA2646EF6"
                     {
-                    "Name" = "8:X2"
+                    "Name" = "8:xEmulate"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -204,9 +358,31 @@
                     }
                 }
             }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_C37FF00D23BA4BEC92E31087E479C1A3"
+            {
+            "Name" = "8:#1918"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:PersonalFolder"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_F88AF92BA51D4FC194BE9F47E246182F"
+                    {
+                    "Name" = "8:Xim Configs"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_B1DA9D62E9A54E08B67F05737342035B"
+                        "Folders"
+                        {
+                        }
+                    }
+                }
+            }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_CE29E9EE02A04E898B3617DBC0FA9A3D"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -231,19 +407,19 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:X2"
+        "ProductName" = "8:xEmulate"
         "ProductCode" = "8:{2C5252EE-5676-43E4-B373-90467B4F685A}"
-        "PackageCode" = "8:{001BA02A-A912-4CFF-A9EA-E9735709FE25}"
+        "PackageCode" = "8:{BFAC5620-A7B9-4991-BF00-75083406DEFA}"
         "UpgradeCode" = "8:{06C1EC59-F269-4AAE-8514-F112FD176E53}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:XimSoft"
+        "Manufacturer" = "8:."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.xim360.com"
-        "Title" = "8:X2 Setup"
+        "Title" = "8:xEmulate Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:X"
         "Keywords" = "8:"
@@ -352,18 +528,18 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_18CAAA1A47314B218EED0A6AD7617FB8"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_5A462F0A2C794670BC41A7D8E5963D2F"
             {
-            "Name" = "8:X2"
+            "Name" = "8:xEmulate"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_E7C4B9907A3B4D7FB29FE06AC18005EA"
+            "Target" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
             "Folder" = "8:_B19EE8EB7F90474F99CE3F7CDE1022C7"
             "WorkingFolder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
-            "Icon" = "8:_F3AACCF78EC0483F8831980E6731A588"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
@@ -765,9 +941,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E7C4B9907A3B4D7FB29FE06AC18005EA"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EDA95D03476047E99F7D4A57A3936C8B"
             {
-            "SourcePath" = "8:..\\X2\\obj\\x86\\Release\\X2.exe"
+            "SourcePath" = "8:..\\xemulate\\obj\\x86\\Release\\X2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
