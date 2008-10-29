@@ -4,6 +4,7 @@ using System.Text;
 using System.Diagnostics;
 using XimApi;
 using Common;
+using System.Threading;
 
 namespace xEmulate
 {
@@ -20,6 +21,8 @@ namespace xEmulate
             public bool hasDest;
         }
 
+        Mutex mutex;
+
         private Destination m_current;
         private bool m_idleFrame = false;
 
@@ -27,6 +30,7 @@ namespace xEmulate
         
         private TextModeManager()
         {
+            this.mutex = new Mutex();
             m_current.shift = false;
             m_current.coord = new Vector2(0, 0);
 
@@ -47,6 +51,7 @@ namespace xEmulate
 
         public void ProcessInput(char ch)
         {
+            mutex.WaitOne();
             if (m_keyOrder.IndexOf(ch) != -1)
             {
                 int idx = m_keyOrder.IndexOf(ch);
@@ -110,11 +115,12 @@ namespace xEmulate
 
                 m_keyqueue.Enqueue(dest);
             }
-            
+            mutex.ReleaseMutex();
         }
 
         public void ProcessOutput(double delay, ref Xim.Input input, ref Xim.Input startState)
         {
+            mutex.WaitOne();
             input = new Xim.Input();
 
             if (m_idleFrame)
@@ -175,6 +181,7 @@ namespace xEmulate
                     Xim.SetButtonState(Xim.Button.LeftStick, Xim.ButtonState.Pressed, ref input);
                 }
             }
+            mutex.ReleaseMutex();
         }
 
         private bool FAtDestination()

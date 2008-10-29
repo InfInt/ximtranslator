@@ -24,7 +24,9 @@ namespace xEmulate
             InitializeComponent();
 
             Singleton<InfoTextManager>.Instance.Init(ref infoText);
-            Singleton<InputManager>.Instance.Init(Handle);
+            Singleton<InputManager>.Instance.Init();
+            //Singleton<RawInputManager>.Instance.Init(Handle);
+            Singleton<DxInputManager>.Instance.Init(this);
             Singleton<XimDyn>.Instance.Init();
 
             m_commandParser = new CommandParser();
@@ -42,6 +44,7 @@ namespace xEmulate
 
             SyncUI();
             SetTooltips();
+            commandBox.Focus();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -78,7 +81,6 @@ namespace xEmulate
             {
                 SetFormControlsEnabled(false);
                 commandBox.Focus();
-                Cursor.Hide();
                 m_ximulator.Go();
                 Cursor.Show();
                 SetFormControlsEnabled(true);
@@ -302,6 +304,29 @@ namespace xEmulate
         private void cbInvertY_CheckedChanged(object sender, EventArgs e)
         {
             m_varManager.SetVar(VarManager.Names.InvertY, cbInvertY.Checked); 
+        }
+
+        public void UpdateOutputView(Xim.Input input)
+        {
+            this.cbRawA.Checked = input.A == Xim.ButtonState.Pressed;
+            this.cbRawB.Checked = input.B == Xim.ButtonState.Pressed;
+            this.cbRawY.Checked = input.Y == Xim.ButtonState.Pressed;
+            this.cbRawX.Checked = input.X == Xim.ButtonState.Pressed;
+            this.cbRawStart.Checked = input.Start == Xim.ButtonState.Pressed;
+            this.cbRawBack.Checked = input.Back == Xim.ButtonState.Pressed;
+            this.cbRawGuide.Checked = input.Guide == Xim.ButtonState.Pressed;
+            this.cbRawDDown.Checked = input.Down == Xim.ButtonState.Pressed;
+            this.cbRawDUp.Checked = input.Up == Xim.ButtonState.Pressed;
+            this.cbRawDLeft.Checked = input.Left == Xim.ButtonState.Pressed;
+            this.cbRawDRight.Checked = input.Right == Xim.ButtonState.Pressed;
+            this.cbRawRBumper.Checked = input.RightBumper == Xim.ButtonState.Pressed;
+            this.cbRawLBumper.Checked = input.LeftBumper == Xim.ButtonState.Pressed;
+            this.tbRawLTrigger.Text = input.LeftTrigger.ToString();
+            this.tbRawRTrigger.Text = input.RightTrigger.ToString();
+            this.tbRawLX.Text = input.LeftStickX.ToString();
+            this.tbRawLY.Text = input.LeftStickY.ToString();
+            this.tbRawRX.Text = input.RightStickX.ToString();
+            this.tbRawRY.Text = input.RightStickY.ToString();
         }
     }
 }

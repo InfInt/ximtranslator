@@ -14,7 +14,6 @@ namespace Linearize
     public partial class LinearizeForm : Form
     {
         XimDyn xim;
-        private bool connected = false;
         private System.Diagnostics.Stopwatch watch;
         public LinearizeForm()
         {
@@ -31,9 +30,10 @@ namespace Linearize
             {
                 this.watch.Reset();
                 Xim.Input input = new Xim.Input();
+                input.RightStickY = 50;
                 input.RightStickX = short.Parse(this.mouseInput.Text);
                 this.watch.Start();
-                this.xim.SendInput(ref input, 0);
+                this.xim.SendInput(ref input, 1);
             }
             else
             {

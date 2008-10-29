@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using XimApi;
 using Common;
+using DxI = Microsoft.DirectX.DirectInput;
 
 namespace xEmulate
 {
@@ -16,7 +17,10 @@ namespace xEmulate
 
         public InputEventHandler(List<InputEvent> futureEvents)
         {
-            m_futureEvents = new List<InputEvent>(futureEvents);
+            if (futureEvents != null)
+            {
+                m_futureEvents = new List<InputEvent>(futureEvents);
+            }
             m_currentEvents = new List<InputEvent>();
             m_futureEventIndex = 0;
             m_blocking = false;
@@ -78,9 +82,8 @@ namespace xEmulate
             return !(m_currentEvents.Count == 0 && m_futureEventIndex >= m_futureEvents.Count) ;
         }
 
-        public abstract bool Run(double elapsed, 
-            List<Mouse.Button> pressedMouseButtons,
-            List<Win32Api.VirtualKeys> pressedKeys, 
+        public abstract bool Run(double elapsed,
+            PressedState pressedState,
             ref Xim.Input input, 
             ref Xim.Input startState);
     }
@@ -97,35 +100,99 @@ namespace xEmulate
         }
 
         public override bool Run(double elapsed,
-            List<Mouse.Button> pressedMouseButtons,
-            List<Win32Api.VirtualKeys> pressedKeys,
+            PressedState pressedState,
             ref Xim.Input input,
             ref Xim.Input startState)
         {
-            m_stillPressed = m_stillPressed && pressedMouseButtons.Contains(m_button);
+            m_stillPressed = m_stillPressed && pressedState.mouseButtons.Contains(m_button);
             return base.Run(elapsed, m_stillPressed, ref input, ref startState);
         }
     }
 
     class KeyboardEventHandler : InputEventHandler
     {
-        private Win32Api.VirtualKeys m_key;
+        private DxI.Key m_key;
         private bool m_stillPressed = true;
 
-        public KeyboardEventHandler(Win32Api.VirtualKeys key, List<InputEvent> futureEvents)
+        public KeyboardEventHandler(DxI.Key key, List<InputEvent> futureEvents)
             : base(futureEvents)
         {
             m_key = key;
         }
 
         public override bool Run(double elapsed,
-            List<Mouse.Button> pressedMouseButtons,
-            List<Win32Api.VirtualKeys> pressedKeys,
+            PressedState pressedState,
             ref Xim.Input input,
             ref Xim.Input startState)
         {
-            m_stillPressed = m_stillPressed && pressedKeys.Contains(m_key);
+            m_stillPressed = m_stillPressed && pressedState.keys.Contains(m_key);
             return base.Run(elapsed, m_stillPressed, ref input, ref startState);
+        }
+    }
+
+    class JoyEventHandler : InputEventHandler
+    {
+        private Joystick.Button button;
+        private bool m_stillPressed = true;
+
+        public JoyEventHandler(Joystick.Button button, List<InputEvent> futureEvents)
+            : base(futureEvents)
+        {
+            this.button = button;
+        }
+
+        public override bool Run(double elapsed,
+            PressedState pressedState,
+            ref Xim.Input input,
+            ref Xim.Input startState)
+        {
+            m_stillPressed = m_stillPressed && pressedState.joyButtons.Contains(this.button);
+            return base.Run(elapsed, m_stillPressed, ref input, ref startState);
+        }
+    }
+
+    class JoyAnalogEventHandler : InputEventHandler
+    {
+        private Joystick.Analog button;
+        private AnalogEvent inputEvent;
+
+        public JoyAnalogEventHandler(Joystick.Analog button, AnalogEvent inputEvent)
+            : base(null)
+        {
+            this.button = button;
+            this.inputEvent = inputEvent;
+        }
+
+        public override bool Run(double elapsed,
+            PressedState pressedState,
+            ref Xim.Input input,
+            ref Xim.Input startState)
+        {
+            int analogVal = 0;
+            switch (button)
+            {
+                case Joystick.Analog.JoyRx:
+                    analogVal = (int)(pressedState.joyState.Rx - (short)Xim.Stick.Max);
+                    break;
+                case Joystick.Analog.JoyRy:
+                    analogVal = (int)-(pressedState.joyState.Ry - (short)Xim.Stick.Max);
+                    break;
+                case Joystick.Analog.JoyRz:
+                    analogVal = (int)(pressedState.joyState.Rz - (short)Xim.Stick.Max);
+                    break;
+                case Joystick.Analog.JoyX:
+                    analogVal = (int)(pressedState.joyState.X - (short)Xim.Stick.Max);
+                    break;
+                case Joystick.Analog.JoyY:
+                    analogVal = (int)-(pressedState.joyState.Y - (short)Xim.Stick.Max);
+                    break;
+                case Joystick.Analog.JoyZ:
+                    analogVal = (int)(pressedState.joyState.Z - (short)Xim.Stick.Max);
+                    break;
+            }
+
+            inputEvent.Run(false, elapsed, analogVal, ref input, ref startState);
+            return true;
         }
     }
 }

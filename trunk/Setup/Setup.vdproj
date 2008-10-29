@@ -15,6 +15,36 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_B645ED1D64D028CA70E9BF42486B814E"
+        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B645ED1D64D028CA70E9BF42486B814E"
+        "OwnerKey" = "8:_D9D5E75D028C91CF6B6404B30AE7E18C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CBEE466ACF437752743443F8B7932673"
+        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CBEE466ACF437752743443F8B7932673"
+        "OwnerKey" = "8:_D9D5E75D028C91CF6B6404B30AE7E18C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D9D5E75D028C91CF6B6404B30AE7E18C"
+        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -29,6 +59,24 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D9D5E75D028C91CF6B6404B30AE7E18C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B645ED1D64D028CA70E9BF42486B814E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CBEE466ACF437752743443F8B7932673"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -49,13 +97,21 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Debug"
         {
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Setup.msi"
+        "OutputFilename" = "8:Debug\\xEmulate.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -92,7 +148,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Setup.msi"
+        "OutputFilename" = "8:Release\\xEmulate.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -152,6 +208,99 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B645ED1D64D028CA70E9BF42486B814E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Win32Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_B645ED1D64D028CA70E9BF42486B814E"
+                    {
+                    "Name" = "8:Win32Api.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Win32Api.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CBEE466ACF437752743443F8B7932673"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_CBEE466ACF437752743443F8B7932673"
+                    {
+                    "Name" = "8:Common.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D9D5E75D028C91CF6B6404B30AE7E18C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:XimApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D9D5E75D028C91CF6B6404B30AE7E18C"
+                    {
+                    "Name" = "8:XimApi.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:XimApi.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F3AACCF78EC0483F8831980E6731A588"
             {
             "SourcePath" = "8:..\\..\\..\\..\\..\\Downloads\\Xbox icon.ico"
@@ -284,13 +433,13 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:xEmulate"
         "ProductCode" = "8:{2C5252EE-5676-43E4-B373-90467B4F685A}"
-        "PackageCode" = "8:{BFAC5620-A7B9-4991-BF00-75083406DEFA}"
+        "PackageCode" = "8:{0C3387E7-A0F2-4068-B921-456CDB6A3363}"
         "UpgradeCode" = "8:{06C1EC59-F269-4AAE-8514-F112FD176E53}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.01.27"
         "Manufacturer" = "8:."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.xim360.com"
@@ -818,7 +967,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EDA95D03476047E99F7D4A57A3936C8B"
             {
-            "SourcePath" = "8:..\\xemulate\\obj\\x86\\All Debug\\X2.exe"
+            "SourcePath" = "8:..\\xemulate\\obj\\x86\\Release\\X2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"

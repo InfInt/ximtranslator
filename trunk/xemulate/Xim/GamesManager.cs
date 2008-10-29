@@ -11,14 +11,14 @@ namespace xEmulate
         public enum Games
         {
             Ut3 = 0,
-            //Cod4 = 1,
+            Cod4 = 1,
             //Halo3 = 2,
         }
 
         public static string[] GameNames = new string[]
         { 
             "Unreal Tournament 3 (ut3)",
-            //"Call of Duty 4 (cod4)",
+            "Call of Duty 4 (cod4)",
             //"Halo 3 (halo3)",
         };
 
@@ -64,6 +64,18 @@ namespace xEmulate
                 0.22, // Yaw
                 new Vector2(0, 10000) // CarryZone
                 ));
+
+            gameSettings.Add(Games.Cod4, new Settings(
+               16513, // Speed
+               0.3775, // Exp
+               7000, // Deadzone
+               99999, // Cap
+               99999, // Max Speed
+               true, //Circular Deadzone
+               0.44, // Pitch
+               0.22, // Yaw
+               new Vector2(0, 0) // CarryZone 
+               ));
 
         }
 
