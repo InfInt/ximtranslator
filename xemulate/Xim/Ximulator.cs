@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Threading;
 using XimApi;
 using Common;
+using DxI = Microsoft.DirectX.DirectInput;
 
 namespace xEmulate
 {
@@ -168,6 +169,11 @@ namespace xEmulate
         {
             if (Connect())
             {
+                m_fXimRunning = true;
+
+                // Get thing set up.
+                DxInputManager dxInputManager = DxInputManager.Instance;
+                
                 System.Drawing.Point cursorPosition = Cursor.Position;
                 Xim.Input input = new Xim.Input();
                 Xim.Input startState = new Xim.Input();
@@ -178,11 +184,17 @@ namespace xEmulate
                 bool done = false;
 
                 watch.Start();
-
-                m_fXimRunning = true;
+                Cursor.Hide();
+                
+                // 
+                
                 m_textMode.Value = false;
                 TimeSpan prevTick = watch.Elapsed;
                 Log("Press ESCAPE to stop X2 processing");
+
+                dxInputManager.Acquire();
+                if (dxInputManager.ControllersPresent())
+                    m_eventManager.QueueAnalogJoyBinds();
 
                 // Main Processing Loop
                 while (!done)
@@ -195,8 +207,10 @@ namespace xEmulate
                         {
                             Cursor.Position = cursorPosition;
                         }
-                        System.Threading.Thread.Sleep(1); 
+                        System.Threading.Thread.Sleep(0); 
                     }
+
+                    dxInputManager.PollAndProcess(!(bool)m_textMode.Value);
 
                     input.CopyFrom(startState);
                     TimeSpan thisTick = watch.Elapsed;
@@ -212,7 +226,7 @@ namespace xEmulate
                         }
                         m_textModeManager.ProcessOutput(delay, ref input, ref startState);
 
-                        if (m_inputManager.IsKeyDown(Win32Api.VirtualKeys.End))
+                        if (m_inputManager.IsKeyDown(DxI.Key.End))
                         {
                             m_textModeManager.Reset();
                             m_textMode.Value = false;
@@ -222,6 +236,7 @@ namespace xEmulate
                     }
                     else
                     {
+                        m_eventManager.ProcessEvents(delay, ref input, ref startState);
                         if ((bool)m_useXimApiMouseMath.Value)
                         {
                             this.mouseMath.ProcessMouseMovement(ref input, ref startState);
@@ -230,23 +245,29 @@ namespace xEmulate
                         {
                             this.mouseMath.XSoftMouseMovement(ref input, ref startState);
                         }
-                        m_eventManager.ProcessEvents(delay, ref input, ref startState);
                     }
 
-                    if ( m_inputManager.IsKeyDown(Win32Api.VirtualKeys.Escape))
+                    if ( m_inputManager.IsKeyDown(DxI.Key.Escape))
                     {
                         break;
                     }
 
                     if (m_form.ContainsFocus)
                     {
-                        ximDyn.SendInput(ref input, 0);
+                        m_form.UpdateOutputView(input);
+                        ximDyn.SendInput(ref input, 1);
                     }
                     else
                     {
-                        ximDyn.SendInput(ref m_blankInput, 0);
+                        ximDyn.SendInput(ref m_blankInput, 1);
                     }
                 }
+
+                // Shutdown and clear events and input
+                m_form.UpdateOutputView(m_blankInput);
+                m_inputManager.ClearInput();
+                m_eventManager.ClearEvents();
+                DxInputManager.Instance.Unaquire();
                 m_fXimRunning = false;
                 Disconnect();
             }
@@ -267,12 +288,14 @@ namespace xEmulate
 
         public bool ProcessMWheel(bool fWheelUp)
         {
-            return m_inputManager.ProcessMWheel(fWheelUp);
+            return false;
+            //return m_rawInputManager.ProcessMWheel(fWheelUp);
         }
 
         public bool ProcessMessage(ref System.Windows.Forms.Message m)
         {
-            return m_inputManager.ProcessMessage(ref m, m_fXimRunning && !(bool)m_textMode.Value);
+            return false;
+            //return m_rawInputManager.ProcessMessage(ref m, m_fXimRunning && !(bool)m_textMode.Value);
         }
 
         #endregion

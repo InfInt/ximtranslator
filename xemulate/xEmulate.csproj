@@ -72,9 +72,16 @@
     <OutputPath>bin\x86\All Debug\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.DirectX.DirectInput, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -93,7 +100,9 @@
     <Compile Include="Events\InputEvent.cs" />
     <Compile Include="Input\CommandParser.cs" />
     <Compile Include="Events\InputEventHandler.cs" />
+    <Compile Include="Input\DxInputManager.cs" />
     <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Input\RawInputManager.cs" />
     <Compile Include="TextModeManager.cs" />
     <Compile Include="VarManager.cs" />
     <Compile Include="Xim\GamesManager.cs" />

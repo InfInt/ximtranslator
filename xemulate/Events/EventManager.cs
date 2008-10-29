@@ -3,9 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using XimApi;
 using Common;
+using DxI = Microsoft.DirectX.DirectInput;
 
 namespace xEmulate
 {
+    public class PressedState
+    {
+        public List<Mouse.Button> mouseButtons;
+        public List<DxI.Key> keys;
+        public List<Joystick.Button> joyButtons;
+        public DxI.JoystickState joyState;
+    };
+
     class EventManager
     {
         private List<InputEventHandler> m_inputEventHandlers;
@@ -24,7 +33,12 @@ namespace xEmulate
             get { return Singleton<EventManager>.Instance; }
         }
 
-        public void FireKeyDownEvent(Win32Api.VirtualKeys key)
+        public void ClearEvents()
+        {
+            m_inputEventHandlers.Clear();
+        }
+
+        public void FireKeyDownEvent(DxI.Key key)
         {
             // Key is now down, check if there is an event for this key and fire it.
             List<InputEvent> events;
@@ -46,14 +60,40 @@ namespace xEmulate
             }
         }
 
+        public void FireButtonDownEvent(Joystick.Button button)
+        {
+            // Key is now down, check if there is an event for this key and fire it.
+            List<InputEvent> events;
+            if (m_bindingManager.GetJoyBind(button, out events))
+            {
+                InputEventHandler inputEventHandler = new JoyEventHandler(button, events);
+                m_inputEventHandlers.Add(inputEventHandler);
+            }
+        }
+
+        public void QueueAnalogJoyBinds()
+        {
+            // Key is now down, check if there is an event for this key and fire it.
+            Dictionary<Joystick.Analog, AnalogEvent> binds;
+            binds = m_bindingManager.GetJoyAnalogBinds();
+            foreach (KeyValuePair<Joystick.Analog, AnalogEvent> pair in binds )
+            {
+                InputEventHandler inputEventHandler = new JoyAnalogEventHandler(pair.Key, pair.Value);
+                m_inputEventHandlers.Add(inputEventHandler);
+            }
+        }
+
         public void ProcessEvents(double elapsed, ref Xim.Input input, ref Xim.Input startState)
         {
-            List<Win32Api.VirtualKeys> pressedKeys = m_inputManager.GetPressedKeys();
-            List<Mouse.Button> pressedButtons = m_inputManager.GetMouseButtons();
+            PressedState pressedState = new PressedState();
+            pressedState.mouseButtons = m_inputManager.GetMouseButtons();
+            pressedState.keys = m_inputManager.GetPressedKeys();
+            pressedState.joyButtons = m_inputManager.GetJoyButtons();
+            pressedState.joyState = m_inputManager.GetJoyState();
             Stack<InputEventHandler> finishedHandlers = new Stack<InputEventHandler>();
             foreach (InputEventHandler inputEventHandler in m_inputEventHandlers)
             {
-                if (!inputEventHandler.Run(elapsed, pressedButtons, pressedKeys, ref input, ref startState))
+                if (!inputEventHandler.Run(elapsed, pressedState, ref input, ref startState))
                 {
                     finishedHandlers.Push(inputEventHandler);
                 }

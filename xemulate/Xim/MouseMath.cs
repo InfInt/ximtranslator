@@ -91,6 +91,10 @@ namespace xEmulate
                 ref deltaX,
                 ref deltaY);
 
+            // Dont set the xbox controller unless we have moved the mouse, this allows analog controllers to work :)
+            if (delta.X == 0 && delta.Y == 0)
+                return;
+
             SetXboxInput(ref input, new Vector2(deltaX, deltaY));
         }
 

@@ -38,6 +38,16 @@ namespace XimApi
             LeftTrigger
         }
 
+        public enum Analog : int
+        {
+            RightStickX,
+            RightStickY,
+            LeftStickX,
+            LeftStickY,
+            LeftTrigger,
+            RightTrigger,
+        }
+
         public enum Status : int
         {
             OK                          = 0,
@@ -206,10 +216,10 @@ namespace XimApi
 
         private static short AddStickValue(short currentValue, short add)
         {
-            int sum = currentValue + add;
-            if (add > (short)Stick.Max)
+            int sum = (int)currentValue + add;
+            if (sum > (short)Stick.Max)
                 sum = (short)Stick.Max;
-            else if (add < -(short)Stick.Max)
+            else if (sum < -(short)Stick.Max)
                 sum = -(short)Stick.Max;
             return (short)sum;
         }
@@ -411,6 +421,44 @@ namespace XimApi
                     break;
                 case Button.LeftStickNegativeY:
                     input.LeftStickY = ToggleState(input.LeftStickY);
+                    break;
+                default:
+                    return false;
+            }
+            return true;
+        }
+
+        public static bool SetAnalogState(Analog button, int analogVal, ref Input input)
+        {
+            if (analogVal > (short)Xim.Stick.Max)
+            {
+                analogVal = (short)Xim.Stick.Max;
+            }
+            else if( analogVal < -(short)Xim.Stick.Max )
+            {
+                analogVal = -(short)Xim.Stick.Max;
+            }
+
+
+            switch (button)
+            {
+                case Analog.LeftStickX:
+                    input.LeftStickX = (short)analogVal;
+                    break;
+                case Analog.LeftStickY:
+                    input.LeftStickY = (short)analogVal;
+                    break;
+                case Analog.RightStickX:
+                    input.RightStickX = (short)analogVal;
+                    break;
+                case Analog.RightStickY:
+                    input.RightStickY = (short)analogVal;
+                    break;
+                case Analog.LeftTrigger:
+                    input.LeftTrigger = (short)analogVal;
+                    break;
+                case Analog.RightTrigger:
+                    input.RightTrigger = (short)analogVal;
                     break;
                 default:
                     return false;

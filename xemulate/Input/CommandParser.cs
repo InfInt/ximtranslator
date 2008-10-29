@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using XimApi;
 using Common;
+using DxI = Microsoft.DirectX.DirectInput;
 
 namespace xEmulate
 {
@@ -12,8 +13,12 @@ namespace xEmulate
         private static char[] c_spacedelim = { ' ' };
 
         private SortedDictionary<String, Xim.Button> m_buttonMap;
-        private SortedDictionary<String, Win32Api.VirtualKeys> m_keyMap;
+        private SortedDictionary<String, Xim.Analog> m_ximAnalogMap;
+        private SortedDictionary<String, DxI.Key> m_keyMap;
         private SortedDictionary<String, Mouse.Button> m_mouseMap;
+
+        private SortedDictionary<String, Joystick.Button> m_joyMap;
+        private SortedDictionary<String, Joystick.Analog> m_joyAnalogMap;
         private BindingManager m_bindingManager;
         private InfoTextManager m_infoTextManager;
         private VarManager m_varManager;
@@ -24,19 +29,29 @@ namespace xEmulate
             m_bindingManager = BindingManager.Instance;
             m_varManager = VarManager.Instance;
             m_buttonMap = new SortedDictionary<String, Xim.Button>();
-            m_keyMap = new SortedDictionary<String, Win32Api.VirtualKeys>();
+            m_keyMap = new SortedDictionary<String, DxI.Key>();
             m_mouseMap = new SortedDictionary<String, Mouse.Button>();
+            m_joyMap = new SortedDictionary<String, Joystick.Button>();
+            m_joyAnalogMap = new SortedDictionary<String, Joystick.Analog>();
+            m_ximAnalogMap = new SortedDictionary<String, Xim.Analog>();
+
             foreach (Xim.Button button in Enum.GetValues(typeof(Xim.Button)))
             {
                 String name = Enum.GetName(typeof(Xim.Button), button);
                 m_buttonMap.Add(name.ToLower(), button);
             }
 
-            String[] keyNames = Enum.GetNames(typeof(Win32Api.VirtualKeys));
-            Array keys = Enum.GetValues(typeof(Win32Api.VirtualKeys));
+            foreach (Xim.Analog button in Enum.GetValues(typeof(Xim.Analog)))
+            {
+                String name = Enum.GetName(typeof(Xim.Analog), button);
+                m_ximAnalogMap.Add(name.ToLower(), button);
+            }
+
+            String[] keyNames = Enum.GetNames(typeof(DxI.Key));
+            Array keys = Enum.GetValues(typeof(DxI.Key));
             for (int i = 0; i < keyNames.Length; i++)
             {
-                m_keyMap.Add(keyNames[i].ToLower(), (Win32Api.VirtualKeys)keys.GetValue(i));
+                m_keyMap.Add(keyNames[i].ToLower(), (DxI.Key)keys.GetValue(i));
             }
 
             keyNames = Enum.GetNames(typeof(Mouse.Button));
@@ -44,6 +59,20 @@ namespace xEmulate
             for (int i = 0; i < keyNames.Length; i++)
             {
                 m_mouseMap.Add(keyNames[i].ToLower(), (Mouse.Button)keys.GetValue(i));
+            }
+
+            keyNames = Enum.GetNames(typeof(Joystick.Button));
+            keys = Enum.GetValues(typeof(Joystick.Button));
+            for (int i = 0; i < keyNames.Length; i++)
+            {
+                m_joyMap.Add(keyNames[i].ToLower(), (Joystick.Button)keys.GetValue(i));
+            }
+
+            keyNames = Enum.GetNames(typeof(Joystick.Analog));
+            keys = Enum.GetValues(typeof(Joystick.Analog));
+            for (int i = 0; i < keyNames.Length; i++)
+            {
+                m_joyAnalogMap.Add(keyNames[i].ToLower(), (Joystick.Analog)keys.GetValue(i));
             }
         }
 
@@ -75,7 +104,16 @@ namespace xEmulate
                         m_infoTextManager.WriteLine(m_bindingManager.GetBindString(m_mouseMap[key]));
                         return true;
                     }
-
+                    else if (m_joyMap.ContainsKey(key))
+                    {
+                        m_infoTextManager.WriteLine(m_bindingManager.GetBindString(m_joyMap[key]));
+                        return true;
+                    }
+                    else if (m_joyAnalogMap.ContainsKey(key))
+                    {
+                        m_infoTextManager.WriteLine(m_bindingManager.GetBindString(m_joyAnalogMap[key]));
+                        return true;
+                    }
                 }
                 else
                 {
@@ -97,6 +135,27 @@ namespace xEmulate
                         if (events.Count > 0)
                         {
                             m_bindingManager.SetMouseBind(m_mouseMap[key], events);
+                            return true;
+                        }
+                    }
+                    else if (m_joyMap.ContainsKey(key))
+                    {
+                        List<InputEvent> events;
+                        CreateEventList(macro, out events);
+                        if (events.Count > 0)
+                        {
+                            m_bindingManager.SetJoyBind(m_joyMap[key], events);
+                            return true;
+                        }
+                    }
+
+                    else if (m_joyAnalogMap.ContainsKey(key))
+                    {
+                        macro = macro.TrimEnd(c_delims);
+                        if (m_ximAnalogMap.ContainsKey(macro))
+                        {
+                            AnalogEvent inputEvent = new AnalogEvent(m_ximAnalogMap[macro]);
+                            m_bindingManager.SetJoyBind(m_joyAnalogMap[key], inputEvent);
                             return true;
                         }
                     }

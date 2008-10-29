@@ -39,7 +39,7 @@ namespace xEmulate
 
         public void WriteLineDebug(String s)
         {
-#if !DEBUG
+#if DEBUG
             WriteLine(s);
 #endif
         }

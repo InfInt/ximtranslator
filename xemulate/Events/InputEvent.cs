@@ -5,8 +5,6 @@ using XimApi;
 
 namespace xEmulate
 {
-    
-
     abstract class InputEvent: ICloneable
     {
         object ICloneable.Clone()
@@ -235,7 +233,7 @@ namespace xEmulate
 
         public override string ToString()
         {
-            return "!"+m_var.ToString().ToLower();
+            return "!"+m_var.VarName.ToLower();
         }
     }
 
@@ -323,6 +321,40 @@ namespace xEmulate
         public override string ToString()
         {
             return "echo " + m_echo;
+        }
+    }
+
+    /*
+     * Sets the state of a button on the startState, it will not release until it is reset.
+     * */
+    class AnalogEvent : InputEvent
+    {
+        Xim.Analog button;
+
+        public AnalogEvent(Xim.Analog button)
+        {
+            this.button = button;
+        }
+
+        public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
+        {
+            if (keyStillPressed)
+            {
+                Xim.SetAnalogState(button, (short)Xim.Stick.Max, ref input);
+                return Status.Running;
+            }
+            return Status.Complete;
+        }
+
+        public InputEvent.Status Run(bool firstRun, double elapsed, int analogVal, ref Xim.Input input, ref Xim.Input startState)
+        {
+            Xim.SetAnalogState(button, analogVal, ref input);
+            return Status.Running;
+        }
+
+        public override string ToString()
+        {
+            return button.ToString().ToLower();
         }
     }
 
