@@ -66,5 +66,21 @@ namespace Common
                 Y = max;
         }
 
+        public void CapX(double min, double max)
+        {
+            if (X < min)
+                X = min;
+            else if (X > max)
+                X = max;
+        }
+
+        public void CapY(double min, double max)
+        { 
+            if (Y < min)
+                Y = min;
+            else if (Y > max)
+                Y = max;
+        }
+
     }
 }
