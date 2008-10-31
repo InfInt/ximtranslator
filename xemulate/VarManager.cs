@@ -128,7 +128,7 @@ namespace xEmulate
             InitVar(Names.Sensitivity, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
             InitVar(Names.Accel, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
             InitVar(Names.Sensitivity1, typeof(double), (double)6000, "Primary sensitivity as defined by XIM api", null);
-            InitVar(Names.Sensitivity2, typeof(int), (int)8500, "Alternate sensitivity as defined by XIM api", null);
+            InitVar(Names.Sensitivity2, typeof(double), (double)8500, "Alternate sensitivity as defined by XIM api", null);
             InitVar(Names.TransExponent1, typeof(double), (double)0.35, "Translation Exponent as defined by XIM api", null);
             InitVar(Names.DiagonalDampen, typeof(double), (double)0, "Diagonal Dampen as defined by XIM api", null);
             InitVar(Names.Deadzone, typeof(int), (int)3000, "Deadzone as defined by XIM api", null);

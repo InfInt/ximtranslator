@@ -208,7 +208,7 @@ namespace xEmulate
                 {
                 }
             }
-            state = m_mouse.CurrentMouseState;
+            state = new DxI.MouseState { };
             return false;
         }
     }
