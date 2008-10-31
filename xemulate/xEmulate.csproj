@@ -88,6 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingManager.cs" />
+    <Compile Include="Xim\MouseAlgs.cs" />
+    <Compile Include="Xim\GamesSettings2.cs" />
+    <Compile Include="Xim\MouseMath2.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="InfoTextManager.cs" />

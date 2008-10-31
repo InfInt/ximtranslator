@@ -66,9 +66,14 @@ namespace xEmulate
         private VarManager.Var m_useXimApiMouseMath;
 
         private MouseMath mouseMath;
+        private Thread myThread;
 
         private XimDyn ximDyn;
 
+        ~Ximulator()
+        {
+            myThread.Abort();
+        }
 
         public Ximulator(X2 form)
         {
@@ -101,8 +106,8 @@ namespace xEmulate
             if (!m_connected)
             {
                 Log("Connecting...");
-                Thread thread = new Thread(new ThreadStart(m_utilThread.Connect));
-                thread.Start();
+                myThread = new Thread(new ThreadStart(m_utilThread.Connect));
+                myThread.Start();
                 Thread.Sleep(100);
 
                 System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
@@ -134,7 +139,7 @@ namespace xEmulate
                             Log("Unable to connect to Xim:" + m_utilThread.m_StatusMsg.ToString());
                             break;
                     }
-                    thread.Abort();
+                    myThread.Abort();
                 }
             }
             return m_connected;
@@ -210,7 +215,16 @@ namespace xEmulate
                         System.Threading.Thread.Sleep(0); 
                     }
 
-                    dxInputManager.PollAndProcess(!(bool)m_textMode.Value);
+                    if (!m_form.ContainsFocus)
+                    {
+                        m_inputManager.ClearInput();
+                        continue;
+                    }
+                    else
+                    {
+                        dxInputManager.PollAndProcess(!(bool)m_textMode.Value);
+                    }
+                    
 
                     input.CopyFrom(startState);
                     TimeSpan thisTick = watch.Elapsed;

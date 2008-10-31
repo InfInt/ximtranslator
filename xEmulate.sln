@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{1AAB516B-2931-477F-910F-1EFB8BCE754D}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "xEmulateSetup", "Setup\Setup.vdproj", "{1AAB516B-2931-477F-910F-1EFB8BCE754D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XimApi", "XimApi\XimApi.csproj", "{FBB71894-216D-45FF-BCDD-06F7112138DB}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xEmulate", "xemulate\xEmulate.csproj", "{B7013D46-EF16-4EC7-AF97-E296D9223AD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLinearize", "xlinearize\xLinearize.csproj", "{12E9CAC4-9ED4-4FAF-91A7-B9C6E8D75FBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yLinearize", "yLinearize\yLinearize.csproj", "{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,16 @@ Global
 		{12E9CAC4-9ED4-4FAF-91A7-B9C6E8D75FBD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{12E9CAC4-9ED4-4FAF-91A7-B9C6E8D75FBD}.Release|x86.ActiveCfg = Release|x86
 		{12E9CAC4-9ED4-4FAF-91A7-B9C6E8D75FBD}.Release|x86.Build.0 = Release|x86
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.All Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.All Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.All Debug|x86.ActiveCfg = Debug|Any CPU
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.Debug|x86.ActiveCfg = Debug|x86
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.Debug|x86.Build.0 = Debug|x86
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF7A79F6-9C62-43FD-AF23-7D1692B196F2}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
