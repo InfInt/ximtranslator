@@ -137,7 +137,7 @@ namespace xEmulate
                 Xim.Analog ximAnalog;
                 ximAnalog = m_ximAnalogMap[tokens[0]];
                 int deadzone = 0;
-                Joystick.Flags flags=0;
+                Joystick.AnalogFlags flags = 0;
 
                 for( uint i = 1;i < tokens.Length ; i++)
                 {
@@ -147,8 +147,8 @@ namespace xEmulate
                     {
                         // parse modifiers.
                         token = token.Substring(1);
-                        Joystick.Flags flag = (Joystick.Flags)Enum.Parse(typeof(Joystick.Flags),token,true);
-                         flags |= flag;
+                        Joystick.AnalogFlags flag = (Joystick.AnalogFlags)Enum.Parse(typeof(Joystick.AnalogFlags), token, true);
+                        flags |= flag;
                     }
                     else if (int.TryParse(token, out tryDeadzone))
                     {
