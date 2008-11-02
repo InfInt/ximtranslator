@@ -40,12 +40,21 @@ namespace xEmulate
             this.cbInvertY = new System.Windows.Forms.CheckBox();
             this.txTextModeRate = new System.Windows.Forms.TextBox();
             this.x2Panel = new System.Windows.Forms.Panel();
+            this.sensTabControl = new System.Windows.Forms.TabControl();
+            this.primarySensitivyTab = new System.Windows.Forms.TabPage();
             this.txAccel = new System.Windows.Forms.TextBox();
-            this.lbAccel = new System.Windows.Forms.Label();
-            this.txSensitivity = new System.Windows.Forms.TextBox();
-            this.lbSensitivity = new System.Windows.Forms.Label();
+            this.sbSpeed = new System.Windows.Forms.TrackBar();
             this.sbAccel = new System.Windows.Forms.TrackBar();
-            this.sbSens = new System.Windows.Forms.TrackBar();
+            this.lbAccel = new System.Windows.Forms.Label();
+            this.lbSpeed = new System.Windows.Forms.Label();
+            this.txSpeed = new System.Windows.Forms.TextBox();
+            this.secondarySensitivyTab = new System.Windows.Forms.TabPage();
+            this.txAccel2 = new System.Windows.Forms.TextBox();
+            this.sbSpeed2 = new System.Windows.Forms.TrackBar();
+            this.txSpeed2 = new System.Windows.Forms.TextBox();
+            this.sbAccel2 = new System.Windows.Forms.TrackBar();
+            this.lbSecondarySpeed = new System.Windows.Forms.Label();
+            this.lbAccel2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cbGame = new System.Windows.Forms.ComboBox();
             this.rbX2 = new System.Windows.Forms.RadioButton();
@@ -75,7 +84,6 @@ namespace xEmulate
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.calibration = new System.Windows.Forms.Button();
             this.tabOutput = new System.Windows.Forms.TabControl();
-            this.tabControllerOutput = new System.Windows.Forms.TabPage();
             this.tabRawOutput = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
             this.tbRawLTrigger = new System.Windows.Forms.TextBox();
@@ -103,10 +111,16 @@ namespace xEmulate
             this.cbRawX = new System.Windows.Forms.CheckBox();
             this.cbRawA = new System.Windows.Forms.CheckBox();
             this.cbRawB = new System.Windows.Forms.CheckBox();
+            this.tabControllerOutput = new System.Windows.Forms.TabPage();
             this.gbSettings.SuspendLayout();
             this.x2Panel.SuspendLayout();
+            this.sensTabControl.SuspendLayout();
+            this.primarySensitivyTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sbSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sbAccel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sbSens)).BeginInit();
+            this.secondarySensitivyTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sbSpeed2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sbAccel2)).BeginInit();
             this.ximPanel.SuspendLayout();
             this.tabOutput.SuspendLayout();
             this.tabRawOutput.SuspendLayout();
@@ -214,12 +228,7 @@ namespace xEmulate
             // 
             // x2Panel
             // 
-            this.x2Panel.Controls.Add(this.txAccel);
-            this.x2Panel.Controls.Add(this.lbAccel);
-            this.x2Panel.Controls.Add(this.txSensitivity);
-            this.x2Panel.Controls.Add(this.lbSensitivity);
-            this.x2Panel.Controls.Add(this.sbAccel);
-            this.x2Panel.Controls.Add(this.sbSens);
+            this.x2Panel.Controls.Add(this.sensTabControl);
             this.x2Panel.Controls.Add(this.label1);
             this.x2Panel.Controls.Add(this.cbGame);
             this.x2Panel.Location = new System.Drawing.Point(6, 316);
@@ -228,9 +237,35 @@ namespace xEmulate
             this.x2Panel.TabIndex = 42;
             this.x2Panel.Visible = false;
             // 
+            // sensTabControl
+            // 
+            this.sensTabControl.Controls.Add(this.primarySensitivyTab);
+            this.sensTabControl.Controls.Add(this.secondarySensitivyTab);
+            this.sensTabControl.Location = new System.Drawing.Point(7, 39);
+            this.sensTabControl.Name = "sensTabControl";
+            this.sensTabControl.SelectedIndex = 0;
+            this.sensTabControl.Size = new System.Drawing.Size(303, 125);
+            this.sensTabControl.TabIndex = 2;
+            // 
+            // primarySensitivyTab
+            // 
+            this.primarySensitivyTab.Controls.Add(this.txAccel);
+            this.primarySensitivyTab.Controls.Add(this.sbSpeed);
+            this.primarySensitivyTab.Controls.Add(this.sbAccel);
+            this.primarySensitivyTab.Controls.Add(this.lbAccel);
+            this.primarySensitivyTab.Controls.Add(this.lbSpeed);
+            this.primarySensitivyTab.Controls.Add(this.txSpeed);
+            this.primarySensitivyTab.Location = new System.Drawing.Point(4, 22);
+            this.primarySensitivyTab.Name = "primarySensitivyTab";
+            this.primarySensitivyTab.Padding = new System.Windows.Forms.Padding(3);
+            this.primarySensitivyTab.Size = new System.Drawing.Size(295, 99);
+            this.primarySensitivyTab.TabIndex = 0;
+            this.primarySensitivyTab.Text = "Primary";
+            this.primarySensitivyTab.UseVisualStyleBackColor = true;
+            // 
             // txAccel
             // 
-            this.txAccel.Location = new System.Drawing.Point(13, 106);
+            this.txAccel.Location = new System.Drawing.Point(0, 74);
             this.txAccel.Name = "txAccel";
             this.txAccel.Size = new System.Drawing.Size(69, 20);
             this.txAccel.TabIndex = 9;
@@ -238,37 +273,22 @@ namespace xEmulate
             this.txAccel.Leave += new System.EventHandler(this.nameMappedSettingTextLeft);
             this.txAccel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nameMappedSettingTextReturn);
             // 
-            // lbAccel
+            // sbSpeed
             // 
-            this.lbAccel.AutoSize = true;
-            this.lbAccel.Location = new System.Drawing.Point(16, 87);
-            this.lbAccel.Name = "lbAccel";
-            this.lbAccel.Size = new System.Drawing.Size(66, 13);
-            this.lbAccel.TabIndex = 8;
-            this.lbAccel.Text = "Acceleration";
-            // 
-            // txSensitivity
-            // 
-            this.txSensitivity.Location = new System.Drawing.Point(13, 55);
-            this.txSensitivity.Name = "txSensitivity";
-            this.txSensitivity.Size = new System.Drawing.Size(69, 20);
-            this.txSensitivity.TabIndex = 7;
-            this.txSensitivity.TextChanged += new System.EventHandler(this.nameMappedSettingTextChanged);
-            this.txSensitivity.Leave += new System.EventHandler(this.nameMappedSettingTextLeft);
-            this.txSensitivity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nameMappedSettingTextReturn);
-            // 
-            // lbSensitivity
-            // 
-            this.lbSensitivity.AutoSize = true;
-            this.lbSensitivity.Location = new System.Drawing.Point(16, 36);
-            this.lbSensitivity.Name = "lbSensitivity";
-            this.lbSensitivity.Size = new System.Drawing.Size(54, 13);
-            this.lbSensitivity.TabIndex = 6;
-            this.lbSensitivity.Text = "Sensitivity";
+            this.sbSpeed.Location = new System.Drawing.Point(75, 7);
+            this.sbSpeed.Maximum = 20000;
+            this.sbSpeed.Minimum = 1;
+            this.sbSpeed.Name = "sbSpeed";
+            this.sbSpeed.Size = new System.Drawing.Size(220, 45);
+            this.sbSpeed.SmallChange = 10;
+            this.sbSpeed.TabIndex = 4;
+            this.sbSpeed.TickFrequency = 1000;
+            this.sbSpeed.Value = 1;
+            this.sbSpeed.Scroll += new System.EventHandler(this.sbSens_Scroll);
             // 
             // sbAccel
             // 
-            this.sbAccel.Location = new System.Drawing.Point(88, 90);
+            this.sbAccel.Location = new System.Drawing.Point(75, 58);
             this.sbAccel.Maximum = 1000;
             this.sbAccel.Minimum = -1000;
             this.sbAccel.Name = "sbAccel";
@@ -278,16 +298,106 @@ namespace xEmulate
             this.sbAccel.TickFrequency = 50;
             this.sbAccel.Scroll += new System.EventHandler(this.sbAccel_Scroll);
             // 
-            // sbSens
+            // lbAccel
             // 
-            this.sbSens.Location = new System.Drawing.Point(88, 39);
-            this.sbSens.Maximum = 20000;
-            this.sbSens.Name = "sbSens";
-            this.sbSens.Size = new System.Drawing.Size(220, 45);
-            this.sbSens.SmallChange = 10;
-            this.sbSens.TabIndex = 4;
-            this.sbSens.TickFrequency = 1000;
-            this.sbSens.Scroll += new System.EventHandler(this.sbSens_Scroll);
+            this.lbAccel.AutoSize = true;
+            this.lbAccel.Location = new System.Drawing.Point(3, 55);
+            this.lbAccel.Name = "lbAccel";
+            this.lbAccel.Size = new System.Drawing.Size(66, 13);
+            this.lbAccel.TabIndex = 8;
+            this.lbAccel.Text = "Acceleration";
+            // 
+            // lbSpeed
+            // 
+            this.lbSpeed.AutoSize = true;
+            this.lbSpeed.Location = new System.Drawing.Point(3, 4);
+            this.lbSpeed.Name = "lbSpeed";
+            this.lbSpeed.Size = new System.Drawing.Size(38, 13);
+            this.lbSpeed.TabIndex = 6;
+            this.lbSpeed.Text = "Speed";
+            // 
+            // txSpeed
+            // 
+            this.txSpeed.Location = new System.Drawing.Point(0, 23);
+            this.txSpeed.Name = "txSpeed";
+            this.txSpeed.Size = new System.Drawing.Size(69, 20);
+            this.txSpeed.TabIndex = 7;
+            this.txSpeed.TextChanged += new System.EventHandler(this.nameMappedSettingTextChanged);
+            this.txSpeed.Leave += new System.EventHandler(this.nameMappedSettingTextLeft);
+            this.txSpeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nameMappedSettingTextReturn);
+            // 
+            // secondarySensitivyTab
+            // 
+            this.secondarySensitivyTab.Controls.Add(this.txAccel2);
+            this.secondarySensitivyTab.Controls.Add(this.sbSpeed2);
+            this.secondarySensitivyTab.Controls.Add(this.txSpeed2);
+            this.secondarySensitivyTab.Controls.Add(this.sbAccel2);
+            this.secondarySensitivyTab.Controls.Add(this.lbSecondarySpeed);
+            this.secondarySensitivyTab.Controls.Add(this.lbAccel2);
+            this.secondarySensitivyTab.Location = new System.Drawing.Point(4, 22);
+            this.secondarySensitivyTab.Name = "secondarySensitivyTab";
+            this.secondarySensitivyTab.Padding = new System.Windows.Forms.Padding(3);
+            this.secondarySensitivyTab.Size = new System.Drawing.Size(295, 99);
+            this.secondarySensitivyTab.TabIndex = 1;
+            this.secondarySensitivyTab.Text = "Secondary";
+            this.secondarySensitivyTab.UseVisualStyleBackColor = true;
+            // 
+            // txAccel2
+            // 
+            this.txAccel2.Location = new System.Drawing.Point(0, 74);
+            this.txAccel2.Name = "txAccel2";
+            this.txAccel2.Size = new System.Drawing.Size(69, 20);
+            this.txAccel2.TabIndex = 15;
+            this.txAccel2.TextChanged += new System.EventHandler(this.nameMappedSettingTextChanged);
+            // 
+            // sbSpeed2
+            // 
+            this.sbSpeed2.Location = new System.Drawing.Point(75, 7);
+            this.sbSpeed2.Maximum = 20000;
+            this.sbSpeed2.Name = "sbSpeed2";
+            this.sbSpeed2.Size = new System.Drawing.Size(220, 45);
+            this.sbSpeed2.SmallChange = 10;
+            this.sbSpeed2.TabIndex = 10;
+            this.sbSpeed2.TickFrequency = 1000;
+            this.sbSpeed2.Scroll += new System.EventHandler(this.sbSpeed2_Scroll);
+            // 
+            // txSpeed2
+            // 
+            this.txSpeed2.Location = new System.Drawing.Point(0, 23);
+            this.txSpeed2.Name = "txSpeed2";
+            this.txSpeed2.Size = new System.Drawing.Size(69, 20);
+            this.txSpeed2.TabIndex = 13;
+            this.txSpeed2.TextChanged += new System.EventHandler(this.nameMappedSettingTextChanged);
+            // 
+            // sbAccel2
+            // 
+            this.sbAccel2.Location = new System.Drawing.Point(75, 58);
+            this.sbAccel2.Maximum = 1000;
+            this.sbAccel2.Minimum = -1000;
+            this.sbAccel2.Name = "sbAccel2";
+            this.sbAccel2.Size = new System.Drawing.Size(220, 45);
+            this.sbAccel2.SmallChange = 10;
+            this.sbAccel2.TabIndex = 11;
+            this.sbAccel2.TickFrequency = 50;
+            this.sbAccel2.Scroll += new System.EventHandler(this.sbAccel2_Scroll);
+            // 
+            // lbSecondarySpeed
+            // 
+            this.lbSecondarySpeed.AutoSize = true;
+            this.lbSecondarySpeed.Location = new System.Drawing.Point(3, 4);
+            this.lbSecondarySpeed.Name = "lbSecondarySpeed";
+            this.lbSecondarySpeed.Size = new System.Drawing.Size(38, 13);
+            this.lbSecondarySpeed.TabIndex = 12;
+            this.lbSecondarySpeed.Text = "Speed";
+            // 
+            // lbAccel2
+            // 
+            this.lbAccel2.AutoSize = true;
+            this.lbAccel2.Location = new System.Drawing.Point(3, 55);
+            this.lbAccel2.Name = "lbAccel2";
+            this.lbAccel2.Size = new System.Drawing.Size(66, 13);
+            this.lbAccel2.TabIndex = 14;
+            this.lbAccel2.Text = "Acceleration";
             // 
             // label1
             // 
@@ -304,7 +414,7 @@ namespace xEmulate
             this.cbGame.FormattingEnabled = true;
             this.cbGame.Location = new System.Drawing.Point(51, 12);
             this.cbGame.Name = "cbGame";
-            this.cbGame.Size = new System.Drawing.Size(203, 21);
+            this.cbGame.Size = new System.Drawing.Size(255, 21);
             this.cbGame.TabIndex = 0;
             this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbGame_SelectedIndexChanged);
             // 
@@ -579,16 +689,6 @@ namespace xEmulate
             this.tabOutput.SelectedIndex = 0;
             this.tabOutput.Size = new System.Drawing.Size(299, 271);
             this.tabOutput.TabIndex = 7;
-            // 
-            // tabControllerOutput
-            // 
-            this.tabControllerOutput.Location = new System.Drawing.Point(4, 22);
-            this.tabControllerOutput.Name = "tabControllerOutput";
-            this.tabControllerOutput.Padding = new System.Windows.Forms.Padding(3);
-            this.tabControllerOutput.Size = new System.Drawing.Size(291, 245);
-            this.tabControllerOutput.TabIndex = 0;
-            this.tabControllerOutput.Text = "Controller Output";
-            this.tabControllerOutput.UseVisualStyleBackColor = true;
             // 
             // tabRawOutput
             // 
@@ -894,6 +994,16 @@ namespace xEmulate
             this.cbRawB.Text = "B";
             this.cbRawB.UseVisualStyleBackColor = false;
             // 
+            // tabControllerOutput
+            // 
+            this.tabControllerOutput.Location = new System.Drawing.Point(4, 22);
+            this.tabControllerOutput.Name = "tabControllerOutput";
+            this.tabControllerOutput.Padding = new System.Windows.Forms.Padding(3);
+            this.tabControllerOutput.Size = new System.Drawing.Size(291, 245);
+            this.tabControllerOutput.TabIndex = 0;
+            this.tabControllerOutput.Text = "Controller Output";
+            this.tabControllerOutput.UseVisualStyleBackColor = true;
+            // 
             // X2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -919,8 +1029,15 @@ namespace xEmulate
             this.gbSettings.PerformLayout();
             this.x2Panel.ResumeLayout(false);
             this.x2Panel.PerformLayout();
+            this.sensTabControl.ResumeLayout(false);
+            this.primarySensitivyTab.ResumeLayout(false);
+            this.primarySensitivyTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sbSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sbAccel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sbSens)).EndInit();
+            this.secondarySensitivyTab.ResumeLayout(false);
+            this.secondarySensitivyTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sbSpeed2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sbAccel2)).EndInit();
             this.ximPanel.ResumeLayout(false);
             this.ximPanel.PerformLayout();
             this.tabOutput.ResumeLayout(false);
@@ -965,12 +1082,12 @@ namespace xEmulate
         private System.Windows.Forms.Button calibration;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbGame;
-        private System.Windows.Forms.TrackBar sbSens;
+        private System.Windows.Forms.TrackBar sbSpeed;
         private System.Windows.Forms.TrackBar sbAccel;
         private System.Windows.Forms.TextBox txAccel;
         private System.Windows.Forms.Label lbAccel;
-        private System.Windows.Forms.TextBox txSensitivity;
-        private System.Windows.Forms.Label lbSensitivity;
+        private System.Windows.Forms.TextBox txSpeed;
+        private System.Windows.Forms.Label lbSpeed;
         private System.Windows.Forms.RadioButton rbX2;
         private System.Windows.Forms.RadioButton rbXimCore;
         private System.Windows.Forms.Label lbMouseAlgorithm;
@@ -1006,6 +1123,15 @@ namespace xEmulate
         private System.Windows.Forms.TextBox tbRawRTrigger;
         private System.Windows.Forms.CheckBox cbRawLBumper;
         private System.Windows.Forms.CheckBox cbRawRBumper;
+        private System.Windows.Forms.TabControl sensTabControl;
+        private System.Windows.Forms.TabPage primarySensitivyTab;
+        private System.Windows.Forms.TabPage secondarySensitivyTab;
+        private System.Windows.Forms.TextBox txAccel2;
+        private System.Windows.Forms.TrackBar sbSpeed2;
+        private System.Windows.Forms.TextBox txSpeed2;
+        private System.Windows.Forms.TrackBar sbAccel2;
+        private System.Windows.Forms.Label lbSecondarySpeed;
+        private System.Windows.Forms.Label lbAccel2;
     }
 }
 

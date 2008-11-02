@@ -9,8 +9,14 @@ namespace xEmulate
     {
         public static class Names
         {
-            public static string Sensitivity = "sensitivity";
+            public static string Speed = "speed";
+            public static string Speed2 = "speed2";
+            public static string Speed3 = "speed3";
+            public static string Speed4 = "speed4";
             public static string Accel = "accel";
+            public static string Accel2 = "accel2";
+            public static string Accel3 = "accel3";
+            public static string Accel4 = "accel4";
             public static string Sensitivity1 = "sensitivity1";
             public static string Sensitivity2 = "sensitivity2";
             public static string TransExponent1 = "transexponent1";
@@ -25,6 +31,8 @@ namespace xEmulate
             public static string UseXimApiMouseMath = "useximapimousemath";
             public static string MouseStick = "mousestick";
             public static string AltSens = "altsens";
+            public static string AltSens2 = "altsens2";
+            public static string AltSens3 = "altsens3";
             public static string AutoAnalogDisconnect = "autoanalogdisconnect";
             public static string TextMode = "textmode";
             public static string CurrentGame = "currentgame";
@@ -125,8 +133,14 @@ namespace xEmulate
         {
             m_vars = new Dictionary<string, Var>();
 
-            InitVar(Names.Sensitivity, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Speed, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Speed2, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Speed3, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Speed4, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
             InitVar(Names.Accel, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel2, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel3, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel4, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
             InitVar(Names.Sensitivity1, typeof(double), (double)6000, "Primary sensitivity as defined by XIM api", null);
             InitVar(Names.Sensitivity2, typeof(double), (double)8500, "Alternate sensitivity as defined by XIM api", null);
             InitVar(Names.TransExponent1, typeof(double), (double)0.35, "Translation Exponent as defined by XIM api", null);
@@ -142,6 +156,8 @@ namespace xEmulate
             InitVar(Names.UseXimApiMouseMath, typeof(bool), (bool)true, "'true' = use the xim API mouse translation, 'false' = don't", null);
             InitVar(Names.MouseStick, typeof(Sticks), (Sticks)Sticks.Right, "None, Rightstick, Leftstick, Both ( lol )", null);
             InitVar(Names.AltSens, typeof(bool), (bool)false, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
+            InitVar(Names.AltSens2, typeof(bool), (bool)false, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
+            InitVar(Names.AltSens3, typeof(bool), (bool)false, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
             InitVar(Names.CurrentGame, typeof(GamesManager.Games), (GamesManager.Games)GamesManager.Games.Ut3, "", null);
             InitVar(Names.InvertY, typeof(bool), (bool)false, "'true' = Invert Y axis during mouse translations", null);
         }

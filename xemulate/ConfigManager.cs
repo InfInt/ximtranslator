@@ -326,9 +326,10 @@ namespace xEmulate
                 {
                     Mouse.Button mouseButton;
                     m_mouse.TryGetValue(altSens, out mouseButton);
-                    if (BindingManager.Instance.IsBound(mouseButton))
+                    InputKey<Mouse.Button> mouseKey = new InputKey<Mouse.Button>(mouseButton);
+                    if (BindingManager.Instance.IsBound(mouseKey))
                     {
-                        otherBinds = BindingManager.Instance.GetBindString(mouseButton);
+                        otherBinds = BindingManager.Instance.GetBindString(mouseKey);
                     }
                         
                     cmdParser.ParseLine("bind " + mouseButton.ToString().ToLower() +" "+ otherBinds + ".altsens");
@@ -337,10 +338,12 @@ namespace xEmulate
                 else if (m_key.ContainsKey(altSens))
                 {
                     DxI.Key keyButton;
+                    
                     m_key.TryGetValue(altSens, out keyButton);
-                    if (BindingManager.Instance.IsBound(keyButton))
+                    InputKey<DxI.Key> key = new InputKey<Microsoft.DirectX.DirectInput.Key>(keyButton);
+                    if (BindingManager.Instance.IsBound(key))
                     {
-                        otherBinds = BindingManager.Instance.GetBindString(keyButton);
+                        otherBinds = BindingManager.Instance.GetBindString(key);
                     }
                         
                     cmdParser.ParseLine("bind " + keyButton.ToString().ToLower() +" "+ otherBinds + ".altsens");

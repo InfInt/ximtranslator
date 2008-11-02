@@ -8,17 +8,21 @@ namespace xEmulate
 {
     class BindingManager
     {
-        private Dictionary<DxI.Key, List<InputEvent>> m_keyboardBindings;
-        private Dictionary<Mouse.Button, List<InputEvent>> m_mouseBindings;
-        private Dictionary<Joystick.Button, List<InputEvent>> m_joyBindings;
-        private Dictionary<Joystick.Analog, AnalogEvent> m_joyAnalogBindings;
-
+        private Dictionary<InputKey<DxI.Key>, List<InputEvent>> m_keyboardBindings = new Dictionary<InputKey<DxI.Key>, List<InputEvent>>(40);
+        private Dictionary<InputKey<Mouse.Button>, List<InputEvent>> m_mouseBindings = new Dictionary<InputKey<Mouse.Button>, List<InputEvent>>(10);
+        private Dictionary<InputKey<Joystick.Button>, List<InputEvent>> m_joyBindings = new Dictionary<InputKey<Joystick.Button>, List<InputEvent>>(10);
+        private Dictionary<InputKey<Joystick.Analog>, List<InputEvent>> m_joyAnalogBindings = new Dictionary<InputKey<Joystick.Analog>, List<InputEvent>>(5);
+        private SortedDictionary<String, DxI.Key> m_keyMap = new SortedDictionary<String, DxI.Key>();
+        private SortedDictionary<String, Mouse.Button> m_mouseMap = new SortedDictionary<String, Mouse.Button>();
+        private SortedDictionary<String, Joystick.Button> m_joyMap = new SortedDictionary<String, Joystick.Button>();
+        private SortedDictionary<String, Joystick.Analog> m_joyAnalogMap = new SortedDictionary<String, Joystick.Analog>();
+        
         private BindingManager()
         {
-            m_keyboardBindings = new Dictionary<DxI.Key, List<InputEvent>>(40);
-            m_mouseBindings = new Dictionary<Mouse.Button, List<InputEvent>>(10);
-            m_joyBindings = new Dictionary<Joystick.Button, List<InputEvent>>(10);
-            m_joyAnalogBindings = new Dictionary<Joystick.Analog,AnalogEvent>(5);
+            PopulateKeyMap(typeof(DxI.Key), m_keyMap);
+            PopulateKeyMap(typeof(Mouse.Button), m_mouseMap);
+            PopulateKeyMap(typeof(Joystick.Button), m_joyMap);
+            PopulateKeyMap(typeof(Joystick.Analog), m_joyAnalogMap);
         }
 
         public static BindingManager Instance
@@ -26,171 +30,143 @@ namespace xEmulate
             get { return Singleton<BindingManager>.Instance; }
         }
 
-        public void SetKeyBind(DxI.Key key, List<InputEvent> eventList)
+        private static void PopulateKeyMap<T>(Type type, SortedDictionary<String, T> dict)
         {
-            m_keyboardBindings[key] = eventList;
+            String[] keyNames = Enum.GetNames(type);
+            Array keys = Enum.GetValues(type);
+            for (int i = 0; i < keyNames.Length; i++)
+            {
+                dict.Add(keyNames[i].ToLower(), (T)keys.GetValue(i));
+            }
         }
 
-        public bool GetKeyBind(DxI.Key key, out List<InputEvent> eventList)
+        public bool IsKey(String keyName)
         {
-            if (m_keyboardBindings.ContainsKey(key))
+            return m_keyMap.ContainsKey(keyName)
+                || m_mouseMap.ContainsKey(keyName)
+                || m_joyMap.ContainsKey(keyName);
+        }
+
+        public bool IsAnalogKey(String keyName)
+        {
+            return m_joyAnalogMap.ContainsKey(keyName);
+        }
+
+        private Dictionary<KeyType, List<InputEvent>> GetBindingDict<KeyType>(KeyType key)
+        {
+            if (key is InputKey<DxI.Key>)
+                return m_keyboardBindings as Dictionary<KeyType, List<InputEvent>>;
+            else if (key is InputKey<Mouse.Button>)
+                return m_mouseBindings as Dictionary<KeyType, List<InputEvent>>;
+            else if (key is InputKey<Joystick.Button>)
+                return m_joyBindings as Dictionary<KeyType, List<InputEvent>>;
+            else if (key is InputKey<Joystick.Analog>)
+                return m_joyAnalogBindings as Dictionary<KeyType, List<InputEvent>>;
+            return null;
+        }
+
+        public void SetKeyBind(String key, List<InputEvent> events)
+        {
+            if (m_keyMap.ContainsKey(key))
+                SetKeyBind(InputKey.Make(m_keyMap[key]),events);
+            else if (m_mouseMap.ContainsKey(key))
+                SetKeyBind(InputKey.Make(m_mouseMap[key]), events);
+            else if (m_joyMap.ContainsKey(key))
+                SetKeyBind(InputKey.Make(m_joyMap[key]), events);
+            else if (m_joyAnalogMap.ContainsKey(key))
+                SetKeyBind(InputKey.Make(m_joyAnalogMap[key]), events);
+        }
+
+        private void SetKeyBind<KeyType>(KeyType key, List<InputEvent> val) where KeyType : IKey
+        {
+            GetBindingDict(key)[key] = val;
+        }
+
+        public bool GetKeyBind<KeyType>(KeyType key, out List<InputEvent> val) where KeyType : IKey
+        {
+            Dictionary<KeyType, List<InputEvent>> dict = GetBindingDict(key);
+            if (dict.ContainsKey(key))
             {
-                eventList = m_keyboardBindings[key];
+                val = dict[key];
                 return true;
             }
-            eventList = new List<InputEvent>();
+            val = default(List<InputEvent>);
             return false;
         }
 
-        public bool IsBound(Mouse.Button key)
+        public bool IsBound<KeyType>(KeyType key) where KeyType : IKey
         {
-            return m_mouseBindings.ContainsKey(key);
+            return GetBindingDict<KeyType>(key).ContainsKey(key);
         }
 
-        public void SetJoyBind(Joystick.Button button, List<InputEvent> eventList)
+        public String GetBindString(String key)
         {
-            m_joyBindings[button] = eventList;
+            if (m_keyMap.ContainsKey(key))
+                return GetBindString(new InputKey<DxI.Key>(m_keyMap[key]));
+            else if (m_mouseMap.ContainsKey(key))
+                return GetBindString(new InputKey<Mouse.Button>(m_mouseMap[key]));
+            else if (m_joyMap.ContainsKey(key))
+                return GetBindString(new InputKey<Joystick.Button>(m_joyMap[key]));
+            else if (m_joyAnalogMap.ContainsKey(key))
+                return GetBindString(new InputKey<Joystick.Analog>(m_joyAnalogMap[key]));
+            return default(String);
         }
 
-        public bool GetJoyBind(Joystick.Button button, out List<InputEvent> eventList)
+        public String GetBindString<KeyType>(KeyType key) where KeyType : IKey
         {
-            if (m_joyBindings.ContainsKey(button))
+            String s;
+            if (GetBindingDict(key).ContainsKey(key))
             {
-                eventList = m_joyBindings[button];
-                return true;
+                GetEventAsString(GetBindingDict(key)[key], out s);
             }
-            eventList = new List<InputEvent>();
-            return false;
+            else
+                s = "Key \"" + key.ToString().ToLower() + "\" not bound to anything";
+            return s;
         }
 
-        public bool IsBound(Joystick.Button button)
+        public void Unbind<KeyType>(KeyType key)
         {
-            return m_joyBindings.ContainsKey(button);
-        }
-
-        public void SetJoyBind(Joystick.Analog button, AnalogEvent inputEvent)
-        {
-            m_joyAnalogBindings[button] = inputEvent;
-        }
-
-        public bool GetJoyBind(Joystick.Analog button, out AnalogEvent inputEvent)
-        {
-            if (m_joyAnalogBindings.ContainsKey(button))
+            InputKey<KeyType> ikey = InputKey.Make(key);
+            if (GetBindingDict(ikey).ContainsKey(ikey))
             {
-                inputEvent = m_joyAnalogBindings[button];
-                return true;
+                GetBindingDict(ikey).Remove(ikey);
             }
-            inputEvent = null;
-            return false;
         }
 
-        public Dictionary<Joystick.Analog, AnalogEvent> GetJoyAnalogBinds()
+        public Dictionary<InputKey<Joystick.Analog>, List<InputEvent>> GetJoyAnalogBinds()
         {
             return m_joyAnalogBindings;
-        }
-
-        public bool IsBound(Joystick.Analog button)
-        {
-            return m_joyAnalogBindings.ContainsKey(button);
-        }
-
-        public bool IsBound(DxI.Key key)
-        {
-            return m_keyboardBindings.ContainsKey(key);
-        }
-
-        public void SetMouseBind(Mouse.Button key, List<InputEvent> eventList)
-        {
-            m_mouseBindings[key] = eventList;
-        }
-
-        public bool GetMouseBind(Mouse.Button key, out List<InputEvent> eventList)
-        {
-            if (m_mouseBindings.ContainsKey(key))
-            {
-                eventList = m_mouseBindings[key];
-                return true;
-            }
-            eventList = new List<InputEvent>();
-            return false;
         }
 
         public void GetBindStringArray(out List<String> binds)
         {
             binds = new List<String>();
-            foreach (KeyValuePair<DxI.Key, List<InputEvent>> pair in m_keyboardBindings)
+            foreach (KeyValuePair<InputKey<DxI.Key>, List<InputEvent>> pair in m_keyboardBindings)
             {
                 String strBind;
                 GetEventAsString(pair.Value, out strBind);
                 binds.Add("bind " + pair.Key.ToString().ToLower() + " " + strBind);
             }
 
-            foreach (KeyValuePair<Mouse.Button, List<InputEvent>> pair in m_mouseBindings)
+            foreach (KeyValuePair<InputKey<Mouse.Button>, List<InputEvent>> pair in m_mouseBindings)
             {
                 String strBind;
                 GetEventAsString(pair.Value, out strBind);
                 binds.Add("bind " + pair.Key.ToString().ToLower() + " " + strBind);
             }
 
-            foreach (KeyValuePair<Joystick.Button, List<InputEvent>> pair in m_joyBindings)
+            foreach (KeyValuePair<InputKey<Joystick.Button>, List<InputEvent>> pair in m_joyBindings)
             {
                 String strBind;
                 GetEventAsString(pair.Value, out strBind);
                 binds.Add("bind " + pair.Key.ToString().ToLower() + " " + strBind);
             }
 
-            foreach (KeyValuePair<Joystick.Analog, AnalogEvent> pair in m_joyAnalogBindings)
+            foreach (KeyValuePair<InputKey<Joystick.Analog>, List<InputEvent>> pair in m_joyAnalogBindings)
             {
-                binds.Add("bind " + pair.Key.ToString().ToLower() + " " + pair.Value.ToString()+";");
+                if(pair.Value.Count == 1)
+                    binds.Add("bind " + pair.Key.ToString().ToLower() + " " + pair.Value[0].ToString()+";");
             }
-        }
-
-        public String GetBindString(DxI.Key key)
-        {
-            String s;
-            if (m_keyboardBindings.ContainsKey(key))
-            {
-                GetEventAsString(m_keyboardBindings[key], out s);
-            }
-            else
-                s = "Key \""+key.ToString().ToLower()+"\" not bound to anything";
-            return s;
-        }
-
-        public String GetBindString(Mouse.Button key)
-        {
-            String s;
-            if (m_mouseBindings.ContainsKey(key))
-            {
-                GetEventAsString(m_mouseBindings[key], out s);
-            }
-            else
-                s = "Key \"" + key.ToString().ToLower() + "\" not bound to anything";
-            return s;
-        }
-
-        public String GetBindString(Joystick.Button key)
-        {
-            String s;
-            if (m_joyBindings.ContainsKey(key))
-            {
-                GetEventAsString(m_joyBindings[key], out s);
-            }
-            else
-                s = "Key \"" + key.ToString().ToLower() + "\" not bound to anything";
-            return s;
-        }
-
-        public String GetBindString(Joystick.Analog key)
-        {
-            String s;
-            if (m_joyAnalogBindings.ContainsKey(key))
-            {
-                s = "bind " + key.ToString().ToLower() + " " + m_joyAnalogBindings[key].ToString() + ";";
-            }
-            else
-                s = "Key \"" + key.ToString().ToLower() + "\" not bound to anything";
-            return s;
         }
 
         private void GetEventAsString(List<InputEvent> events, out String strBind)
@@ -207,6 +183,8 @@ namespace xEmulate
         {
             m_mouseBindings.Clear();
             m_keyboardBindings.Clear();
+            m_joyAnalogBindings.Clear();
+            m_joyBindings.Clear();
         }
     }
 }

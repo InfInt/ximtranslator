@@ -66,13 +66,15 @@ namespace xEmulate
         private VarManager.Var m_useXimApiMouseMath;
 
         private MouseMath mouseMath;
+        private MouseMath2 mouseMath2;
         private Thread myThread;
 
         private XimDyn ximDyn;
 
         ~Ximulator()
         {
-            myThread.Abort();
+            if(myThread != null)
+                myThread.Abort();
         }
 
         public Ximulator(X2 form)
@@ -97,6 +99,7 @@ namespace xEmulate
             m_varManager.GetVar("useximapimousemath", out m_useXimApiMouseMath);
 
             this.mouseMath = new MouseMath();
+            this.mouseMath2 = new MouseMath2();
 
             m_utilThread = new UtilThread();
         }
@@ -155,19 +158,6 @@ namespace xEmulate
         public bool IsRunning()
         {
             return m_fXimRunning;
-        }
-
-        public void Test(int xVal)
-        {
-            if (Connect())
-            {
-                Xim.Input input = new Xim.Input();
-                input.RightStickX = (short)xVal;
-                Xim.SendInput(ref input, 0);
-                Thread.Sleep(10000);
-
-                Disconnect();
-            }
         }
 
         public void Go()
@@ -230,6 +220,9 @@ namespace xEmulate
                     TimeSpan thisTick = watch.Elapsed;
                     double delay = thisTick.TotalMilliseconds - prevTick.TotalMilliseconds;
                     prevTick = thisTick;
+                    
+                    if (delay > 1000)
+                        continue;
 
                     if ((bool)m_textMode.Value)
                     {
@@ -254,9 +247,11 @@ namespace xEmulate
                         if ((bool)m_useXimApiMouseMath.Value)
                         {
                             this.mouseMath.ProcessMouseMovement(ref input, ref startState);
+                            
                         }
                         else
                         {
+                            //this.mouseMath2.XSoftMouseMovement(ref input, ref startState);             
                             this.mouseMath.XSoftMouseMovement(ref input, ref startState);
                         }
                     }

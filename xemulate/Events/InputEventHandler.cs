@@ -172,23 +172,25 @@ namespace xEmulate
             switch (button)
             {
                 case Joystick.Analog.JoyRx:
-                    analogVal = (int)(pressedState.joyState.Rx - (short)Xim.Stick.Max);
+                    analogVal = pressedState.joyState.Rx;
                     break;
                 case Joystick.Analog.JoyRy:
-                    analogVal = (int)-(pressedState.joyState.Ry - (short)Xim.Stick.Max);
+                    analogVal = pressedState.joyState.Ry;
                     break;
                 case Joystick.Analog.JoyRz:
-                    analogVal = (int)(pressedState.joyState.Rz - (short)Xim.Stick.Max);
+                    analogVal = pressedState.joyState.Rz;
                     break;
                 case Joystick.Analog.JoyX:
-                    analogVal = (int)(pressedState.joyState.X - (short)Xim.Stick.Max);
+                    analogVal = pressedState.joyState.X;
                     break;
                 case Joystick.Analog.JoyY:
-                    analogVal = (int)-(pressedState.joyState.Y - (short)Xim.Stick.Max);
+                    analogVal = pressedState.joyState.Y;
                     break;
                 case Joystick.Analog.JoyZ:
-                    analogVal = (int)(pressedState.joyState.Z - (short)Xim.Stick.Max);
+                    analogVal = pressedState.joyState.Z;
                     break;
+                default:
+                    return false;
             }
 
             inputEvent.Run(false, elapsed, analogVal, ref input, ref startState);

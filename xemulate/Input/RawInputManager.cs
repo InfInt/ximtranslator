@@ -92,7 +92,7 @@ namespace xEmulate
 
         public bool ProcessMWheel(bool mWheelUp)
         {
-            m_eventManager.FireButtonDownEvent(mWheelUp ? Mouse.Button.MWheelUp : Mouse.Button.MWheelDown);
+            m_eventManager.FireKeyDownEvent(new InputKey<Mouse.Button>(mWheelUp ? Mouse.Button.MWheelUp : Mouse.Button.MWheelDown));
             return true;
         }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Common;
 
 namespace xEmulate
 {
@@ -29,7 +29,7 @@ namespace xEmulate
             }
 
             public abstract double GetPixelCapValue(int deadzone);
-            public abstract double CalcOutputDelta(double inputDelta);
+            public abstract double CalcOutputDelta(double inputDelta, double otherAxis);
 
             public AxisAlgorithm GetAlg() { return alg; }
         }
@@ -45,13 +45,12 @@ namespace xEmulate
             public double Speed { get; set; }
             public double Exp { get; set; }
 
-            public override double CalcOutputDelta(double inputDelta)
+            public override double CalcOutputDelta(double inputDelta,double otherAxis)
             {
-                double output;
-                // Transform by the found linearize formula delta^exp * speed + deadzone
-                output = Math.Sign(inputDelta) * Math.Pow(Math.Abs(inputDelta), this.Exp);
-                output = output * this.Speed;
-                return output;
+                Vector2 delta = new Vector2(inputDelta, otherAxis);
+                delta.Pow(this.Exp);
+                delta.Scale(this.Speed);
+                return delta.X;
             }
 
             public override double GetPixelCapValue(int deadzone)
@@ -74,11 +73,34 @@ namespace xEmulate
             public double xFactor { get; set; }
             public double yIntercept { get; set; }
 
-            public override double CalcOutputDelta(double inputDelta)
+            public override double CalcOutputDelta(double inputDelta, double otherAxis)
             {
-                int sign = Math.Sign(inputDelta);
-                double val = Math.Abs(inputDelta);
-                return sign * (x2Factor * (val * val) + xFactor * val + yIntercept);
+                Vector2 xsquared = new Vector2(inputDelta, otherAxis);
+                xsquared.Pow(2);
+                xsquared.Scale(this.x2Factor);
+                return Math.Sign(inputDelta) * ( xsquared.X + this.xFactor * Math.Abs(inputDelta) + yIntercept ) ;
+            }
+
+            public override double GetPixelCapValue(int deadzone)
+            {
+                return 99999;
+            }
+        }
+        public class LogFunction : Algorithm
+        {
+            public LogFunction(double lnFactor, double offset, int cap, double maxSpeed, int carryZone)
+                : base(AxisAlgorithm.Pow, cap, maxSpeed, carryZone)
+            {
+                this.offset = offset;
+            }
+            public double lnFactor { get; set; }
+            public double offset { get; set; }
+
+            public override double CalcOutputDelta(double inputDelta, double otherAxis)
+            {
+                Vector2 lnx = new Vector2(inputDelta, otherAxis);
+                lnx.Log();
+                return (lnx.X + this.lnFactor * Math.Abs(inputDelta) + this.offset);
             }
 
             public override double GetPixelCapValue(int deadzone)
