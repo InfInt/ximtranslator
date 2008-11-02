@@ -136,30 +136,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_739E29642B0413167A2BE70B2E4DEDD9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4BB470782CA274E08DB895A972B99B1E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D2EE81E0E7EE4F2E68AF32E8C10DD4D5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0CBAA2F24DD27E1CE1008361C5C1DEB0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_89104E871AA229239DFF2AB3134AC6FD"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -167,6 +143,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_6929CA7E7AE9A3CC3AD8ABFE10B4C7FC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_739E29642B0413167A2BE70B2E4DEDD9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -185,6 +167,24 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_AB805AC3D7654466AFA6C29CB187A263"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4BB470782CA274E08DB895A972B99B1E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D2EE81E0E7EE4F2E68AF32E8C10DD4D5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0CBAA2F24DD27E1CE1008361C5C1DEB0"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -269,7 +269,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\xEmulate v1.01.xx.msi"
+        "OutputFilename" = "8:Release\\xEmulate v1.02.xx.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -542,7 +542,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -689,7 +689,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:xEmulate"
         "ProductCode" = "8:{B9A409A9-1E07-4E6E-A54E-93AB9D587880}"
-        "PackageCode" = "8:{13CA03FE-E6EE-4CE6-A123-D23677839C12}"
+        "PackageCode" = "8:{12C84DB8-0FD0-4796-A7A7-4E55F1D15AE4}"
         "UpgradeCode" = "8:{06C1EC59-F269-4AAE-8514-F112FD176E53}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -1251,7 +1251,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AB805AC3D7654466AFA6C29CB187A263"
             {
-            "SourcePath" = "8:..\\xlinearize\\obj\\x86\\Release\\WindowsFormsApplication1.exe"
+            "SourcePath" = "8:..\\xlinearize\\obj\\x86\\Release\\xLinearize.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
@@ -1307,7 +1307,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EDA95D03476047E99F7D4A57A3936C8B"
             {
-            "SourcePath" = "8:..\\xemulate\\obj\\x86\\Release\\X2.exe"
+            "SourcePath" = "8:..\\xemulate\\obj\\x86\\Release\\xEmulate.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
