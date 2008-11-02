@@ -330,15 +330,15 @@ namespace xEmulate
      * */
     class AnalogEvent : InputEvent
     {
-        Xim.Analog button;
-        int deadzone;
-        Joystick.Flags flags;
+        private Joystick.AnalogFlags analog;
+        private Xim.Analog button;
+        private int deadzone;
 
-        public AnalogEvent(Xim.Analog button, int deadzone, Joystick.Flags flags)
+        public AnalogEvent(Xim.Analog button, int deadzone, Joystick.AnalogFlags flags)
         {
+            this.analog = flags;
             this.button = button;
             this.deadzone = deadzone;
-            this.flags = flags;
         }
 
         public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
@@ -350,22 +350,27 @@ namespace xEmulate
         public InputEvent.Status Run(bool firstRun, double elapsed, int analogVal, ref Xim.Input input, ref Xim.Input startState)
         {
             analogVal -= (int)Xim.Stick.Max;
-            if ((flags &= Joystick.Flags.Invert) != 0)
+            if ((this.analog & Joystick.AnalogFlags.Invert) != 0)
                 analogVal = -analogVal;
 
             if (deadzone != 0 && analogVal != 0)
             {
-                if ((flags &= Joystick.Flags.Scale) != 0)
+                if ((this.analog & Joystick.AnalogFlags.Scale) != 0)
                 {
                     analogVal *= (int)(Xim.Stick.Max) - deadzone / (int)(Xim.Stick.Max);
                 }
                 analogVal += Math.Sign(analogVal) * deadzone;
             }
 
-            if ((flags &= Joystick.Flags.Scale) != 0 && button == Xim.Analog.LeftTrigger || button == Xim.Analog.RightTrigger )
+            if (button == Xim.Analog.LeftTrigger || button == Xim.Analog.RightTrigger)
             {
-                analogVal += (int)Xim.Stick.Max;
-                analogVal = (int)((double)analogVal * 0.5);
+                if ((this.analog & Joystick.AnalogFlags.Scale) != 0)
+                {
+                    analogVal += (int)Xim.Stick.Max;
+                    analogVal = (int)((double)analogVal * 0.5);
+                }
+                if (analogVal < 0)
+                    analogVal = 0;
             }
 
             Xim.SetAnalogState(button, analogVal, ref input);
@@ -380,11 +385,11 @@ namespace xEmulate
                 result += " " + deadzone;
             }
 
-            if(flags != 0)
+            if (this.analog != 0)
             {
-                foreach (Joystick.Flags flag in Enum.GetValues(typeof(Joystick.Flags)))
+                foreach (Joystick.AnalogFlags flag in Enum.GetValues(typeof(Joystick.AnalogFlags)))
                 {
-                    if ((this.flags &= flag) != 0)
+                    if ((this.analog & flag) != 0)
                         result += " -" + flag.ToString().ToLower();
                 }
             }
