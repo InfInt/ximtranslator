@@ -333,6 +333,64 @@ namespace XimApi
             return true;
         }
 
+        public static ButtonState GetButtonState(Button button, ref Input input)
+        {
+            switch (button)
+            {
+                case Button.A:
+                    return input.A;
+                case Button.B:
+                    return input.B;
+                case Button.X:
+                    return input.X;
+                case Button.Y:
+                    return input.Y;
+                case Button.Guide:
+                    return input.Guide;
+                case Button.Back:
+                    return input.Back;
+                case Button.Down:
+                    return input.Down;
+                case Button.Up:
+                    return input.Up;
+                case Button.Left:
+                    return input.Left;
+                case Button.Right:
+                    return input.Right;
+                case Button.Start:
+                    return input.Start;
+                case Button.LeftBumper:
+                    return input.LeftBumper;
+                case Button.RightBumper:
+                    return input.RightBumper;
+                case Button.LeftStick:
+                    return input.LeftStick;
+                case Button.RightStick:
+                    return input.RightStick;
+                case Button.LeftTrigger:
+                    return input.LeftTrigger == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.RightTrigger:
+                    return input.RightTrigger == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.RightStickPositiveX:
+                    return input.RightStickX == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.RightStickNegativeX:
+                    return input.RightStickX == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.LeftStickPositiveX:
+                    return input.LeftStickX == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.LeftStickNegativeX:
+                    return input.LeftStickX == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.RightStickPositiveY:
+                    return input.RightStickY == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.RightStickNegativeY:
+                    return input.RightStickY == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.LeftStickPositiveY:
+                    return input.LeftStickY == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+                case Button.LeftStickNegativeY:
+                    return input.LeftStickY == (int)Xim.Trigger.Max ? ButtonState.Pressed : ButtonState.Released;
+            }
+            return ButtonState.Released;
+        }
+
         private static ButtonState ToggleState(ButtonState b)
         {
             return b == ButtonState.Pressed ? ButtonState.Released : ButtonState.Pressed; 

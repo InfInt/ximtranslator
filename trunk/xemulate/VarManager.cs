@@ -60,6 +60,7 @@ namespace xEmulate
             public Type VarType { get; set; }
             public String Info { get; set; }
             public Enum VarValues { get; set; }
+            public bool Internal { get; set; }
 
             public Object Value
             {
@@ -133,36 +134,36 @@ namespace xEmulate
         {
             m_vars = new Dictionary<string, Var>();
 
-            InitVar(Names.Speed, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
-            InitVar(Names.Speed2, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
-            InitVar(Names.Speed3, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
-            InitVar(Names.Speed4, typeof(double), (double)5, "Sensitivity for Game Specific Algorithm", null);
-            InitVar(Names.Accel, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
-            InitVar(Names.Accel2, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
-            InitVar(Names.Accel3, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
-            InitVar(Names.Accel4, typeof(double), (double)0, "Mouse acceleration for Game Specific Algorithm", null);
-            InitVar(Names.Sensitivity1, typeof(double), (double)6000, "Primary sensitivity as defined by XIM api", null);
-            InitVar(Names.Sensitivity2, typeof(double), (double)8500, "Alternate sensitivity as defined by XIM api", null);
-            InitVar(Names.TransExponent1, typeof(double), (double)0.35, "Translation Exponent as defined by XIM api", null);
-            InitVar(Names.DiagonalDampen, typeof(double), (double)0, "Diagonal Dampen as defined by XIM api", null);
-            InitVar(Names.Deadzone, typeof(int), (int)3000, "Deadzone as defined by XIM api", null);
-            InitVar(Names.YXRatio, typeof(double), (double)2.0, "YXRatio as defined by XIM api", null);
-            InitVar(Names.Rate, typeof(double), (double)60, "Rate to process input", null);
-            InitVar(Names.TextMode, typeof(bool), (bool)false, "Set to true to start textmode", null);
-            InitVar(Names.TextModeRate, typeof(double), (double)20, "Rate to process keystrokes when in Text Mode", null);
-            InitVar(Names.Smoothness, typeof(double), (double)0, "Smoothness as defined by XIM api", null);
-            InitVar(Names.AutoAnalogDisconnect, typeof(bool), (bool)false, "'true' = use autoanalogdisconnect, 'false' = don't", null);
-            InitVar(Names.CircularDeadzone, typeof(bool), (bool)true, "Defines deadzone type: 'true' = circular deadzone, 'false' = square deadzone", null);
-            InitVar(Names.UseXimApiMouseMath, typeof(bool), (bool)true, "'true' = use the xim API mouse translation, 'false' = don't", null);
-            InitVar(Names.MouseStick, typeof(Sticks), (Sticks)Sticks.Right, "None, Rightstick, Leftstick, Both ( lol )", null);
-            InitVar(Names.AltSens, typeof(bool), (bool)false, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
-            InitVar(Names.AltSens2, typeof(bool), (bool)false, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
-            InitVar(Names.AltSens3, typeof(bool), (bool)false, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
-            InitVar(Names.CurrentGame, typeof(GamesManager.Games), (GamesManager.Games)GamesManager.Games.Ut3, "", null);
-            InitVar(Names.InvertY, typeof(bool), (bool)false, "'true' = Invert Y axis during mouse translations", null);
+            InitVar(Names.Speed, typeof(double), (double)5, false,"Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Speed2, typeof(double), (double)5, false, "Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Speed3, typeof(double), (double)5, false, "Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Speed4, typeof(double), (double)5, false, "Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Accel, typeof(double), (double)0, false, "Mouse acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel2, typeof(double), (double)0, false, "Mouse acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel3, typeof(double), (double)0, false, "Mouse acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel4, typeof(double), (double)0, false, "Mouse acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Sensitivity1, typeof(double), (double)6000, false, "Primary sensitivity as defined by XIM api", null);
+            InitVar(Names.Sensitivity2, typeof(double), (double)8500, false, "Alternate sensitivity as defined by XIM api", null);
+            InitVar(Names.TransExponent1, typeof(double), (double)0.35, false, "Translation Exponent as defined by XIM api", null);
+            InitVar(Names.DiagonalDampen, typeof(double), (double)0, false, "Diagonal Dampen as defined by XIM api", null);
+            InitVar(Names.Deadzone, typeof(int), (int)3000, false, "Deadzone as defined by XIM api", null);
+            InitVar(Names.YXRatio, typeof(double), (double)2.0, false, "YXRatio as defined by XIM api", null);
+            InitVar(Names.Rate, typeof(double), (double)60, false, "Rate to process input", null);
+            InitVar(Names.TextMode, typeof(bool), (bool)false, false, "Set to true to start textmode", null);
+            InitVar(Names.TextModeRate, typeof(double), (double)20, false, "Rate to process keystrokes when in Text Mode", null);
+            InitVar(Names.Smoothness, typeof(double), (double)0, false, "Smoothness as defined by XIM api", null);
+            InitVar(Names.AutoAnalogDisconnect, typeof(bool), (bool)false, false, "'true' = use autoanalogdisconnect, 'false' = don't", null);
+            InitVar(Names.CircularDeadzone, typeof(bool), (bool)true, false, "Defines deadzone type: 'true' = circular deadzone, 'false' = square deadzone", null);
+            InitVar(Names.UseXimApiMouseMath, typeof(bool), (bool)true, false, "'true' = use the xim API mouse translation, 'false' = don't", null);
+            InitVar(Names.MouseStick, typeof(Sticks), (Sticks)Sticks.Right, false, "None, Rightstick, Leftstick, Both ( lol )", null);
+            InitVar(Names.AltSens, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
+            InitVar(Names.AltSens2, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
+            InitVar(Names.AltSens3, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
+            InitVar(Names.CurrentGame, typeof(GamesManager.Games), (GamesManager.Games)GamesManager.Games.Ut3, false, "", null);
+            InitVar(Names.InvertY, typeof(bool), (bool)false, false, "'true' = Invert Y axis during mouse translations", null);
         }
 
-        private void InitVar(String varName, Type varType, Object value, String info, Enum validValues)
+        private void InitVar(String varName, Type varType, Object value, bool intern, String info, Enum validValues)
         {
             Var var = new Var();
             var.VarName = varName;
@@ -170,6 +171,7 @@ namespace xEmulate
             var.Value = value;
             var.Info = info;
             var.VarValues = validValues;
+            var.Internal = intern;
 
             m_vars[varName] = var;
         }
@@ -299,6 +301,8 @@ namespace xEmulate
 
             foreach (Var v in m_vars.Values)
             {
+                if (v.Internal)
+                    continue;
                 varStrings.Add(v.VarName.ToString().ToLower() + " " + v.Value.ToString().ToLower());
             }
         }

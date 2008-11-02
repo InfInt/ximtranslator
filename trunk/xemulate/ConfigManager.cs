@@ -361,15 +361,23 @@ namespace xEmulate
             }
             else
             {
-                String fileLoc = m_x2DataFolder + "\\" + file;
+                String fileLoc = m_x2MyDocs + "\\" + file;
                 if (File.Exists(fileLoc))
                 {
                     sr = File.OpenText(fileLoc);
                 }
                 else
                 {
-                    sr = null;
-                    return false;
+                    fileLoc = m_x2DataFolder + "\\" + file;
+                    if (File.Exists(fileLoc))
+                    {
+                        sr = File.OpenText(fileLoc);
+                    }
+                    else
+                    {
+                        sr = null;
+                        return false;
+                    }
                 }
             }
 

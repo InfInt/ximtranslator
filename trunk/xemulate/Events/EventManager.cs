@@ -18,12 +18,15 @@ namespace xEmulate
     class EventManager
     {
         private List<InputEventHandler> m_inputEventHandlers;
+        private List<LinkEventHandler> m_linkEventHandlers;
         private BindingManager m_bindingManager;
         private InputManager m_inputManager;
+        private Xim.Input lastXimInput;
         
         private EventManager()
         {
             m_inputEventHandlers = new List<InputEventHandler>();
+            m_linkEventHandlers = new List<LinkEventHandler>();
             m_bindingManager = BindingManager.Instance;
             m_inputManager = InputManager.Instance;
         }
@@ -95,6 +98,39 @@ namespace xEmulate
             {
                 m_inputEventHandlers.Remove(finishedHandlers.Pop());
             }
+        }
+
+        public void ProcessLinks(double elapsed, ref Xim.Input input, ref Xim.Input startState)
+        {
+            // Check for links to fire
+            foreach (Xim.Button button in Enum.GetValues(typeof(Xim.Button)))
+            {
+                if( Xim.GetButtonState(button,ref input) == Xim.ButtonState.Pressed 
+                    && Xim.GetButtonState(button, ref this.lastXimInput) == Xim.ButtonState.Released
+                    && m_bindingManager.IsBound(InputKey.Make(button)) )
+                {
+                    List<InputEvent> events;
+                    m_bindingManager.GetKeyBind(InputKey.Make(button), out events);
+                    m_linkEventHandlers.Add(new LinkEventHandler(button, events));
+                }
+            }
+
+            // Run all events
+            PressedState pressedState = new PressedState();
+            Stack<LinkEventHandler> finishedHandlers = new Stack<LinkEventHandler>();
+            foreach (LinkEventHandler inputEventHandler in m_linkEventHandlers)
+            {
+                if (!inputEventHandler.Run(elapsed, pressedState, ref input, ref startState))
+                {
+                    finishedHandlers.Push(inputEventHandler);
+                }
+            }
+
+            while (finishedHandlers.Count != 0)
+            {
+                m_linkEventHandlers.Remove(finishedHandlers.Pop());
+            }
+            this.lastXimInput = input;
         }
     }
 }

@@ -1,5 +1,2 @@
-"unbind x"
-bind analog joy to certain range of the joystick
 fix mousemath2 timing
-deadzone for analog joy
-fix exec
+xinput

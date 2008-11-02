@@ -247,13 +247,13 @@ namespace xEmulate
                         if ((bool)m_useXimApiMouseMath.Value)
                         {
                             this.mouseMath.ProcessMouseMovement(ref input, ref startState);
-                            
                         }
                         else
                         {
-                            //this.mouseMath2.XSoftMouseMovement(ref input, ref startState);             
-                            this.mouseMath.XSoftMouseMovement(ref input, ref startState);
+                            this.mouseMath2.XSoftMouseMovement(ref input, ref startState);             
+                            //this.mouseMath.XSoftMouseMovement(ref input, ref startState);
                         }
+                        m_eventManager.ProcessLinks(delay, ref input, ref startState);
                     }
 
                     if ( m_inputManager.IsKeyDown(DxI.Key.Escape))
