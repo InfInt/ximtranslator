@@ -12,13 +12,9 @@ namespace xEmulate
         private static char[] c_delims = { ';' };
         private static char[] c_spacedelim = { ' ' };
 
-        private SortedDictionary<String, Xim.Button> m_buttonMap;
-        private SortedDictionary<String, Xim.Analog> m_ximAnalogMap;
-        private SortedDictionary<String, DxI.Key> m_keyMap;
-        private SortedDictionary<String, Mouse.Button> m_mouseMap;
-
-        private SortedDictionary<String, Joystick.Button> m_joyMap;
-        private SortedDictionary<String, Joystick.Analog> m_joyAnalogMap;
+        private SortedDictionary<String, Xim.Button> m_buttonMap = new SortedDictionary<String, Xim.Button>();
+        private SortedDictionary<String, Xim.Analog> m_ximAnalogMap =  new SortedDictionary<String, Xim.Analog>();
+        
         private BindingManager m_bindingManager;
         private InfoTextManager m_infoTextManager;
         private VarManager m_varManager;
@@ -28,12 +24,6 @@ namespace xEmulate
             m_infoTextManager = InfoTextManager.Instance;
             m_bindingManager = BindingManager.Instance;
             m_varManager = VarManager.Instance;
-            m_buttonMap = new SortedDictionary<String, Xim.Button>();
-            m_keyMap = new SortedDictionary<String, DxI.Key>();
-            m_mouseMap = new SortedDictionary<String, Mouse.Button>();
-            m_joyMap = new SortedDictionary<String, Joystick.Button>();
-            m_joyAnalogMap = new SortedDictionary<String, Joystick.Analog>();
-            m_ximAnalogMap = new SortedDictionary<String, Xim.Analog>();
 
             foreach (Xim.Button button in Enum.GetValues(typeof(Xim.Button)))
             {
@@ -45,34 +35,6 @@ namespace xEmulate
             {
                 String name = Enum.GetName(typeof(Xim.Analog), button);
                 m_ximAnalogMap.Add(name.ToLower(), button);
-            }
-
-            String[] keyNames = Enum.GetNames(typeof(DxI.Key));
-            Array keys = Enum.GetValues(typeof(DxI.Key));
-            for (int i = 0; i < keyNames.Length; i++)
-            {
-                m_keyMap.Add(keyNames[i].ToLower(), (DxI.Key)keys.GetValue(i));
-            }
-
-            keyNames = Enum.GetNames(typeof(Mouse.Button));
-            keys = Enum.GetValues(typeof(Mouse.Button));
-            for (int i = 0; i < keyNames.Length; i++)
-            {
-                m_mouseMap.Add(keyNames[i].ToLower(), (Mouse.Button)keys.GetValue(i));
-            }
-
-            keyNames = Enum.GetNames(typeof(Joystick.Button));
-            keys = Enum.GetValues(typeof(Joystick.Button));
-            for (int i = 0; i < keyNames.Length; i++)
-            {
-                m_joyMap.Add(keyNames[i].ToLower(), (Joystick.Button)keys.GetValue(i));
-            }
-
-            keyNames = Enum.GetNames(typeof(Joystick.Analog));
-            keys = Enum.GetValues(typeof(Joystick.Analog));
-            for (int i = 0; i < keyNames.Length; i++)
-            {
-                m_joyAnalogMap.Add(keyNames[i].ToLower(), (Joystick.Analog)keys.GetValue(i));
             }
         }
 
@@ -94,68 +56,34 @@ namespace xEmulate
                 if (key == line)
                 {
                     // Just display the current bind for that key if one exists.
-                    if (m_keyMap.ContainsKey(key))
+                    if (m_bindingManager.IsKey(key) || m_bindingManager.IsAnalogKey(key))
                     {
-                        m_infoTextManager.WriteLine(m_bindingManager.GetBindString(m_keyMap[key]));
-                        return true;
-                    }
-                    else if (m_mouseMap.ContainsKey(key))
-                    {
-                        m_infoTextManager.WriteLine(m_bindingManager.GetBindString(m_mouseMap[key]));
-                        return true;
-                    }
-                    else if (m_joyMap.ContainsKey(key))
-                    {
-                        m_infoTextManager.WriteLine(m_bindingManager.GetBindString(m_joyMap[key]));
-                        return true;
-                    }
-                    else if (m_joyAnalogMap.ContainsKey(key))
-                    {
-                        m_infoTextManager.WriteLine(m_bindingManager.GetBindString(m_joyAnalogMap[key]));
+                        m_infoTextManager.WriteLine(m_bindingManager.GetBindString(key));
                         return true;
                     }
                 }
                 else
                 {
                     String macro = line.Substring(firstSpace + 1);
-                    if (m_keyMap.ContainsKey(key))
+                    if (m_bindingManager.IsKey(key))
                     {
                         List<InputEvent> events;
                         CreateEventList(macro, out events);
                         if (events.Count > 0)
                         {
-                            m_bindingManager.SetKeyBind(m_keyMap[key], events);
+                            m_bindingManager.SetKeyBind(key, events);
                             return true;
                         }
                     }
-                    else if (m_mouseMap.ContainsKey(key))
-                    {
-                        List<InputEvent> events;
-                        CreateEventList(macro, out events);
-                        if (events.Count > 0)
-                        {
-                            m_bindingManager.SetMouseBind(m_mouseMap[key], events);
-                            return true;
-                        }
-                    }
-                    else if (m_joyMap.ContainsKey(key))
-                    {
-                        List<InputEvent> events;
-                        CreateEventList(macro, out events);
-                        if (events.Count > 0)
-                        {
-                            m_bindingManager.SetJoyBind(m_joyMap[key], events);
-                            return true;
-                        }
-                    }
-
-                    else if (m_joyAnalogMap.ContainsKey(key))
+                    else if (m_bindingManager.IsAnalogKey(key))
                     {
                         macro = macro.TrimEnd(c_delims);
-                        if (m_ximAnalogMap.ContainsKey(macro))
+                        AnalogEvent analogEvent;
+                        if (CreateAnalogEvent(macro, out analogEvent))
                         {
-                            AnalogEvent inputEvent = new AnalogEvent(m_ximAnalogMap[macro]);
-                            m_bindingManager.SetJoyBind(m_joyAnalogMap[key], inputEvent);
+                            List<InputEvent> events = new List<InputEvent>();
+                            events.Add(analogEvent);
+                            m_bindingManager.SetKeyBind(key, events);
                             return true;
                         }
                     }
@@ -198,6 +126,40 @@ namespace xEmulate
                 return true;
             }
             e = new SetVarEvent(null, null);
+            return false;
+        }
+
+        public bool CreateAnalogEvent(String macro, out AnalogEvent analogEvent)
+        {
+            String[] tokens = macro.Split( c_spacedelim );
+            if(tokens.Length > 0 && m_ximAnalogMap.ContainsKey(tokens[0]))
+            {
+                Xim.Analog ximAnalog;
+                ximAnalog = m_ximAnalogMap[tokens[0]];
+                int deadzone = 0;
+                Joystick.Flags flags=0;
+
+                for( uint i = 1;i < tokens.Length ; i++)
+                {
+                    int tryDeadzone;
+                    String token = tokens[i];
+                    if (token.StartsWith("-"))
+                    {
+                        // parse modifiers.
+                        token = token.Substring(1);
+                        Joystick.Flags flag = (Joystick.Flags)Enum.Parse(typeof(Joystick.Flags),token,true);
+                         flags |= flag;
+                    }
+                    else if (int.TryParse(token, out tryDeadzone))
+                    {
+                        deadzone = tryDeadzone;
+                    }
+                }
+                analogEvent = new AnalogEvent(ximAnalog, deadzone, flags);
+                return true;
+            }
+            
+            analogEvent = default(AnalogEvent);
             return false;
         }
 

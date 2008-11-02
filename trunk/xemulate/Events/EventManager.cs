@@ -38,48 +38,40 @@ namespace xEmulate
             m_inputEventHandlers.Clear();
         }
 
-        public void FireKeyDownEvent(DxI.Key key)
+        public void FireKeyDownEvent<KeyType>(KeyType key) where KeyType : IKey
         {
             // Key is now down, check if there is an event for this key and fire it.
             List<InputEvent> events;
             if (m_bindingManager.GetKeyBind(key, out events))
             {
-                InputEventHandler inputEventHandler = new KeyboardEventHandler(key, events);
+                InputEventHandler inputEventHandler = CreateEventHandler(key, events);
                 m_inputEventHandlers.Add(inputEventHandler);
             }
         }
 
-        public void FireButtonDownEvent(Mouse.Button button)
+        public InputEventHandler CreateEventHandler<KeyType>(KeyType key, List<InputEvent> events)
         {
-            // Key is now down, check if there is an event for this key and fire it.
-            List<InputEvent> events;
-            if (m_bindingManager.GetMouseBind(button, out events))
-            {
-                InputEventHandler inputEventHandler = new MouseEventHandler(button, events);
-                m_inputEventHandlers.Add(inputEventHandler);
-            }
-        }
-
-        public void FireButtonDownEvent(Joystick.Button button)
-        {
-            // Key is now down, check if there is an event for this key and fire it.
-            List<InputEvent> events;
-            if (m_bindingManager.GetJoyBind(button, out events))
-            {
-                InputEventHandler inputEventHandler = new JoyEventHandler(button, events);
-                m_inputEventHandlers.Add(inputEventHandler);
-            }
+            if (key is InputKey<Mouse.Button>)
+                return new MouseEventHandler((key as InputKey<Mouse.Button>).key, events);
+            else if (key is InputKey<DxI.Key>)
+                return new KeyboardEventHandler((key as InputKey<DxI.Key>).key, events);
+            else if (key is InputKey<Joystick.Button>)
+                return new JoyEventHandler((key as InputKey<Joystick.Button>).key, events);
+            return null;
         }
 
         public void QueueAnalogJoyBinds()
         {
             // Key is now down, check if there is an event for this key and fire it.
-            Dictionary<Joystick.Analog, AnalogEvent> binds;
+            Dictionary<InputKey<Joystick.Analog>, List<InputEvent>> binds;
             binds = m_bindingManager.GetJoyAnalogBinds();
-            foreach (KeyValuePair<Joystick.Analog, AnalogEvent> pair in binds )
+            foreach (KeyValuePair<InputKey<Joystick.Analog>, List<InputEvent>> pair in binds)
             {
-                InputEventHandler inputEventHandler = new JoyAnalogEventHandler(pair.Key, pair.Value);
-                m_inputEventHandlers.Add(inputEventHandler);
+                if (pair.Value.Count == 1)
+                {
+                    InputEventHandler inputEventHandler = new JoyAnalogEventHandler(pair.Key.key, pair.Value[0] as AnalogEvent);
+                    m_inputEventHandlers.Add(inputEventHandler);
+                }
             }
         }
 

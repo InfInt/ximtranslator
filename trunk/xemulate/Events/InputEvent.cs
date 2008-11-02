@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using XimApi;
+using Common;
 
 namespace xEmulate
 {
@@ -330,32 +331,63 @@ namespace xEmulate
     class AnalogEvent : InputEvent
     {
         Xim.Analog button;
+        int deadzone;
+        Joystick.Flags flags;
 
-        public AnalogEvent(Xim.Analog button)
+        public AnalogEvent(Xim.Analog button, int deadzone, Joystick.Flags flags)
         {
             this.button = button;
+            this.deadzone = deadzone;
+            this.flags = flags;
         }
 
         public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
         {
-            if (keyStillPressed)
-            {
-                Xim.SetAnalogState(button, (short)Xim.Stick.Max, ref input);
-                return Status.Running;
-            }
+            // This should never get hit.
             return Status.Complete;
         }
 
         public InputEvent.Status Run(bool firstRun, double elapsed, int analogVal, ref Xim.Input input, ref Xim.Input startState)
         {
+            analogVal -= (int)Xim.Stick.Max;
+            if ((flags &= Joystick.Flags.Invert) != 0)
+                analogVal = -analogVal;
+
+            if (deadzone != 0 && analogVal != 0)
+            {
+                if ((flags &= Joystick.Flags.Scale) != 0)
+                {
+                    analogVal *= (int)(Xim.Stick.Max) - deadzone / (int)(Xim.Stick.Max);
+                }
+                analogVal += Math.Sign(analogVal) * deadzone;
+            }
+
+            if ((flags &= Joystick.Flags.Scale) != 0) && button == Xim.Analog.LeftTrigger || button == Xim.Analog.RightTrigger )
+            {
+
+            }
+
             Xim.SetAnalogState(button, analogVal, ref input);
             return Status.Running;
         }
 
         public override string ToString()
         {
-            return button.ToString().ToLower();
+            string result = button.ToString().ToLower();
+            if (deadzone != 0)
+            {
+                result += " " + deadzone;
+            }
+
+            if(flags != 0)
+            {
+                foreach (Joystick.Flags flag in Enum.GetValues(typeof(Joystick.Flags)))
+                {
+                    if ((this.flags &= flag) != 0)
+                        result += " -" + flag.ToString().ToLower();
+                }
+            }
+            return result;
         }
     }
-
 }

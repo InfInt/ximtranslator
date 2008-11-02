@@ -88,6 +88,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingManager.cs" />
+    <Compile Include="KeyClasses.cs" />
+    <Compile Include="VarManager.cs" />
     <Compile Include="Xim\MouseAlgs.cs" />
     <Compile Include="Xim\GamesSettings2.cs" />
     <Compile Include="Xim\MouseMath2.cs" />
@@ -107,7 +109,6 @@
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Input\RawInputManager.cs" />
     <Compile Include="TextModeManager.cs" />
-    <Compile Include="VarManager.cs" />
     <Compile Include="Xim\GamesManager.cs" />
     <Compile Include="Xim\MouseMath.cs" />
     <Compile Include="Xim\Ximulator.cs" />

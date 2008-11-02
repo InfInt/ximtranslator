@@ -12,14 +12,14 @@ namespace xEmulate
         {
             Ut3 = 0,
             Cod4 = 1,
-            //Halo3 = 2,
+            Halo3 = 2,
         }
 
         public static string[] GameNames = new string[]
         { 
             "Unreal Tournament 3 (ut3) (20 sens, 10 accel)",
             "Call of Duty 4 (cod4) (10 sens)",
-            //"Halo 3 (halo3)",
+            "Halo 3 (halo3)",
         };
 
         private Dictionary<Games, GameSettings> gameSettings;
@@ -72,22 +72,41 @@ namespace xEmulate
                                                0 // CarryZone 
                                                ),
                                                new MouseAlgs.PowerFunction(
-                                               16513, // Speed
-                                               0.3775, // Exp
+                                               24220, // Speed
+                                               0.4014, // Exp
                                                99999, // Cap
                                                99999, // Max Speed
                                                0 // CarryZone 
                                                ),
                                                /*new MouseAlgs.PolynomialFunction(
-                                               0, // x^2 coeff
-                                               2000, // x coeff
-                                               8038.4, // yintercept
+                                               -16638, // x^2 coeff
+                                               32836, // x coeff
+                                               6247.2, // yintercept
                                                99999, // Cap
                                                99999, // Max Speed
                                                0 // CarryZone 
                                                ),*/
                                                7000, // Deadzone
                                                true //Circular Deadzone
+                                            ) // GameSettings
+                            ); // Add
+            gameSettings.Add(Games.Halo3, new GameSettings(
+                                               new MouseAlgs.LogFunction(
+                                               5042, // lnFactor
+                                               31766, // offset
+                                               32000, // Cap
+                                               1.8, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               new MouseAlgs.LogFunction(
+                                               5939.5, // lnFactor
+                                               37696, // offset
+                                               32000, // Cap
+                                               1.8, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               0, // Deadzone
+                                               false //Circular Deadzone
                                             ) // GameSettings
                             ); // Add
 

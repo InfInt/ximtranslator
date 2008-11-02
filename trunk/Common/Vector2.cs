@@ -46,6 +46,14 @@ namespace Common
             this.Scale(mouseVectorLen);
         }
 
+        public void Log()
+        {
+            double mouseVectorLen = Math.Sqrt(this.X * this.X + this.Y * this.Y);
+            mouseVectorLen = Math.Log(mouseVectorLen);
+            this.Normalize();
+            this.Scale(mouseVectorLen);
+        }
+
         public static Vector2 operator+(Vector2 first, Vector2 other )
         {
             Vector2 v = new Vector2(other.X, other.Y);

@@ -126,7 +126,6 @@ namespace xEmulate
                 joyState = m_joy.CurrentJoystickState;
                 this.inputManager.SetAndFireJoyButtons(joyState, fCreateEvents);
             }
-
         }
 
         public short GetJoyYValue()
@@ -208,7 +207,7 @@ namespace xEmulate
                 {
                 }
             }
-            state = new DxI.MouseState { };
+            state = default(DxI.MouseState);
             return false;
         }
     }

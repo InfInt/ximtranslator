@@ -160,18 +160,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BCE3037791FB4D0C9789E16E4BAA1358"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AB805AC3D7654466AFA6C29CB187A263"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_89104E871AA229239DFF2AB3134AC6FD"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -185,6 +173,18 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_6343A90B5852704A39357747B8FAA2AC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BCE3037791FB4D0C9789E16E4BAA1358"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AB805AC3D7654466AFA6C29CB187A263"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -542,7 +542,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -688,14 +688,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:xEmulate"
-        "ProductCode" = "8:{980DE3E0-FD2E-4531-800A-5C339A76DEED}"
-        "PackageCode" = "8:{AD92DC2E-B268-4488-A198-3BDD2E219201}"
+        "ProductCode" = "8:{B9A409A9-1E07-4E6E-A54E-93AB9D587880}"
+        "PackageCode" = "8:{13CA03FE-E6EE-4CE6-A123-D23677839C12}"
         "UpgradeCode" = "8:{06C1EC59-F269-4AAE-8514-F112FD176E53}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.01.31"
+        "ProductVersion" = "8:1.02.01"
         "Manufacturer" = "8:."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.xim360.com"

@@ -44,7 +44,7 @@ namespace xEmulate
             m_pressedJoyButtons.Clear();
             m_pressedMouseButtons.Clear();
             m_pressedKeys.Clear();
-            m_currentJoyState = new Microsoft.DirectX.DirectInput.JoystickState { };
+            m_currentJoyState = default(DxI.JoystickState);
         }
 
         public List<DxI.Key> GetPressedKeys()
@@ -95,7 +95,7 @@ namespace xEmulate
                 m_pressedKeys.Add(button);
                 if (fCreateEvents)
                 {
-                    eventManager.FireKeyDownEvent(button);
+                    eventManager.FireKeyDownEvent(new InputKey<DxI.Key>(button));
                 }
                 return true;
             }
@@ -119,7 +119,7 @@ namespace xEmulate
                 m_pressedMouseButtons.Add(button);
                 if (fCreateEvents)
                 {
-                    eventManager.FireButtonDownEvent(button);
+                    eventManager.FireKeyDownEvent(InputKey.Make(button));
                 }
                 return true;
             }
@@ -144,7 +144,7 @@ namespace xEmulate
                 {
                     if (!m_pressedKeys.Contains(key))
                     {
-                        eventManager.FireKeyDownEvent(key);
+                        eventManager.FireKeyDownEvent(InputKey.Make(key));
                     }
                 }
             }
@@ -170,11 +170,11 @@ namespace xEmulate
             {
                 if (mouseState.Z > 0)
                 {
-                    eventManager.FireButtonDownEvent(Mouse.Button.MWheelUp);
+                    eventManager.FireKeyDownEvent(InputKey.Make(Mouse.Button.MWheelUp));
                 }
                 if (mouseState.Z < 0)
                 {
-                    eventManager.FireButtonDownEvent(Mouse.Button.MWheelDown);
+                    eventManager.FireKeyDownEvent(InputKey.Make(Mouse.Button.MWheelDown));
                 }
             }
 
@@ -184,7 +184,7 @@ namespace xEmulate
                 {
                     if(!m_pressedMouseButtons.Contains(button))
                     {
-                        eventManager.FireButtonDownEvent(button);
+                        eventManager.FireKeyDownEvent(InputKey.Make(button));
                     }
                 }
             }
@@ -245,7 +245,7 @@ namespace xEmulate
                 {
                     if (!m_pressedJoyButtons.Contains(button))
                     {
-                        eventManager.FireButtonDownEvent(button);
+                        eventManager.FireKeyDownEvent(InputKey.Make(button));
                     }
                 }
             }

@@ -39,7 +39,7 @@ namespace xEmulate
             this.inputManager = InputManager.Instance;
             this.gamesManager = GamesManager.Instance;
 
-            this.varManager.GetVar(VarManager.Names.Sensitivity, out m_sens);
+            this.varManager.GetVar(VarManager.Names.Speed, out m_sens);
             this.varManager.GetVar(VarManager.Names.Accel, out m_accel);
             this.varManager.GetVar(VarManager.Names.Sensitivity1, out m_sensitivity1);
             this.varManager.GetVar(VarManager.Names.Sensitivity2, out m_sensitivity2);

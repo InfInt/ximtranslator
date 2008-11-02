@@ -203,12 +203,16 @@ namespace xEmulate
 
             this.cbGame.SelectedIndex = (int)m_varManager.GetVar<GamesManager.Games>(VarManager.Names.CurrentGame);
 
-            this.txSensitivity.Text = m_varManager.GetVarStr(VarManager.Names.Sensitivity);
+            this.txSpeed.Text = m_varManager.GetVarStr(VarManager.Names.Speed);
             this.txAccel.Text = m_varManager.GetVarStr(VarManager.Names.Accel);
+            this.txSpeed2.Text = m_varManager.GetVarStr(VarManager.Names.Speed2);
+            this.txAccel2.Text = m_varManager.GetVarStr(VarManager.Names.Accel2);
 
             // Sensitivity and accel on the slider are 1000* the decimal value.
-            this.sbSens.Value = (int)(double.Parse(this.txSensitivity.Text)*1000);
+            this.sbSpeed.Value = (int)(double.Parse(this.txSpeed.Text)*1000);
             this.sbAccel.Value = (int)(double.Parse(this.txAccel.Text) * 1000);
+            this.sbSpeed2.Value = (int)(double.Parse(this.txSpeed2.Text) * 1000);
+            this.sbAccel2.Value = (int)(double.Parse(this.txAccel2.Text) * 1000);
 
             this.txDiagonalDampen.Text = m_varManager.GetVarStr(VarManager.Names.DiagonalDampen);
             this.txDeadzone.Text = m_varManager.GetVarStr(VarManager.Names.Deadzone);
@@ -264,13 +268,25 @@ namespace xEmulate
 
         private void sbSens_Scroll(object sender, EventArgs e)
         {
-            m_varManager.SetVar(VarManager.Names.Sensitivity, (double)sbSens.Value / 1000);
+            m_varManager.SetVar(VarManager.Names.Speed, (double)sbSpeed.Value / 1000);
             SyncUI();
         }
 
         private void sbAccel_Scroll(object sender, EventArgs e)
         {
             m_varManager.SetVar(VarManager.Names.Accel, (double)sbAccel.Value / 1000);
+            SyncUI();
+        }
+
+        private void sbSpeed2_Scroll(object sender, EventArgs e)
+        {
+            m_varManager.SetVar(VarManager.Names.Speed2, (double)sbSpeed2.Value / 1000);
+            SyncUI();
+        }
+
+        private void sbAccel2_Scroll(object sender, EventArgs e)
+        {
+            m_varManager.SetVar(VarManager.Names.Accel2, (double)sbAccel2.Value / 1000);
             SyncUI();
         }
 
@@ -330,3 +346,4 @@ namespace xEmulate
         }
     }
 }
+        

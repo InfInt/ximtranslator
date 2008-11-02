@@ -24,6 +24,8 @@ namespace Common
 
     public class Joystick
     {
+        public const int Max = 65534;
+
         public enum Button : int
         {
             Joy1 = 0,
@@ -33,7 +35,7 @@ namespace Common
             Joy5 = 4,
             Joy6 = 5,
             Joy7 = 6,
-            Joy8 = 8,
+            Joy8 = 7,
             Joy9 = 8,
             Joy10 = 9,
             JoyMax = Joy10, // actually its 128 but im lazy
@@ -62,6 +64,25 @@ namespace Common
             JoyRx,
             JoyRy,
             JoyRz,
+            JoyPosX,
+            JoyPosY,
+            JoyPosZ,
+            JoyPosRx,
+            JoyPosRy,
+            JoyPosRz,
+            JoyNegX,
+            JoyNegY,
+            JoyNegZ,
+            JoyNegRx,
+            JoyNegRy,
+            JoyNegRz,
+        }
+
+        [Flags]
+        public enum Flags : int
+        {
+            Invert=1,
+            Scale=2,
         }
     }
 

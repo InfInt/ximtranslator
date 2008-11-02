@@ -12,14 +12,14 @@ namespace xEmulate
         {
             Ut3 = 0,
             Cod4 = 1,
-            //Halo3 = 2,
+            Halo3 = 2,
         }
 
         public static string[] GameNames = new string[]
         { 
-            "Unreal Tournament 3 (ut3)",
-            "Call of Duty 4 (cod4)",
-            //"Halo 3 (halo3)",
+            "Unreal Tournament 3 (ut3) - 20sens, 10accel",
+            "Call of Duty 4 (cod4) - 10 sens",
+            "Halo 3 (halo3) - 10 sens",
         };
 
         private Dictionary<Games, Settings> gameSettings;
