@@ -1,2 +1,5 @@
+Nov 2, 2008
+	- Fixed a bug in AnalogEvent preventing flags from working at all.
+
 Nov 1, 2008
 	Start of log... better late than never.

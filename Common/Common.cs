@@ -79,10 +79,11 @@ namespace Common
         }
 
         [Flags]
-        public enum Flags : int
+        public enum AnalogFlags : int
         {
-            Invert=1,
-            Scale=2,
+            None=0,
+            Invert,
+            Scale,
         }
     }
 
