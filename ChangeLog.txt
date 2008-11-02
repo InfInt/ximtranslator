@@ -1,5 +1,11 @@
 Nov 2, 2008
+	- Fixed "exec" to look in the current directory, then the xim configs in my documents, then in app data.
 	- Fixed a bug in AnalogEvent preventing flags from working at all.
+	
+	- Added unbind <key>
+	- Added "link" type bind.  Allows events to be fired when input to the xbox has buttons pressed.
+		Example:  "link lefttrigger wait 150;.altsens"
+		With this bind, when you zoom in cod4 it will automatically wait 150ms and then engage the alternate sensitivity, this is especially useful when using a toggle zoom bind like "bind mouseright !lefttrigger".  :)
 
 Nov 1, 2008
 	Start of log... better late than never.

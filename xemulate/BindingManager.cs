@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Common;
+using XimApi;
 using DxI = Microsoft.DirectX.DirectInput;
 
 namespace xEmulate
@@ -12,10 +13,12 @@ namespace xEmulate
         private Dictionary<InputKey<Mouse.Button>, List<InputEvent>> m_mouseBindings = new Dictionary<InputKey<Mouse.Button>, List<InputEvent>>(10);
         private Dictionary<InputKey<Joystick.Button>, List<InputEvent>> m_joyBindings = new Dictionary<InputKey<Joystick.Button>, List<InputEvent>>(10);
         private Dictionary<InputKey<Joystick.Analog>, List<InputEvent>> m_joyAnalogBindings = new Dictionary<InputKey<Joystick.Analog>, List<InputEvent>>(5);
+        private Dictionary<InputKey<Xim.Button>, List<InputEvent>> m_linkBindings = new Dictionary<InputKey<Xim.Button>, List<InputEvent>>(5);
         private SortedDictionary<String, DxI.Key> m_keyMap = new SortedDictionary<String, DxI.Key>();
         private SortedDictionary<String, Mouse.Button> m_mouseMap = new SortedDictionary<String, Mouse.Button>();
         private SortedDictionary<String, Joystick.Button> m_joyMap = new SortedDictionary<String, Joystick.Button>();
         private SortedDictionary<String, Joystick.Analog> m_joyAnalogMap = new SortedDictionary<String, Joystick.Analog>();
+        private SortedDictionary<String, Xim.Button> m_linkMap = new SortedDictionary<String, Xim.Button>();
         
         private BindingManager()
         {
@@ -23,6 +26,7 @@ namespace xEmulate
             PopulateKeyMap(typeof(Mouse.Button), m_mouseMap);
             PopulateKeyMap(typeof(Joystick.Button), m_joyMap);
             PopulateKeyMap(typeof(Joystick.Analog), m_joyAnalogMap);
+            PopulateKeyMap(typeof(Xim.Button), m_linkMap);
         }
 
         public static BindingManager Instance
@@ -52,6 +56,11 @@ namespace xEmulate
             return m_joyAnalogMap.ContainsKey(keyName);
         }
 
+        public bool IsLinkKey(String keyName)
+        {
+            return m_linkMap.ContainsKey(keyName);
+        }
+
         private Dictionary<KeyType, List<InputEvent>> GetBindingDict<KeyType>(KeyType key)
         {
             if (key is InputKey<DxI.Key>)
@@ -62,6 +71,8 @@ namespace xEmulate
                 return m_joyBindings as Dictionary<KeyType, List<InputEvent>>;
             else if (key is InputKey<Joystick.Analog>)
                 return m_joyAnalogBindings as Dictionary<KeyType, List<InputEvent>>;
+            else if (key is InputKey<Xim.Button>)
+                return m_linkBindings as Dictionary<KeyType, List<InputEvent>>;
             return null;
         }
 
@@ -75,6 +86,8 @@ namespace xEmulate
                 SetKeyBind(InputKey.Make(m_joyMap[key]), events);
             else if (m_joyAnalogMap.ContainsKey(key))
                 SetKeyBind(InputKey.Make(m_joyAnalogMap[key]), events);
+            else if (m_linkMap.ContainsKey(key))
+                SetKeyBind(InputKey.Make(m_linkMap[key]), events);
         }
 
         private void SetKeyBind<KeyType>(KeyType key, List<InputEvent> val) where KeyType : IKey
@@ -102,13 +115,15 @@ namespace xEmulate
         public String GetBindString(String key)
         {
             if (m_keyMap.ContainsKey(key))
-                return GetBindString(new InputKey<DxI.Key>(m_keyMap[key]));
+                return GetBindString(InputKey.Make(m_keyMap[key]));
             else if (m_mouseMap.ContainsKey(key))
-                return GetBindString(new InputKey<Mouse.Button>(m_mouseMap[key]));
+                return GetBindString(InputKey.Make(m_mouseMap[key]));
             else if (m_joyMap.ContainsKey(key))
-                return GetBindString(new InputKey<Joystick.Button>(m_joyMap[key]));
+                return GetBindString(InputKey.Make(m_joyMap[key]));
             else if (m_joyAnalogMap.ContainsKey(key))
-                return GetBindString(new InputKey<Joystick.Analog>(m_joyAnalogMap[key]));
+                return GetBindString(InputKey.Make(m_joyAnalogMap[key]));
+            else if (m_linkMap.ContainsKey(key))
+                return GetBindString(InputKey.Make(m_linkMap[key]));
             return default(String);
         }
 
@@ -120,11 +135,25 @@ namespace xEmulate
                 GetEventAsString(GetBindingDict(key)[key], out s);
             }
             else
-                s = "Key \"" + key.ToString().ToLower() + "\" not bound to anything";
+                s = "Key \"" + key.ToString().ToLower() + "\" not bound/linked to anything";
             return s;
         }
 
-        public void Unbind<KeyType>(KeyType key)
+        public void Unbind(String key)
+        {
+            if (m_keyMap.ContainsKey(key))
+                Unbind(m_keyMap[key]);
+            else if (m_mouseMap.ContainsKey(key))
+                Unbind(m_mouseMap[key]);
+            else if (m_joyMap.ContainsKey(key))
+                Unbind(m_joyMap[key]);
+            else if (m_joyAnalogMap.ContainsKey(key))
+                Unbind(m_joyAnalogMap[key]);
+            else if (m_linkMap.ContainsKey(key))
+                Unbind(m_linkMap[key]);
+        }
+
+        private void Unbind<KeyType>(KeyType key)
         {
             InputKey<KeyType> ikey = InputKey.Make(key);
             if (GetBindingDict(ikey).ContainsKey(ikey))
@@ -167,6 +196,12 @@ namespace xEmulate
                 if(pair.Value.Count == 1)
                     binds.Add("bind " + pair.Key.ToString().ToLower() + " " + pair.Value[0].ToString()+";");
             }
+
+            foreach (KeyValuePair<InputKey<Xim.Button>, List<InputEvent>> pair in m_linkBindings)
+            {
+                if(pair.Value.Count == 1)
+                    binds.Add("link " + pair.Key.ToString().ToLower() + " " + pair.Value[0].ToString()+";");
+            }
         }
 
         private void GetEventAsString(List<InputEvent> events, out String strBind)
@@ -185,6 +220,7 @@ namespace xEmulate
             m_keyboardBindings.Clear();
             m_joyAnalogBindings.Clear();
             m_joyBindings.Clear();
+            m_linkMap.Clear();
         }
     }
 }

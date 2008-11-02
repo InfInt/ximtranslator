@@ -45,13 +45,64 @@ namespace xEmulate
                 m_bindingManager.UnbindAll();
                 return true;
             }
-            if (line.StartsWith("bind "))
+            else if (line.StartsWith("unbind "))
+            {
+                line = line.Substring(7);
+                int firstSpace = line.IndexOf(' ');
+                if (firstSpace == -1)
+                    firstSpace = line.Length;
+                String key = line.Substring(0, firstSpace);
+
+                if (key == line)
+                {
+                    // Just display the current bind for that key if one exists.
+                    if (m_bindingManager.IsKey(key) || m_bindingManager.IsAnalogKey(key) || m_bindingManager.IsLinkKey(key))
+                    {
+                        m_bindingManager.Unbind(key);
+                        this.ParseLine("bind " + key);
+                        return true;
+                    }
+                }
+            }
+            else if (line.StartsWith("link "))
             {
                 line = line.Substring(5);
                 int firstSpace = line.IndexOf(' ');
                 if (firstSpace == -1)
                     firstSpace = line.Length;
-                String key = line.Substring(0,firstSpace);
+                String key = line.Substring(0, firstSpace);
+
+                if (key == line)
+                {
+                    // Just display the current bind for that key if one exists.
+                    if (m_bindingManager.IsLinkKey(key))
+                    {
+                        m_infoTextManager.WriteLine(m_bindingManager.GetBindString(key));
+                        return true;
+                    }
+                }
+                else
+                {
+                    String macro = line.Substring(firstSpace + 1);
+                    if (m_bindingManager.IsLinkKey(key))
+                    {
+                        List<InputEvent> events;
+                        CreateEventList(macro, out events);
+                        if (events.Count > 0)
+                        {
+                            m_bindingManager.SetKeyBind(key, events);
+                            return true;
+                        }
+                    }
+                }
+            }
+            else if (line.StartsWith("bind "))
+            {
+                line = line.Substring(5);
+                int firstSpace = line.IndexOf(' ');
+                if (firstSpace == -1)
+                    firstSpace = line.Length;
+                String key = line.Substring(0, firstSpace);
 
                 if (key == line)
                 {

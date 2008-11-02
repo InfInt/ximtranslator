@@ -197,4 +197,25 @@ namespace xEmulate
             return true;
         }
     }
+
+    class LinkEventHandler : InputEventHandler
+    {
+        private Xim.Button button;
+        private bool m_stillPressed = true;
+
+        public LinkEventHandler(Xim.Button button, List<InputEvent> futureEvents)
+            : base(futureEvents)
+        {
+            this.button = button;
+        }
+
+        public override bool Run(double elapsed,
+            PressedState pressedState,
+            ref Xim.Input input,
+            ref Xim.Input startState)
+        {
+            m_stillPressed = m_stillPressed && Xim.GetButtonState(button, ref input) == Xim.ButtonState.Pressed;
+            return base.Run(elapsed, m_stillPressed, ref input, ref startState);
+        }
+    }
 }
