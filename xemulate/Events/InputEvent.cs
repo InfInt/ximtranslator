@@ -362,9 +362,10 @@ namespace xEmulate
                 analogVal += Math.Sign(analogVal) * deadzone;
             }
 
-            if ((flags &= Joystick.Flags.Scale) != 0) && button == Xim.Analog.LeftTrigger || button == Xim.Analog.RightTrigger )
+            if ((flags &= Joystick.Flags.Scale) != 0 && button == Xim.Analog.LeftTrigger || button == Xim.Analog.RightTrigger )
             {
-
+                analogVal += (int)Xim.Stick.Max;
+                analogVal = (int)((double)analogVal * 0.5);
             }
 
             Xim.SetAnalogState(button, analogVal, ref input);
