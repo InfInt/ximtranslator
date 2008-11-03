@@ -1,4 +1,4 @@
-#summary Keyboard and Mouse buttons
+#summary Keyboard, Mouse, and Joy buttons
 
 Mouse:
   * MouseLeft
@@ -6,109 +6,90 @@ Mouse:
   * MouseMiddle
   * Mouse4
   * Mouse5
+  * Mouse6
+  * Mouse7
+  * Mouse8
   * MWheelUp
   * MWheelDown
 
+Joystick Buttons:
+  * Joy1 - Joy12
+  * PovUp
+  * PovDown
+  * PovLeft
+  * PovRight
+
+Joystick Analog Sticks:
+  * JoyX
+  * JoyY
+  * JoyZ
+  * JoyRx
+  * JoyRy
+  * JoyRz
+
 Keyboard:
-  * LeftButton
-  * RightButton
-  * Cancel
-  * MiddleButton
-  * ExtraButton1
-  * ExtraButton2
-  * Back
-  * Tab
-  * Clear
-  * Return
-  * Shift
-  * Control
-  * Menu
-  * Pause
-  * Capital
-  * Kana
-  * Hangeul
-  * Hangul
-  * Junja
-  * Final
-  * Hanja
-  * Kanji
   * Escape
-  * Convert
-  * NonConvert
-  * Accept
-  * ModeChange
-  * Space
-  * Prior
-  * Next
-  * End
-  * Home
-  * Left
-  * Up
-  * Right
-  * Down
-  * Select
-  * Print
-  * Execute
-  * Snapshot
-  * Insert
-  * Delete
-  * Help
-  * N0
-  * N1
-  * N2
-  * N3
-  * N4
-  * N5
-  * N6
-  * N7
-  * N8
-  * N9
-  * A
-  * B
-  * C
-  * D
+  * D1
+  * D2
+  * D3
+  * D4
+  * D5
+  * D6
+  * D7
+  * D8
+  * D9
+  * D0
+  * Minus
+  * Equals
+  * BackSpace
+  * BackSpace
+  * Tab
+  * Q
+  * W
   * E
+  * R
+  * T
+  * Y
+  * U
+  * I
+  * O
+  * P
+  * LeftBracket
+  * RightBracket
+  * Return
+  * LeftControl
+  * A
+  * S
+  * D
   * F
   * G
   * H
-  * I
   * J
   * K
   * L
-  * M
-  * N
-  * O
-  * P
-  * Q
-  * R
-  * S
-  * T
-  * U
-  * V
-  * W
-  * X
-  * Y
+  * SemiColon
+  * Apostrophe
+  * Grave
+  * LeftShift
+  * BackSlash
   * Z
-  * LeftWindows
-  * RightWindows
-  * Application
-  * Sleep
-  * Numpad0
-  * Numpad1
-  * Numpad2
-  * Numpad3
-  * Numpad4
-  * Numpad5
-  * Numpad6
-  * Numpad7
-  * Numpad8
-  * Numpad9
-  * Multiply
-  * Add
-  * Separator
-  * Subtract
-  * Decimal
-  * Divide
+  * X
+  * C
+  * V
+  * B
+  * N
+  * M
+  * Comma
+  * Period
+  * Slash
+  * RightShift
+  * NumPadStar
+  * NumPadStar
+  * LeftMenu
+  * LeftMenu
+  * Space
+  * CapsLock
+  * CapsLock
   * F1
   * F2
   * F3
@@ -119,90 +100,91 @@ Keyboard:
   * F8
   * F9
   * F10
+  * Numlock
+  * Scroll
+  * NumPad7
+  * NumPad8
+  * NumPad9
+  * NumPadMinus
+  * NumPadMinus
+  * NumPad4
+  * NumPad5
+  * NumPad6
+  * Add
+  * Add
+  * NumPad1
+  * NumPad2
+  * NumPad3
+  * NumPad0
+  * Decimal
+  * Decimal
+  * OEM102
   * F11
   * F12
   * F13
   * F14
   * F15
-  * F16
-  * F17
-  * F18
-  * F19
-  * F20
-  * F21
-  * F22
-  * F23
-  * F24
-  * NumLock
-  * ScrollLock
-  * NEC_Equal
-  * Fujitsu_Jisho
-  * Fujitsu_Masshou
-  * Fujitsu_Touroku
-  * Fujitsu_Loya
-  * Fujitsu_Roya
-  * LeftShift
-  * RightShift
-  * LeftControl
+  * Kana
+  * AbntC1
+  * Convert
+  * NoConvert
+  * Yen
+  * AbntC2
+  * NumPadEquals
+  * Circumflex
+  * Circumflex
+  * At
+  * Colon
+  * Underline
+  * Kanji
+  * Stop
+  * AX
+  * Unlabeled
+  * NextTrack
+  * NumPadEnter
   * RightControl
-  * LeftMenu
-  * RightMenu
-  * BrowserBack
-  * BrowserForward
-  * BrowserRefresh
-  * BrowserStop
-  * BrowserSearch
-  * BrowserFavorites
-  * BrowserHome
-  * VolumeMute
+  * Mute
+  * Calculator
+  * PlayPause
+  * MediaStop
   * VolumeDown
   * VolumeUp
-  * MediaNextTrack
-  * MediaPrevTrack
-  * MediaStop
-  * MediaPlayPause
+  * WebHome
+  * NumPadComma
+  * NumPadSlash
+  * NumPadSlash
+  * SysRq
+  * RightMenu
+  * RightMenu
+  * Pause
+  * Home
+  * Up
+  * Up
+  * PageUp
+  * PageUp
+  * LeftArrow
+  * LeftArrow
+  * Right
+  * Right
+  * End
+  * DownArrow
+  * DownArrow
+  * PageDown
+  * PageDown
+  * Insert
+  * Delete
+  * LeftWindows
+  * RightWindows
+  * Apps
+  * Power
+  * Sleep
+  * Wake
+  * WebSearch
+  * WebFavorites
+  * WebRefresh
+  * WebStop
+  * WebForward
+  * WebBack
+  * MyComputer
   * Mail
   * MediaSelect
-  * LaunchApplication1
-  * LaunchApplication2
-  * Semicolon
-  * Plus
-  * Comma
-  * Minus
-  * Period
-  * Slash
-  * Tilde
-  * LeftBracket
-  * Backslash
-  * RightBracket
-  * Apostrophe
-  * OEM8
-  * OEMAX
-  * OEM102
-  * ICOHelp
-  * ICO00
-  * ProcessKey
-  * ICOClear
-  * Packet
-  * OEMReset
-  * OEMJump
-  * OEMPA1
-  * OEMPA2
-  * OEMPA3
-  * OEMWSCtrl
-  * OEMCUSel
-  * OEMATTN
-  * OEMFinish
-  * OEMCopy
-  * OEMAuto
-  * OEMENLW
-  * OEMBackTab
-  * ATTN
-  * CRSel
-  * EXSel
-  * EREOF
-  * Play
-  * Zoom
-  * Noname
-  * PA1
-  * OEMClear
