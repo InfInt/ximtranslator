@@ -56,3 +56,30 @@ This example is what i use for cod4 if i feel like autofiring :)
 The toggle (!) modifier can be used to swap the state of a button from on to off.  In this example clicking mouseright will change the state of the right trigger to the opposite state that it was just in. if it was pressed it will now be released, if it was released it will now be pressed. 
 
 This example is what i use to toggle zoom in cod4.
+
+== Advanced Binding == 
+
+=== Exec ===
+
+I havent tested this much, but the concept is pretty sweet:
+
+'bind x exec 1234.cfg'
+
+With this bind, when x is pressed xEmulate will search for 1234.cfg in 3 locations:
+1) the current working folder
+2) my documents\xim configs
+3) appdata\xEmulate
+
+If it finds the config, it will load it.  This can be useful for switching between "game modes" like in gta for driving vs walking.
+
+== Useful Game Specific Bindings ==
+
+Heres some useful binds for games
+
+=== COD4 ===
+
+|| Toggle sniping || bind x !lefttrigger ||
+|| Run even if you were sniping, this is similar to PC where running causes you to exit sniping. || bind x +leftstick;-lefttrigger;wait 100;-leftstick; ||
+|| Go Prone || bind x +b;wait 1000;-b ||
+|| Swap weapons || bind x +y;wait 1000;-y ||
+
