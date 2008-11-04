@@ -12,71 +12,105 @@ namespace xEmulate
         {
             Ut3 = 0,
             Cod4 = 1,
-            Halo3 = 2,
+            Halo3 = 2
         }
 
         public static string[] GameNames = new string[]
         { 
-            "Unreal Tournament 3 (ut3) - 20sens, 10accel",
-            "Call of Duty 4 (cod4) - 10 sens",
-            "Halo 3 (halo3) - 10 sens",
+            "Unreal Tournament 3 (ut3) (20 sens, 10 accel)",
+            "Call of Duty 4 (cod4) (10 sens)",
+            "Halo 3 (halo3) (10 sens)"
         };
 
-        private Dictionary<Games, Settings> gameSettings;
+        private Dictionary<Games, GameSettings> gameSettings;
 
-        public class Settings
+        public class GameSettings
         {
-            public Settings(double speed, double exponent, int deadzone, int cap, double maxSpeed, bool circularDeadzone, double pitch, double yaw, Vector2 carryZone)
+            public GameSettings(MouseAlgs.Algorithm XAxis, MouseAlgs.Algorithm YAxis, int deadzone, bool circularDeadzone, double diagonalCoeff, double smoothing)
             {
-                this.Speed = speed;
-                this.Exp = exponent;
-                this.Deadzone = deadzone;
-                this.Cap = cap;
-                this.MaxSpeed = maxSpeed;
+                this.XAxis = XAxis;
+                this.YAxis = YAxis;
                 this.Circular = circularDeadzone;
-                this.CarryZone = carryZone;
-                this.Yaw = yaw;
-                this.Pitch = pitch;
+                this.Deadzone = deadzone;
+                this.DiagonalCoeff = diagonalCoeff;
+                this.Smoothing = smoothing;
             }
-            public Vector2 CarryZone { get; set; }
-            public double Pitch { get; set; }
-            public double Yaw { get; set; }
-            public double Speed { get; set; }
-            public double Exp { get; set; }
-            public int Deadzone { get; set; }
-            public int Cap { get; set; }
-            public double MaxSpeed { get; set; }
+            public MouseAlgs.Algorithm XAxis { get; set; }
+            public MouseAlgs.Algorithm YAxis { get; set; }
             public bool Circular { get; set; }
+            public int Deadzone { get; set; }
+            public double DiagonalCoeff { get; set; }
+            public double Smoothing { get; set; }
+
         }
 
         private GamesManager()
         {
-            gameSettings = new Dictionary<Games, Settings>();
-            
-            gameSettings.Add(Games.Ut3, new Settings(
-                31075, // Speed
-                0.4789, // Exp
-                6200, // Deadzone
-                32000, // Cap
-                2.5, // Max Speed
-                false, //Circular Deadzone
-                0.22, // Pitch
-                0.22, // Yaw
-                new Vector2(0, 10000) // CarryZone
-                ));
+            gameSettings = new Dictionary<Games, GameSettings>();
 
-            gameSettings.Add(Games.Cod4, new Settings(
-               16513, // Speed
-               0.3775, // Exp
-               7000, // Deadzone
-               99999, // Cap
-               99999, // Max Speed
-               true, //Circular Deadzone
-               0.44, // Pitch
-               0.22, // Yaw
-               new Vector2(0, 0) // CarryZone 
-               ));
+            gameSettings.Add(Games.Ut3, new GameSettings(new MouseAlgs.PowerFunction(
+                                                31075, // Speed
+                                                0.4789, // Exp
+                                                32000, // Cap
+                                                2.5, // Max Speed
+                                                0 // CarryZone
+                                                ),
+                                                new MouseAlgs.PowerFunction(
+                                                31075, // Speed
+                                                0.4789, // Exp
+                                                32000, // Cap
+                                                2.5, // Max Speed
+                                                10000 // CarryZone
+                                                ),
+                                                6200, // deadzone
+                                                false, // circularDeadzone
+                                                0, // diagonalCoeff
+                                                0 // smoothing
+                                            ) // GameSettings
+                            ); // Add
 
+            gameSettings.Add(Games.Cod4, new GameSettings(
+                                               new MouseAlgs.PowerFunction(
+                                               16513, // Speed
+                                               0.3775, // Exp
+                                               99999, // Cap
+                                               99999, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               new MouseAlgs.PowerFunction(
+                                               24220, // Speed
+                                               0.4014, // Exp
+                                               99999, // Cap
+                                               99999, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               7000, // Deadzone
+                                               true, //Circular Deadzone
+                                               0, // diagonalCoeff
+                                               0 // smoothing
+                                            ) // GameSettings
+                            ); // Add
+            gameSettings.Add(Games.Halo3, new GameSettings(
+                                               new MouseAlgs.PowerFunction(
+                                               19044, // Speed
+                                               .4544, // Exp
+                                               31000, // Cap
+                                               2.0, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               new MouseAlgs.PowerFunction(
+                                               26084, // Speed
+                                               .3992, // Exp
+                                               31000, // Cap
+                                               2.5, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               7000, // Deadzone
+                                               false, //Circular Deadzone
+                                               0.35, // diagonalCoeff
+                                               0.3 // Smoothing
+                                            ) // GameSettings
+                            ); // Add
         }
 
         public static GamesManager Instance
@@ -84,9 +118,9 @@ namespace xEmulate
             get { return Singleton<GamesManager>.Instance; }
         }
 
-        public Settings GetGameSettings(Games game)
+        public GameSettings GetGameSettings(Games game)
         {
-            Settings settings;
+            GameSettings settings;
             gameSettings.TryGetValue(game, out settings);
             return settings;
         }

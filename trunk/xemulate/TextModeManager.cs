@@ -24,8 +24,8 @@ namespace xEmulate
         Mutex mutex;
 
         private Destination m_current;
-        private bool m_idleFrame = false;
-
+        private int m_idleFrame = 0;
+        
         private Queue<Destination> m_keyqueue;
         
         private TextModeManager()
@@ -123,12 +123,12 @@ namespace xEmulate
             mutex.WaitOne();
             input = new Xim.Input();
 
-            if (m_idleFrame)
+            if (m_idleFrame < 3)
             {
-                m_idleFrame = false;
+                m_idleFrame++;
                 return;
             }
-            m_idleFrame = true;
+            m_idleFrame = 0;
 
 
             if (m_keyqueue.Count == 0)
@@ -198,6 +198,7 @@ namespace xEmulate
 
         public void Reset()
         {
+            m_keyqueue.Clear();
             m_current.coord.X = 0;
             m_current.coord.Y = 0;
             m_current.shift = false;

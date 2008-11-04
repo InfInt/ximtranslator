@@ -37,9 +37,20 @@ namespace xEmulate
             this.commandBox = new System.Windows.Forms.TextBox();
             this.cbAutoAnalogDisc = new System.Windows.Forms.CheckBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.rbMouseYNone = new System.Windows.Forms.RadioButton();
+            this.rbMouseYLeft = new System.Windows.Forms.RadioButton();
+            this.rbMouseYRight = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lbMouseAlgorithm = new System.Windows.Forms.Label();
+            this.rbXimCore = new System.Windows.Forms.RadioButton();
+            this.rbX2 = new System.Windows.Forms.RadioButton();
             this.cbInvertY = new System.Windows.Forms.CheckBox();
             this.txTextModeRate = new System.Windows.Forms.TextBox();
             this.x2Panel = new System.Windows.Forms.Panel();
+            this.txMouseDpi = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.sensTabControl = new System.Windows.Forms.TabControl();
             this.primarySensitivyTab = new System.Windows.Forms.TabPage();
             this.txAccel = new System.Windows.Forms.TextBox();
@@ -57,9 +68,6 @@ namespace xEmulate
             this.lbAccel2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cbGame = new System.Windows.Forms.ComboBox();
-            this.rbX2 = new System.Windows.Forms.RadioButton();
-            this.rbXimCore = new System.Windows.Forms.RadioButton();
-            this.lbMouseAlgorithm = new System.Windows.Forms.Label();
             this.ximPanel = new System.Windows.Forms.Panel();
             this.labelDeadzone = new System.Windows.Forms.Label();
             this.rbSquare = new System.Windows.Forms.RadioButton();
@@ -81,6 +89,11 @@ namespace xEmulate
             this.lbTextRate = new System.Windows.Forms.Label();
             this.lbRate = new System.Windows.Forms.Label();
             this.txRate = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.rbMouseXNone = new System.Windows.Forms.RadioButton();
+            this.rbMouseXLeft = new System.Windows.Forms.RadioButton();
+            this.rbMouseXRight = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.calibration = new System.Windows.Forms.Button();
             this.tabOutput = new System.Windows.Forms.TabControl();
@@ -112,7 +125,10 @@ namespace xEmulate
             this.cbRawA = new System.Windows.Forms.CheckBox();
             this.cbRawB = new System.Windows.Forms.CheckBox();
             this.tabControllerOutput = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gbSettings.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.x2Panel.SuspendLayout();
             this.sensTabControl.SuspendLayout();
             this.primarySensitivyTab.SuspendLayout();
@@ -122,8 +138,10 @@ namespace xEmulate
             ((System.ComponentModel.ISupportInitialize)(this.sbSpeed2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sbAccel2)).BeginInit();
             this.ximPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tabOutput.SuspendLayout();
             this.tabRawOutput.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -178,7 +196,7 @@ namespace xEmulate
             // cbAutoAnalogDisc
             // 
             this.cbAutoAnalogDisc.AutoSize = true;
-            this.cbAutoAnalogDisc.Location = new System.Drawing.Point(13, 139);
+            this.cbAutoAnalogDisc.Location = new System.Drawing.Point(9, 95);
             this.cbAutoAnalogDisc.Name = "cbAutoAnalogDisc";
             this.cbAutoAnalogDisc.Size = new System.Drawing.Size(141, 17);
             this.cbAutoAnalogDisc.TabIndex = 4;
@@ -188,12 +206,12 @@ namespace xEmulate
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.groupBox1);
+            this.gbSettings.Controls.Add(this.panel2);
+            this.gbSettings.Controls.Add(this.cbAutoAnalogDisc);
             this.gbSettings.Controls.Add(this.cbInvertY);
             this.gbSettings.Controls.Add(this.txTextModeRate);
             this.gbSettings.Controls.Add(this.x2Panel);
-            this.gbSettings.Controls.Add(this.rbX2);
-            this.gbSettings.Controls.Add(this.rbXimCore);
-            this.gbSettings.Controls.Add(this.lbMouseAlgorithm);
             this.gbSettings.Controls.Add(this.ximPanel);
             this.gbSettings.Controls.Add(this.lbTextRate);
             this.gbSettings.Controls.Add(this.lbRate);
@@ -205,10 +223,108 @@ namespace xEmulate
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "General Settings";
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.label11);
+            this.panel3.Controls.Add(this.rbMouseYNone);
+            this.panel3.Controls.Add(this.rbMouseYLeft);
+            this.panel3.Controls.Add(this.rbMouseYRight);
+            this.panel3.Location = new System.Drawing.Point(6, 50);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(207, 25);
+            this.panel3.TabIndex = 53;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 4);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(36, 13);
+            this.label11.TabIndex = 52;
+            this.label11.Text = "Y Axis";
+            // 
+            // rbMouseYNone
+            // 
+            this.rbMouseYNone.AutoSize = true;
+            this.rbMouseYNone.Location = new System.Drawing.Point(153, 2);
+            this.rbMouseYNone.Name = "rbMouseYNone";
+            this.rbMouseYNone.Size = new System.Drawing.Size(51, 17);
+            this.rbMouseYNone.TabIndex = 51;
+            this.rbMouseYNone.TabStop = true;
+            this.rbMouseYNone.Text = "None";
+            this.rbMouseYNone.UseVisualStyleBackColor = true;
+            this.rbMouseYNone.CheckedChanged += new System.EventHandler(this.rbMouseYNone_Changed);
+            // 
+            // rbMouseYLeft
+            // 
+            this.rbMouseYLeft.AutoSize = true;
+            this.rbMouseYLeft.Location = new System.Drawing.Point(48, 2);
+            this.rbMouseYLeft.Name = "rbMouseYLeft";
+            this.rbMouseYLeft.Size = new System.Drawing.Size(43, 17);
+            this.rbMouseYLeft.TabIndex = 48;
+            this.rbMouseYLeft.TabStop = true;
+            this.rbMouseYLeft.Text = "Left";
+            this.rbMouseYLeft.UseVisualStyleBackColor = true;
+            this.rbMouseYLeft.CheckedChanged += new System.EventHandler(this.rbMouseYLeft_Changed);
+            // 
+            // rbMouseYRight
+            // 
+            this.rbMouseYRight.AutoSize = true;
+            this.rbMouseYRight.Location = new System.Drawing.Point(97, 2);
+            this.rbMouseYRight.Name = "rbMouseYRight";
+            this.rbMouseYRight.Size = new System.Drawing.Size(50, 17);
+            this.rbMouseYRight.TabIndex = 49;
+            this.rbMouseYRight.TabStop = true;
+            this.rbMouseYRight.Text = "Right";
+            this.rbMouseYRight.UseVisualStyleBackColor = true;
+            this.rbMouseYRight.CheckedChanged += new System.EventHandler(this.rbMouseYRight_Changed);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.lbMouseAlgorithm);
+            this.panel2.Controls.Add(this.rbXimCore);
+            this.panel2.Controls.Add(this.rbX2);
+            this.panel2.Location = new System.Drawing.Point(6, 223);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(150, 66);
+            this.panel2.TabIndex = 8;
+            // 
+            // lbMouseAlgorithm
+            // 
+            this.lbMouseAlgorithm.AutoSize = true;
+            this.lbMouseAlgorithm.Location = new System.Drawing.Point(3, 4);
+            this.lbMouseAlgorithm.Name = "lbMouseAlgorithm";
+            this.lbMouseAlgorithm.Size = new System.Drawing.Size(85, 13);
+            this.lbMouseAlgorithm.TabIndex = 43;
+            this.lbMouseAlgorithm.Text = "Mouse Algorithm";
+            // 
+            // rbXimCore
+            // 
+            this.rbXimCore.AutoSize = true;
+            this.rbXimCore.Location = new System.Drawing.Point(3, 43);
+            this.rbXimCore.Name = "rbXimCore";
+            this.rbXimCore.Size = new System.Drawing.Size(113, 17);
+            this.rbXimCore.TabIndex = 44;
+            this.rbXimCore.TabStop = true;
+            this.rbXimCore.Text = "Xim Core Algorithm";
+            this.rbXimCore.UseVisualStyleBackColor = true;
+            // 
+            // rbX2
+            // 
+            this.rbX2.AutoSize = true;
+            this.rbX2.Location = new System.Drawing.Point(3, 20);
+            this.rbX2.Name = "rbX2";
+            this.rbX2.Size = new System.Drawing.Size(140, 17);
+            this.rbX2.TabIndex = 45;
+            this.rbX2.TabStop = true;
+            this.rbX2.Text = "Game Specific Algorithm";
+            this.rbX2.UseVisualStyleBackColor = true;
+            this.rbX2.CheckedChanged += new System.EventHandler(this.rbX2_CheckedChanged);
+            // 
             // cbInvertY
             // 
             this.cbInvertY.AutoSize = true;
-            this.cbInvertY.Location = new System.Drawing.Point(19, 78);
+            this.cbInvertY.Location = new System.Drawing.Point(9, 72);
             this.cbInvertY.Name = "cbInvertY";
             this.cbInvertY.Size = new System.Drawing.Size(85, 17);
             this.cbInvertY.TabIndex = 46;
@@ -218,7 +334,7 @@ namespace xEmulate
             // 
             // txTextModeRate
             // 
-            this.txTextModeRate.Location = new System.Drawing.Point(76, 52);
+            this.txTextModeRate.Location = new System.Drawing.Point(66, 46);
             this.txTextModeRate.Name = "txTextModeRate";
             this.txTextModeRate.Size = new System.Drawing.Size(43, 20);
             this.txTextModeRate.TabIndex = 41;
@@ -228,20 +344,40 @@ namespace xEmulate
             // 
             // x2Panel
             // 
+            this.x2Panel.Controls.Add(this.txMouseDpi);
+            this.x2Panel.Controls.Add(this.label12);
             this.x2Panel.Controls.Add(this.sensTabControl);
             this.x2Panel.Controls.Add(this.label1);
             this.x2Panel.Controls.Add(this.cbGame);
-            this.x2Panel.Location = new System.Drawing.Point(6, 316);
+            this.x2Panel.Location = new System.Drawing.Point(6, 295);
             this.x2Panel.Name = "x2Panel";
-            this.x2Panel.Size = new System.Drawing.Size(311, 171);
+            this.x2Panel.Size = new System.Drawing.Size(311, 192);
             this.x2Panel.TabIndex = 42;
             this.x2Panel.Visible = false;
+            // 
+            // txMouseDpi
+            // 
+            this.txMouseDpi.Location = new System.Drawing.Point(74, 38);
+            this.txMouseDpi.Name = "txMouseDpi";
+            this.txMouseDpi.Size = new System.Drawing.Size(42, 20);
+            this.txMouseDpi.TabIndex = 4;
+            this.txMouseDpi.TextChanged += new System.EventHandler(this.nameMappedSettingTextChanged);
+            this.txMouseDpi.Leave += new System.EventHandler(this.nameMappedSettingTextLeft);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(10, 41);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(58, 13);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Mouse Dpi";
             // 
             // sensTabControl
             // 
             this.sensTabControl.Controls.Add(this.primarySensitivyTab);
             this.sensTabControl.Controls.Add(this.secondarySensitivyTab);
-            this.sensTabControl.Location = new System.Drawing.Point(7, 39);
+            this.sensTabControl.Location = new System.Drawing.Point(6, 62);
             this.sensTabControl.Name = "sensTabControl";
             this.sensTabControl.SelectedIndex = 0;
             this.sensTabControl.Size = new System.Drawing.Size(303, 125);
@@ -402,7 +538,7 @@ namespace xEmulate
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 15);
+            this.label1.Location = new System.Drawing.Point(7, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
@@ -412,47 +548,14 @@ namespace xEmulate
             // 
             this.cbGame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGame.FormattingEnabled = true;
-            this.cbGame.Location = new System.Drawing.Point(51, 12);
+            this.cbGame.Location = new System.Drawing.Point(48, 13);
             this.cbGame.Name = "cbGame";
             this.cbGame.Size = new System.Drawing.Size(255, 21);
             this.cbGame.TabIndex = 0;
             this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbGame_SelectedIndexChanged);
             // 
-            // rbX2
-            // 
-            this.rbX2.AutoSize = true;
-            this.rbX2.Location = new System.Drawing.Point(10, 274);
-            this.rbX2.Name = "rbX2";
-            this.rbX2.Size = new System.Drawing.Size(140, 17);
-            this.rbX2.TabIndex = 45;
-            this.rbX2.TabStop = true;
-            this.rbX2.Text = "Game Specific Algorithm";
-            this.rbX2.UseVisualStyleBackColor = true;
-            this.rbX2.CheckedChanged += new System.EventHandler(this.rbX2_CheckedChanged);
-            // 
-            // rbXimCore
-            // 
-            this.rbXimCore.AutoSize = true;
-            this.rbXimCore.Location = new System.Drawing.Point(10, 297);
-            this.rbXimCore.Name = "rbXimCore";
-            this.rbXimCore.Size = new System.Drawing.Size(113, 17);
-            this.rbXimCore.TabIndex = 44;
-            this.rbXimCore.TabStop = true;
-            this.rbXimCore.Text = "Xim Core Algorithm";
-            this.rbXimCore.UseVisualStyleBackColor = true;
-            // 
-            // lbMouseAlgorithm
-            // 
-            this.lbMouseAlgorithm.AutoSize = true;
-            this.lbMouseAlgorithm.Location = new System.Drawing.Point(10, 258);
-            this.lbMouseAlgorithm.Name = "lbMouseAlgorithm";
-            this.lbMouseAlgorithm.Size = new System.Drawing.Size(85, 13);
-            this.lbMouseAlgorithm.TabIndex = 43;
-            this.lbMouseAlgorithm.Text = "Mouse Algorithm";
-            // 
             // ximPanel
             // 
-            this.ximPanel.Controls.Add(this.cbAutoAnalogDisc);
             this.ximPanel.Controls.Add(this.labelDeadzone);
             this.ximPanel.Controls.Add(this.rbSquare);
             this.ximPanel.Controls.Add(this.txDiagonalDampen);
@@ -645,7 +748,7 @@ namespace xEmulate
             // lbTextRate
             // 
             this.lbTextRate.AutoSize = true;
-            this.lbTextRate.Location = new System.Drawing.Point(16, 55);
+            this.lbTextRate.Location = new System.Drawing.Point(6, 49);
             this.lbTextRate.Name = "lbTextRate";
             this.lbTextRate.Size = new System.Drawing.Size(54, 13);
             this.lbTextRate.TabIndex = 26;
@@ -654,7 +757,7 @@ namespace xEmulate
             // lbRate
             // 
             this.lbRate.AutoSize = true;
-            this.lbRate.Location = new System.Drawing.Point(16, 28);
+            this.lbRate.Location = new System.Drawing.Point(6, 22);
             this.lbRate.Name = "lbRate";
             this.lbRate.Size = new System.Drawing.Size(30, 13);
             this.lbRate.TabIndex = 24;
@@ -662,13 +765,69 @@ namespace xEmulate
             // 
             // txRate
             // 
-            this.txRate.Location = new System.Drawing.Point(76, 25);
+            this.txRate.Location = new System.Drawing.Point(66, 19);
             this.txRate.Name = "txRate";
             this.txRate.Size = new System.Drawing.Size(43, 20);
             this.txRate.TabIndex = 36;
             this.txRate.TextChanged += new System.EventHandler(this.nameMappedSettingTextChanged);
             this.txRate.Leave += new System.EventHandler(this.nameMappedSettingTextLeft);
             this.txRate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nameMappedSettingTextReturn);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Controls.Add(this.rbMouseXNone);
+            this.panel1.Controls.Add(this.rbMouseXLeft);
+            this.panel1.Controls.Add(this.rbMouseXRight);
+            this.panel1.Location = new System.Drawing.Point(6, 19);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(207, 25);
+            this.panel1.TabIndex = 52;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(4, 4);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(36, 13);
+            this.label10.TabIndex = 52;
+            this.label10.Text = "X Axis";
+            // 
+            // rbMouseXNone
+            // 
+            this.rbMouseXNone.AutoSize = true;
+            this.rbMouseXNone.Location = new System.Drawing.Point(153, 2);
+            this.rbMouseXNone.Name = "rbMouseXNone";
+            this.rbMouseXNone.Size = new System.Drawing.Size(51, 17);
+            this.rbMouseXNone.TabIndex = 51;
+            this.rbMouseXNone.TabStop = true;
+            this.rbMouseXNone.Text = "None";
+            this.rbMouseXNone.UseVisualStyleBackColor = true;
+            this.rbMouseXNone.CheckedChanged += new System.EventHandler(this.rbMouseXNone_Changed);
+            // 
+            // rbMouseXLeft
+            // 
+            this.rbMouseXLeft.AutoSize = true;
+            this.rbMouseXLeft.Location = new System.Drawing.Point(48, 2);
+            this.rbMouseXLeft.Name = "rbMouseXLeft";
+            this.rbMouseXLeft.Size = new System.Drawing.Size(43, 17);
+            this.rbMouseXLeft.TabIndex = 48;
+            this.rbMouseXLeft.TabStop = true;
+            this.rbMouseXLeft.Text = "Left";
+            this.rbMouseXLeft.UseVisualStyleBackColor = true;
+            this.rbMouseXLeft.CheckedChanged += new System.EventHandler(this.rbMouseXLeft_Changed);
+            // 
+            // rbMouseXRight
+            // 
+            this.rbMouseXRight.AutoSize = true;
+            this.rbMouseXRight.Location = new System.Drawing.Point(97, 2);
+            this.rbMouseXRight.Name = "rbMouseXRight";
+            this.rbMouseXRight.Size = new System.Drawing.Size(50, 17);
+            this.rbMouseXRight.TabIndex = 49;
+            this.rbMouseXRight.TabStop = true;
+            this.rbMouseXRight.Text = "Right";
+            this.rbMouseXRight.UseVisualStyleBackColor = true;
+            this.rbMouseXRight.CheckedChanged += new System.EventHandler(this.rbMouseXRight_Changed);
             // 
             // calibration
             // 
@@ -1004,6 +1163,17 @@ namespace xEmulate
             this.tabControllerOutput.Text = "Controller Output";
             this.tabControllerOutput.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.panel3);
+            this.groupBox1.Controls.Add(this.panel1);
+            this.groupBox1.Location = new System.Drawing.Point(6, 118);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(263, 91);
+            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Mouse Stick";
+            // 
             // X2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1027,6 +1197,10 @@ namespace xEmulate
             this.Text = "xEmulate";
             this.gbSettings.ResumeLayout(false);
             this.gbSettings.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.x2Panel.ResumeLayout(false);
             this.x2Panel.PerformLayout();
             this.sensTabControl.ResumeLayout(false);
@@ -1040,9 +1214,12 @@ namespace xEmulate
             ((System.ComponentModel.ISupportInitialize)(this.sbAccel2)).EndInit();
             this.ximPanel.ResumeLayout(false);
             this.ximPanel.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tabOutput.ResumeLayout(false);
             this.tabRawOutput.ResumeLayout(false);
             this.tabRawOutput.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1132,6 +1309,20 @@ namespace xEmulate
         private System.Windows.Forms.TrackBar sbAccel2;
         private System.Windows.Forms.Label lbSecondarySpeed;
         private System.Windows.Forms.Label lbAccel2;
+        private System.Windows.Forms.RadioButton rbMouseXNone;
+        private System.Windows.Forms.RadioButton rbMouseXRight;
+        private System.Windows.Forms.RadioButton rbMouseXLeft;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.RadioButton rbMouseYNone;
+        private System.Windows.Forms.RadioButton rbMouseYLeft;
+        private System.Windows.Forms.RadioButton rbMouseYRight;
+        private System.Windows.Forms.TextBox txMouseDpi;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

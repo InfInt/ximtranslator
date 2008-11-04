@@ -25,11 +25,10 @@ namespace xEmulate
 
             Singleton<InfoTextManager>.Instance.Init(ref infoText);
             Singleton<InputManager>.Instance.Init();
-            //Singleton<RawInputManager>.Instance.Init(Handle);
             Singleton<DxInputManager>.Instance.Init(this);
             Singleton<XimDyn>.Instance.Init();
 
-            m_commandParser = new CommandParser();
+            m_commandParser = CommandParser.Instance;
             m_ximulator = new Ximulator(this);
 
             m_configManager = ConfigManager.Instance;
@@ -64,13 +63,17 @@ namespace xEmulate
             SetToolTip(txTextModeRate);
             SetToolTip(txTransExponent1);
             SetToolTip(txYxRatio);
+            SetToolTip(cbInvertY);
 
             toolTip1.SetToolTip(cbAutoAnalogDisc, "Autoanalogdisconnect... yea it does something");
             toolTip1.SetToolTip(rbCircular, "Use a circular deadzone when translating mouse movement.");
             toolTip1.SetToolTip(rbSquare, "Use a square deadzone when translating mouse movement.");
+
+            toolTip1.SetToolTip(rbX2, "Use game specific mouse translation ( Not recommended )");
+            toolTip1.SetToolTip(rbXimCore, "Use Xim Core provided mouse translation ( Recommended )");
         }
 
-        private void SetToolTip(TextBox tb)
+        private void SetToolTip(Control tb)
         {
             toolTip1.SetToolTip(tb, m_varManager.GetVarInfo(tb.Name.ToLower().Substring(2)));
         }
@@ -214,6 +217,8 @@ namespace xEmulate
             this.sbSpeed2.Value = (int)(double.Parse(this.txSpeed2.Text) * 1000);
             this.sbAccel2.Value = (int)(double.Parse(this.txAccel2.Text) * 1000);
 
+            this.txMouseDpi.Text = m_varManager.GetVarStr(VarManager.Names.MouseDPI);
+
             this.txDiagonalDampen.Text = m_varManager.GetVarStr(VarManager.Names.DiagonalDampen);
             this.txDeadzone.Text = m_varManager.GetVarStr(VarManager.Names.Deadzone);
             this.txRate.Text = m_varManager.GetVarStr(VarManager.Names.Rate);
@@ -228,6 +233,16 @@ namespace xEmulate
             this.m_varManager.GetVar(VarManager.Names.CircularDeadzone, out circular);
             this.rbCircular.Checked = circular;
             this.rbSquare.Checked = !circular;
+
+            VarManager.Sticks mouseStick = m_varManager.GetVar<VarManager.Sticks>(VarManager.Names.MouseStickX);
+            this.rbMouseXRight.Checked = mouseStick == VarManager.Sticks.Right;
+            this.rbMouseXLeft.Checked = mouseStick == VarManager.Sticks.Left;
+            this.rbMouseXNone.Checked = mouseStick == VarManager.Sticks.None;
+
+            mouseStick = m_varManager.GetVar<VarManager.Sticks>(VarManager.Names.MouseStickY);
+            this.rbMouseYRight.Checked = mouseStick == VarManager.Sticks.Right;
+            this.rbMouseYLeft.Checked = mouseStick == VarManager.Sticks.Left;
+            this.rbMouseYNone.Checked = mouseStick == VarManager.Sticks.None;
 
             this.cbAutoAnalogDisc.Checked = m_varManager.GetVar<bool>(VarManager.Names.AutoAnalogDisconnect);
 
@@ -344,6 +359,15 @@ namespace xEmulate
             this.tbRawRX.Text = input.RightStickX.ToString();
             this.tbRawRY.Text = input.RightStickY.ToString();
         }
+
+        private void rbMouseXLeft_Changed(object sender, EventArgs e){ m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickX, VarManager.Sticks.Left); }
+        private void rbMouseXRight_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickX, VarManager.Sticks.Right); }
+        private void rbMouseXNone_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickX, VarManager.Sticks.None); }
+
+        private void rbMouseYLeft_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.Left); }
+        private void rbMouseYRight_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.Right); }
+        private void rbMouseYNone_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.None); }
+
     }
 }
         

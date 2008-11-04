@@ -497,7 +497,6 @@ namespace XimApi
                 analogVal = -(short)Xim.Stick.Max;
             }
 
-
             switch (button)
             {
                 case Analog.LeftStickX:
@@ -517,6 +516,39 @@ namespace XimApi
                     break;
                 case Analog.RightTrigger:
                     input.RightTrigger = (short)analogVal;
+                    break;
+                default:
+                    return false;
+            }
+            return true;
+        }
+
+        public static bool AddAnalogValue(Analog button, int analogVal, ref Input input)
+        {
+            if (analogVal > (short)Xim.Stick.Max)
+                analogVal = (short)Xim.Stick.Max;
+            else if (analogVal < -(short)Xim.Stick.Max)
+                analogVal = -(short)Xim.Stick.Max;
+
+            switch (button)
+            {
+                case Analog.LeftStickX:
+                    input.LeftStickX = AddStickValue(input.LeftStickX, (short)analogVal);
+                    break;
+                case Analog.LeftStickY:
+                    input.LeftStickY = AddStickValue(input.LeftStickY, (short)analogVal);
+                    break;
+                case Analog.RightStickX:
+                    input.RightStickX = AddStickValue(input.RightStickX, (short)analogVal);
+                    break;
+                case Analog.RightStickY:
+                    input.RightStickY = AddStickValue(input.RightStickY, (short)analogVal);
+                    break;
+                case Analog.LeftTrigger:
+                    input.LeftTrigger = AddStickValue(input.LeftTrigger, (short)analogVal);
+                    break;
+                case Analog.RightTrigger:
+                    input.RightTrigger = AddStickValue(input.RightTrigger, (short)analogVal);
                     break;
                 default:
                     return false;

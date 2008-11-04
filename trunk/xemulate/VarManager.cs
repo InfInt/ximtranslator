@@ -29,22 +29,23 @@ namespace xEmulate
             public static string Smoothness = "smoothness";
             public static string CircularDeadzone = "circulardeadzone";
             public static string UseXimApiMouseMath = "useximapimousemath";
-            public static string MouseStick = "mousestick";
+            public static string MouseStickX = "mousestickx";
+            public static string MouseStickY = "mousesticky";
             public static string AltSens = "altsens";
             public static string AltSens2 = "altsens2";
             public static string AltSens3 = "altsens3";
             public static string AutoAnalogDisconnect = "autoanalogdisconnect";
             public static string TextMode = "textmode";
             public static string CurrentGame = "currentgame";
-            public static string InvertY = "invertyaxis";
+            public static string InvertY = "inverty";
+            public static string MouseDPI = "mousedpi";
         };
 
         public enum Sticks
         {
             None = 0,
             Left,
-            Right,
-            Both,
+            Right
         }
 
         public class Var
@@ -155,12 +156,14 @@ namespace xEmulate
             InitVar(Names.AutoAnalogDisconnect, typeof(bool), (bool)false, false, "'true' = use autoanalogdisconnect, 'false' = don't", null);
             InitVar(Names.CircularDeadzone, typeof(bool), (bool)true, false, "Defines deadzone type: 'true' = circular deadzone, 'false' = square deadzone", null);
             InitVar(Names.UseXimApiMouseMath, typeof(bool), (bool)true, false, "'true' = use the xim API mouse translation, 'false' = don't", null);
-            InitVar(Names.MouseStick, typeof(Sticks), (Sticks)Sticks.Right, false, "None, Rightstick, Leftstick, Both ( lol )", null);
+            InitVar(Names.MouseStickX, typeof(Sticks), (Sticks)Sticks.Right, false, "None, Rightstick, Leftstick", null);
+            InitVar(Names.MouseStickY, typeof(Sticks), (Sticks)Sticks.Right, false, "None, Rightstick, Leftstick", null);
             InitVar(Names.AltSens, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
             InitVar(Names.AltSens2, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
             InitVar(Names.AltSens3, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
             InitVar(Names.CurrentGame, typeof(GamesManager.Games), (GamesManager.Games)GamesManager.Games.Ut3, false, "", null);
             InitVar(Names.InvertY, typeof(bool), (bool)false, false, "'true' = Invert Y axis during mouse translations", null);
+            InitVar(Names.MouseDPI, typeof(int), (int)800, false, "Your mouse DPI", null);
         }
 
         private void InitVar(String varName, Type varType, Object value, bool intern, String info, Enum validValues)
@@ -206,7 +209,7 @@ namespace xEmulate
             Var v;
             if (GetVar(key, out v))
             {
-                return v.Info.ToString().ToLower(); ;
+                return v.Info.ToString();
             }
             return "";
         }

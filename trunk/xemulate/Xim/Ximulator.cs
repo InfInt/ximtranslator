@@ -66,10 +66,9 @@ namespace xEmulate
         private VarManager.Var m_useXimApiMouseMath;
 
         private MouseMath mouseMath;
-        private MouseMath2 mouseMath2;
         private Thread myThread;
 
-        private XimDyn ximDyn;
+        public XimDyn ximDyn;
 
         ~Ximulator()
         {
@@ -99,8 +98,7 @@ namespace xEmulate
             m_varManager.GetVar("useximapimousemath", out m_useXimApiMouseMath);
 
             this.mouseMath = new MouseMath();
-            this.mouseMath2 = new MouseMath2();
-
+            
             m_utilThread = new UtilThread();
         }
 
@@ -153,6 +151,7 @@ namespace xEmulate
             Log("Disconnected.");
             m_connected = false;
             m_utilThread.m_fConnected = false;
+            Xim.Disconnect();
         }
 
         public bool IsRunning()
@@ -214,7 +213,6 @@ namespace xEmulate
                     {
                         dxInputManager.PollAndProcess(!(bool)m_textMode.Value);
                     }
-                    
 
                     input.CopyFrom(startState);
                     TimeSpan thisTick = watch.Elapsed;
@@ -250,8 +248,7 @@ namespace xEmulate
                         }
                         else
                         {
-                            this.mouseMath2.XSoftMouseMovement(ref input, ref startState);             
-                            //this.mouseMath.XSoftMouseMovement(ref input, ref startState);
+                            this.mouseMath.XSoftMouseMovement(ref input, ref startState);
                         }
                         m_eventManager.ProcessLinks(delay, ref input, ref startState);
                     }
