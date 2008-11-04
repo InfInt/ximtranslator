@@ -1,11 +1,29 @@
+Nov 4, 2008
+	- Fixed a bug where if you had a joystick enabled on an analog stick/trigger you could not use autofire for that stick/trigger
+	
+	- Added Seperating which axis the mouse controls ( Left, Right, None ) for each axis.
+	- Added MouseDpi, this will be factored into the Game Specific algorithms to normalize them further.
+	- Replaced MouseMath with MouseMath2 and removed MouseMath2/GameSettings2
+
+Nov 3, 2008
+    - Fixed "echo" to allow more than 1 word to be echoed.
+	- Fixed "bind x bind y .a" type binds.
+	
+	- Added XInput support :)
+	- Added a delay to rapid fire "bind mouseleft *righttrigger 40" delays by atleast 40 ms instead of as fast as possible.
+	
+	- Refactored the BindingManager to only contain 1 dictionary for all IKeys
+	
 Nov 2, 2008
 	- Fixed "exec" to look in the current directory, then the xim configs in my documents, then in app data.
 	- Fixed a bug in AnalogEvent preventing flags from working at all.
+	- Fixed timing logic in MouseMath and MouseMath2, now correctly scales by the delay. 
 	
 	- Added unbind <key>
 	- Added "link" type bind.  Allows events to be fired when input to the xbox has buttons pressed.
 		Example:  "link lefttrigger wait 150;.altsens"
 		With this bind, when you zoom in cod4 it will automatically wait 150ms and then engage the alternate sensitivity, this is especially useful when using a toggle zoom bind like "bind mouseright !lefttrigger".  :)
+	- Added notification if a joystick was found. 
 
 Nov 1, 2008
 	Start of log... better late than never.

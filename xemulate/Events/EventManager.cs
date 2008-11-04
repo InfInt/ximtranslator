@@ -4,6 +4,7 @@ using System.Text;
 using XimApi;
 using Common;
 using DxI = Microsoft.DirectX.DirectInput;
+using Xna = Microsoft.Xna.Framework;
 
 namespace xEmulate
 {
@@ -13,20 +14,19 @@ namespace xEmulate
         public List<DxI.Key> keys;
         public List<Joystick.Button> joyButtons;
         public DxI.JoystickState joyState;
+        public Xna.Input.GamePadState xinputState;
     };
 
     class EventManager
     {
-        private List<InputEventHandler> m_inputEventHandlers;
-        private List<LinkEventHandler> m_linkEventHandlers;
+        private List<InputEventHandler> m_inputEventHandlers = new List<InputEventHandler>();
+        private List<LinkEventHandler> m_linkEventHandlers = new List<LinkEventHandler>();
         private BindingManager m_bindingManager;
         private InputManager m_inputManager;
         private Xim.Input lastXimInput;
         
         private EventManager()
         {
-            m_inputEventHandlers = new List<InputEventHandler>();
-            m_linkEventHandlers = new List<LinkEventHandler>();
             m_bindingManager = BindingManager.Instance;
             m_inputManager = InputManager.Instance;
         }
@@ -60,20 +60,30 @@ namespace xEmulate
                 return new KeyboardEventHandler((key as InputKey<DxI.Key>).key, events);
             else if (key is InputKey<Joystick.Button>)
                 return new JoyEventHandler((key as InputKey<Joystick.Button>).key, events);
+            else if (key is InputKey<Xna.Input.Buttons>)
+                return new XInputEventHandler((key as InputKey<Xna.Input.Buttons>).key, events);
             return null;
         }
 
         public void QueueAnalogJoyBinds()
         {
-            // Key is now down, check if there is an event for this key and fire it.
-            Dictionary<InputKey<Joystick.Analog>, List<InputEvent>> binds;
-            binds = m_bindingManager.GetJoyAnalogBinds();
-            foreach (KeyValuePair<InputKey<Joystick.Analog>, List<InputEvent>> pair in binds)
+            Dictionary<IKey, List<InputEvent>> joyBinds;
+            joyBinds = m_bindingManager.GetAnalogBinds();
+            foreach (KeyValuePair<IKey, List<InputEvent>> pair in joyBinds)
             {
                 if (pair.Value.Count == 1)
                 {
-                    InputEventHandler inputEventHandler = new JoyAnalogEventHandler(pair.Key.key, pair.Value[0] as AnalogEvent);
-                    m_inputEventHandlers.Add(inputEventHandler);
+                    // Try as JoyAnalogEvent
+                    if (pair.Key is InputKey<Joystick.Analog>)
+                    {
+                        InputEventHandler inputEventHandler = new JoyAnalogEventHandler((pair.Key as InputKey<Joystick.Analog>).key, pair.Value[0] as AnalogEvent);
+                        m_inputEventHandlers.Add(inputEventHandler);
+                    }
+                    else if ( pair.Key is InputKey<Xim.Analog> )
+                    {
+                        InputEventHandler inputEventHandler = new XInputAnalogEventHandler((pair.Key as InputKey<Xim.Analog>).key, pair.Value[0] as AnalogEvent);
+                        m_inputEventHandlers.Add(inputEventHandler);
+                    }
                 }
             }
         }
@@ -85,6 +95,7 @@ namespace xEmulate
             pressedState.keys = m_inputManager.GetPressedKeys();
             pressedState.joyButtons = m_inputManager.GetJoyButtons();
             pressedState.joyState = m_inputManager.GetJoyState();
+            pressedState.xinputState = m_inputManager.GetXInputState();
             Stack<InputEventHandler> finishedHandlers = new Stack<InputEventHandler>();
             foreach (InputEventHandler inputEventHandler in m_inputEventHandlers)
             {

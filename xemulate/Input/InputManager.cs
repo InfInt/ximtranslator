@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Text;
 using Common;
 using DxI = Microsoft.DirectX.DirectInput;
+using Xna = Microsoft.Xna.Framework;
 
 namespace xEmulate
 {
     class InputManager
     {
-        private List<DxI.Key> m_pressedKeys;
-        private List<Mouse.Button> m_pressedMouseButtons;
-        private List<Joystick.Button> m_pressedJoyButtons;
-        private DxI.JoystickState m_currentJoyState;
-        private Vector2 m_mouseDelta;
+        private List<DxI.Key> m_pressedKeys = new List<DxI.Key>(30);
+        private List<Mouse.Button> m_pressedMouseButtons = new List<Mouse.Button>(3);
+        private List<Joystick.Button> m_pressedJoyButtons = new List<Joystick.Button>(10);
+        //private List<Xna.Input.Buttons> m_pressedXInputButtons = new List<Xna.Input.Buttons>(10);
+        private DxI.JoystickState m_currentJoyState = default(DxI.JoystickState);
+        private Xna.Input.GamePadState m_currentXInputState = default(Xna.Input.GamePadState);
+        private Vector2 m_mouseDelta = new Vector2(0, 0);
 
         private EventManager eventManager;
         private bool initialized = false;
 
         private InputManager()
         {
-            m_pressedKeys = new List<DxI.Key>(30);
-            m_pressedMouseButtons = new List<Mouse.Button>(3);
-            m_pressedJoyButtons = new List<Joystick.Button>(10);
-            m_mouseDelta = new Vector2(0, 0);
         }
 
         public void Init()
@@ -65,6 +64,11 @@ namespace xEmulate
         public DxI.JoystickState GetJoyState()
         {
             return m_currentJoyState;
+        }
+
+        public Xna.Input.GamePadState GetXInputState()
+        {
+            return m_currentXInputState;
         }
 
         public bool IsKeyDown(DxI.Key key)
@@ -250,6 +254,26 @@ namespace xEmulate
                 }
             }
             m_pressedJoyButtons = buttons;
+        }
+
+        public void SetAndFireXInput(Xna.Input.GamePadState state, bool fCreateEvents)
+        {
+            
+            List<Xna.Input.Buttons> buttons = new List<Xna.Input.Buttons>(6);         
+            foreach (Xna.Input.Buttons button in Enum.GetValues(typeof(Xna.Input.Buttons)))
+            {
+                if (state.IsButtonDown(button))
+                {
+                    buttons.Add(button);
+                    if (fCreateEvents && !this.m_currentXInputState.IsButtonDown(button))
+                    {
+                        eventManager.FireKeyDownEvent(InputKey.Make(button));
+                    }
+                }
+            }
+
+            this.m_currentXInputState = state;
+            //m_pressedXInputButtons = buttons;
         }
     }
 }

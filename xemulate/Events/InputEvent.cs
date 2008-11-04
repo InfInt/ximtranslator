@@ -138,11 +138,14 @@ namespace xEmulate
      * */
     class RapidEvent : InputEvent
     {
-        private Xim.Button m_button;
+        private Xim.Button button;
+        private double delay;
+        private double elapsed = 0;
 
-        public RapidEvent(Xim.Button button)
+        public RapidEvent(Xim.Button button, double delay)
         {
-            m_button = button;
+            this.button = button;
+            this.delay = delay;
         }
 
         public override Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
@@ -150,13 +153,23 @@ namespace xEmulate
             if (keyStillPressed)
             {
                 if (firstRun)
-                    Xim.ToggleButtonState(m_button, ref input);
+                {
+                    Xim.ToggleButtonState(this.button, ref input);
+                    //Xim.ToggleButtonState(this.button, ref startState);
+                }
                 else
-                    Xim.ToggleButtonState(m_button, ref startState);
+                {
+                    this.elapsed += elapsed;
+                    if (this.elapsed > delay)
+                    {
+                        this.elapsed = this.elapsed - delay;
+                        Xim.ToggleButtonState(this.button, ref startState);
+                    }
+                }
             }
             else
             {
-                Xim.SetButtonState(m_button, Xim.ButtonState.Released, ref startState);
+                Xim.SetButtonState(this.button, Xim.ButtonState.Released, ref startState);
             }
 
             return keyStillPressed ? Status.Running : Status.Complete;
@@ -164,7 +177,10 @@ namespace xEmulate
 
         public override string ToString()
         {
-            return "*" + m_button.ToString().ToLower();
+            String delayStr = "";
+            if (this.delay > 0)
+                delayStr = " " +this.delay.ToString();
+            return "*" + this.button.ToString().ToLower() + delayStr;
         }
     }
 
@@ -214,7 +230,7 @@ namespace xEmulate
 
         public override string ToString()
         {
-            return "set "+ m_var.ToString().ToLower() + " " + m_value.ToString().ToLower();
+            return "set "+ m_var.VarName.ToString().ToLower() + " " + m_value.ToString().ToLower();
         }
     }
 
@@ -303,6 +319,30 @@ namespace xEmulate
     /*
      * Sets the state of a button on the startState, it will not release until it is reset.
      * */
+    class CommandLineEvent : InputEvent
+    {
+        String cmdLine;
+
+        public CommandLineEvent(String cmdLine)
+        {
+            this.cmdLine = cmdLine;
+        }
+
+        public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
+        {
+            CommandParser.Instance.ParseLine(this.cmdLine);
+            return Status.Complete;
+        }
+
+        public override string ToString()
+        {
+            return this.cmdLine;
+        }
+    }
+
+    /*
+     * Sets the state of a button on the startState, it will not release until it is reset.
+     * */
     class EchoEvent : InputEvent
     {
         String m_echo;
@@ -373,7 +413,7 @@ namespace xEmulate
                     analogVal = 0;
             }
 
-            Xim.SetAnalogState(button, analogVal, ref input);
+            Xim.AddAnalogValue(button, analogVal, ref input);
             return Status.Running;
         }
 

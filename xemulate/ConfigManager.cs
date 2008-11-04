@@ -214,7 +214,7 @@ namespace xEmulate
         private bool LoadDotXim(String file)
         {
             VarManager varManager = Singleton<VarManager>.Instance;
-            CommandParser cmdParser = new CommandParser();
+            CommandParser cmdParser = CommandParser.Instance;
             m_infoTextManager.WriteLine("Loading xim config from: " + Environment.NewLine + "\t" + file + "... ");
 
             StreamReader sr;
@@ -422,7 +422,7 @@ namespace xEmulate
 
         public bool LoadConfig(String file)
         {
-            CommandParser cmdParser = new CommandParser();
+            CommandParser cmdParser = CommandParser.Instance;
 
             StreamReader SR;
 

@@ -4,6 +4,7 @@ using System.Text;
 using XimApi;
 using Common;
 using DxI = Microsoft.DirectX.DirectInput;
+using Xna = Microsoft.Xna.Framework;
 
 namespace xEmulate
 {
@@ -192,6 +193,77 @@ namespace xEmulate
                 default:
                     return false;
             }
+
+            inputEvent.Run(false, elapsed, analogVal, ref input, ref startState);
+            return true;
+        }
+    }
+
+    class XInputEventHandler : InputEventHandler
+    {
+        private Xna.Input.Buttons button;
+        private bool m_stillPressed = true;
+
+        public XInputEventHandler(Xna.Input.Buttons button, List<InputEvent> futureEvents)
+            : base(futureEvents)
+        {
+            this.button = button;
+        }
+
+        public override bool Run(double elapsed,
+            PressedState pressedState,
+            ref Xim.Input input,
+            ref Xim.Input startState)
+        {
+            m_stillPressed = m_stillPressed && pressedState.xinputState.IsButtonDown(this.button);
+            return base.Run(elapsed, m_stillPressed, ref input, ref startState);
+        }
+    }
+
+    class XInputAnalogEventHandler : InputEventHandler
+    {
+        private Xim.Analog button;
+        private AnalogEvent inputEvent;
+
+        public XInputAnalogEventHandler(Xim.Analog button, AnalogEvent inputEvent)
+            : base(null)
+        {
+            this.button = button;
+            this.inputEvent = inputEvent;
+        }
+
+        public override bool Run(double elapsed,
+            PressedState pressedState,
+            ref Xim.Input input,
+            ref Xim.Input startState)
+        {
+            int analogVal = 0;
+            float controllerValue = 0;
+            switch (button)
+            {
+                case Xim.Analog.LeftStickX:
+                    controllerValue = pressedState.xinputState.ThumbSticks.Left.X;
+                    break;
+                case Xim.Analog.LeftStickY:
+                    controllerValue = pressedState.xinputState.ThumbSticks.Left.Y;
+                    break;
+                case Xim.Analog.LeftTrigger:
+                    controllerValue = pressedState.xinputState.Triggers.Left;
+                    break;
+                case Xim.Analog.RightStickX:
+                    controllerValue = pressedState.xinputState.ThumbSticks.Right.X;
+                    break;
+                case Xim.Analog.RightStickY:
+                    controllerValue = pressedState.xinputState.ThumbSticks.Right.Y;
+                    break;
+                case Xim.Analog.RightTrigger:
+                    controllerValue = pressedState.xinputState.Triggers.Right;
+                    break;
+                default:
+                    return false;
+            }
+
+            analogVal = (int)(controllerValue * (int)Xim.Stick.Max + (int)Xim.Stick.Max);
 
             inputEvent.Run(false, elapsed, analogVal, ref input, ref startState);
             return true;

@@ -81,6 +81,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_824AA947159E09304F5BC1B918EBA4B8"
+        "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_89104E871AA229239DFF2AB3134AC6FD"
         "OwnerKey" = "8:_EDA95D03476047E99F7D4A57A3936C8B"
         "MsmSig" = "8:_UNDEFINED"
@@ -149,6 +155,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_739E29642B0413167A2BE70B2E4DEDD9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_824AA947159E09304F5BC1B918EBA4B8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -484,6 +496,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_824AA947159E09304F5BC1B918EBA4B8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_824AA947159E09304F5BC1B918EBA4B8"
+                    {
+                    "Name" = "8:Microsoft.Xna.Framework.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.Xna.Framework.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE29E9EE02A04E898B3617DBC0FA9A3D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_89104E871AA229239DFF2AB3134AC6FD"
             {
             "AssemblyRegister" = "3:1"
@@ -542,7 +585,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -688,14 +731,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:xEmulate"
-        "ProductCode" = "8:{B9A409A9-1E07-4E6E-A54E-93AB9D587880}"
-        "PackageCode" = "8:{12C84DB8-0FD0-4796-A7A7-4E55F1D15AE4}"
+        "ProductCode" = "8:{D7E4E49E-402A-4921-A4CD-DC2632D35D2F}"
+        "PackageCode" = "8:{F8BFFA50-31F8-4D53-8B66-426292D2B5AC}"
         "UpgradeCode" = "8:{06C1EC59-F269-4AAE-8514-F112FD176E53}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.02.01"
+        "ProductVersion" = "8:1.02.03"
         "Manufacturer" = "8:."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.xim360.com"

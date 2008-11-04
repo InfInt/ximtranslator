@@ -29,6 +29,9 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,6 +81,7 @@
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -91,8 +95,6 @@
     <Compile Include="KeyClasses.cs" />
     <Compile Include="VarManager.cs" />
     <Compile Include="Xim\MouseAlgs.cs" />
-    <Compile Include="Xim\GamesSettings2.cs" />
-    <Compile Include="Xim\MouseMath2.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="InfoTextManager.cs" />
@@ -172,6 +174,9 @@
       <Project>{FBB71894-216D-45FF-BCDD-06F7112138DB}</Project>
       <Name>XimApi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Win32Api\" />

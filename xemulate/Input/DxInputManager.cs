@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using DxI = Microsoft.DirectX.DirectInput;
+using Xna = Microsoft.Xna.Framework;
 using Common;
 
 namespace xEmulate
@@ -12,7 +13,7 @@ namespace xEmulate
         private DxI.Device m_keyboard = null;
         private DxI.Device m_mouse = null;
         private DxI.Device m_joy = null;
-        private DxI.JoystickState joyState;
+        private bool useXInput = false;
         private X2 form;
 
         private InputManager inputManager;
@@ -29,8 +30,8 @@ namespace xEmulate
 
         public void Init(X2 form)
         {
+            InfoTextManager.Instance.WriteLine("Initializing DirectInput...");
             this.form = form;
-
             m_keyboard = new DxI.Device(DxI.SystemGuid.Keyboard);
             m_keyboard.Properties.BufferSize = 20;
             m_keyboard.SetCooperativeLevel(form.Handle,
@@ -55,22 +56,40 @@ namespace xEmulate
                                             DxI.CooperativeLevelFlags.Exclusive);
 #endif
 
-
-            foreach (DxI.DeviceInstance pad in DxI.Manager.GetDevices(DxI.DeviceClass.GameControl, DxI.EnumDevicesFlags.AttachedOnly))
+            InfoTextManager.Instance.Write("Complete."); 
+            Xna.Input.GamePadState gamePadState = Xna.Input.GamePad.GetState(Xna.PlayerIndex.One);
+            if (gamePadState.IsConnected)
             {
-                m_joy = new DxI.Device(pad.InstanceGuid);
-                m_joy.SetCooperativeLevel(form, DxI.CooperativeLevelFlags.Background |
+                this.useXInput = true;
+                InfoTextManager.Instance.WriteLine("Initialized 1 XInput Controller, skipping Joysticks");
+            }
+            else
+            {
+
+                foreach (DxI.DeviceInstance pad in DxI.Manager.GetDevices(DxI.DeviceClass.GameControl, DxI.EnumDevicesFlags.AttachedOnly))
+                {
+                    m_joy = new DxI.Device(pad.InstanceGuid);
+                    m_joy.SetCooperativeLevel(form, DxI.CooperativeLevelFlags.Background |
 #if DEBUG
-                                            DxI.CooperativeLevelFlags.NonExclusive);
+ DxI.CooperativeLevelFlags.NonExclusive);
 #else
                                             DxI.CooperativeLevelFlags.Exclusive);
 #endif
+                }
+
+
+                
+                if (m_joy != null)
+                {
+                    InfoTextManager.Instance.WriteLine("Initialized 1 Joystick");
+                }
             }
         }
 
         public bool ControllersPresent()
         {
-            return m_joy != null;
+            Xna.Input.GamePadState gamePadState = Xna.Input.GamePad.GetState(Xna.PlayerIndex.One);
+            return gamePadState.IsConnected || m_joy != null;
         }
 
         public void PollAndProcess(bool fCreateEvents)
@@ -78,8 +97,6 @@ namespace xEmulate
             // Keyboard
             DxI.Key[] keys = null;
             keys = GetPressedKeys();
-
-           
             if (keys != null)
             {
                 DxI.BufferedDataCollection buffData = m_keyboard.GetBufferedData();
@@ -104,7 +121,7 @@ namespace xEmulate
             DxI.MouseState mouseState;
             if (GetMouseState(out mouseState))
             {
-                DxI.BufferedDataCollection buffData = m_mouse.GetBufferedData();
+                /*DxI.BufferedDataCollection buffData = m_mouse.GetBufferedData();
                 if (buffData != null)
                 {
 
@@ -112,7 +129,7 @@ namespace xEmulate
                     {
                         
                     }
-                }
+                }*/
                 Vector2 delta = new Vector2(mouseState.X, mouseState.Y);
                 this.inputManager.SetMouseDelta(delta);
 
@@ -120,17 +137,21 @@ namespace xEmulate
             }
 
             // Joystick
-            if (m_joy != null)
+            DxI.JoystickState joyState;
+            if (m_joy != null && GetJoyState(out joyState))
             {
-                m_joy.Poll();
-                joyState = m_joy.CurrentJoystickState;
                 this.inputManager.SetAndFireJoyButtons(joyState, fCreateEvents);
             }
-        }
 
-        public short GetJoyYValue()
-        {
-            return (short)(joyState.X - (short)XimApi.Xim.Stick.Max ) ;
+            // XInput
+            if(this.useXInput)
+            {
+                Xna.Input.GamePadState gamePadState = Xna.Input.GamePad.GetState(Xna.PlayerIndex.One);
+                if (gamePadState.IsConnected)
+                {
+                    this.inputManager.SetAndFireXInput(gamePadState, fCreateEvents);
+                }
+            }
         }
 
         private void AcquireKeyboard()
@@ -208,6 +229,31 @@ namespace xEmulate
                 }
             }
             state = default(DxI.MouseState);
+            return false;
+        }
+
+        public bool GetJoyState(out DxI.JoystickState joyState)
+        {
+            try
+            {
+                m_joy.Poll();
+                joyState = m_joy.CurrentJoystickState;
+                return true;
+            }
+            catch
+            {
+                try
+                {
+                    AcquireJoy();
+                    m_joy.Poll();
+                    joyState = m_joy.CurrentJoystickState;
+                    return true;
+                }
+                catch
+                {
+                }
+            }
+            joyState = default(DxI.JoystickState);
             return false;
         }
     }

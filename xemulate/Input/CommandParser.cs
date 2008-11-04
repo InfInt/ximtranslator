@@ -19,7 +19,7 @@ namespace xEmulate
         private InfoTextManager m_infoTextManager;
         private VarManager m_varManager;
 
-        public CommandParser()
+        private CommandParser()
         {
             m_infoTextManager = InfoTextManager.Instance;
             m_bindingManager = BindingManager.Instance;
@@ -36,6 +36,11 @@ namespace xEmulate
                 String name = Enum.GetName(typeof(Xim.Analog), button);
                 m_ximAnalogMap.Add(name.ToLower(), button);
             }
+        }
+
+        public static CommandParser Instance
+        {
+            get { return Singleton<CommandParser>.Instance; }
         }
 
         public bool ParseLine(String line)
@@ -74,6 +79,7 @@ namespace xEmulate
 
                 if (key == line)
                 {
+                    key = "link" + key;
                     // Just display the current bind for that key if one exists.
                     if (m_bindingManager.IsLinkKey(key))
                     {
@@ -83,6 +89,7 @@ namespace xEmulate
                 }
                 else
                 {
+                    key = "link" + key;
                     String macro = line.Substring(firstSpace + 1);
                     if (m_bindingManager.IsLinkKey(key))
                     {
@@ -233,12 +240,12 @@ namespace xEmulate
                         events.Add(new LoadConfigEvent(execTokens[1]));
                     }
                 }
-                else if (token.StartsWith("echo"))
+                else if (token.StartsWith("echo "))
                 {
-                    String[] execTokens = token.Split(c_spacedelim);
-                    if (execTokens.Length == 2)
+                    String execStr = token.Substring(token.IndexOf(' '));
+                    if (execStr.Length > 0)
                     {
-                        events.Add(new EchoEvent(execTokens[1]));
+                        events.Add(new EchoEvent(execStr));
                     }
                 }
                 else if(token.StartsWith("set"))
@@ -257,8 +264,8 @@ namespace xEmulate
                 }
                 else if (token.StartsWith("wait"))
                 {
-                    String[] waitTokens = token.Split( c_spacedelim );
-                    if( waitTokens.Length == 2 )
+                    String[] waitTokens = token.Split(c_spacedelim);
+                    if (waitTokens.Length == 2)
                     {
                         double waitTimeInMs = 0;
                         if (double.TryParse(waitTokens[1], out waitTimeInMs))
@@ -266,6 +273,10 @@ namespace xEmulate
                             events.Add(new WaitEvent(waitTimeInMs));
                         }
                     }
+                }
+                else if (token.StartsWith("bind"))
+                {
+                    events.Add(new CommandLineEvent(token));
                 }
                 else if (token[0] == '+')
                 {
@@ -326,10 +337,18 @@ namespace xEmulate
                 else if (token[0] == '*')
                 {
                     token = token.Substring(1);
+                    double delay = 0;
+
+                    if (token.IndexOf(' ') != -1)
+                    {
+                        delay = double.Parse(token.Substring(token.IndexOf(' ')));
+                        token = token.Substring(0, token.IndexOf(' '));
+                    }
+
                     Xim.Button button;
                     if (m_buttonMap.TryGetValue(token, out button))
                     {
-                        events.Add(new RapidEvent(button));
+                        events.Add(new RapidEvent(button, delay));
                     }
                 }
                 else if (m_buttonMap.ContainsKey(token))
