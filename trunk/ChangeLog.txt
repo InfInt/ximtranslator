@@ -3,6 +3,7 @@ Nov 4, 2008
 	
 	- Added Seperating which axis the mouse controls ( Left, Right, None ) for each axis.
 	- Added MouseDpi, this will be factored into the Game Specific algorithms to normalize them further.
+	
 	- Replaced MouseMath with MouseMath2 and removed MouseMath2/GameSettings2
 
 Nov 3, 2008
