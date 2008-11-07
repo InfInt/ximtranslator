@@ -95,7 +95,14 @@ namespace xEmulate
                 VarManager.GetVarValue(m_sensitivity1, out sensitivity);
             }
 
-            if (m_mouseSmoothPtr == (IntPtr)0)
+            if (this.m_smoothness.Updated)
+            {
+                this.m_smoothness.Updated = false;
+                Xim.FreeSmoothness(m_mouseSmoothPtr);
+                m_mouseSmoothPtr = IntPtr.Zero;
+            }
+
+            if (m_mouseSmoothPtr == IntPtr.Zero)
             {
                 // Alloc the smooth ptr.
                 m_mouseSmoothPtr = Xim.AllocSmoothness((float)((double)this.m_smoothness.Value), (int)(1000 / Xim.Delay), (float)((double)m_yxratio.Value), (float)((double)m_transExp1.Value), (float)sensitivity);
