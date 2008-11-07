@@ -1,3 +1,8 @@
+Nov 6, 2008
+	- Fixed a bug that caused smoothness to not update if changed in the UI
+	
+	- Added a check for XNA dependencies before we reun so we dont crash.
+	
 Nov 4, 2008
 	- Fixed a bug where if you had a joystick enabled on an analog stick/trigger you could not use autofire for that stick/trigger
 	

@@ -20,7 +20,8 @@ namespace yLinearize
             InitializeComponent();
 
             threadObj = new MyThreadObj();
-            threadObj.speed = short.Parse(textBox1.Text);
+            threadObj.ySpeed = short.Parse(textBox1.Text);
+            threadObj.xSpeed = short.Parse(textBox4.Text);
             threadObj.time = short.Parse(textBox3.Text);
 
             Thread myThread = new Thread(new ThreadStart(threadObj.Go));
@@ -36,7 +37,7 @@ namespace yLinearize
         {
             try
             {
-                threadObj.speed = short.Parse(textBox1.Text);
+                threadObj.ySpeed = short.Parse(textBox1.Text);
             }
             catch { }
         }
@@ -143,6 +144,15 @@ namespace yLinearize
             threadObj.going = !threadObj.going;
             button1.Text = threadObj.going ? "Stop" : "Start";
         }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                threadObj.xSpeed = short.Parse(textBox4.Text);
+            }
+            catch { }
+        }
     }
 
     public class MyThreadObj
@@ -151,7 +161,8 @@ namespace yLinearize
         public bool abort = false;
         public bool going = false;
         public bool connected = false;
-        public short speed = 0;
+        public short ySpeed = 0;
+        public short xSpeed = 0;
         public short time = 0;
         private bool up = true;
 
@@ -182,6 +193,8 @@ namespace yLinearize
                 {
                     flipTime = watch.Elapsed;
                     up = !up;
+                    if (up)
+                        going = false;
                 }
 
                 if (going)
@@ -194,7 +207,8 @@ namespace yLinearize
                     if (connected)
                     {
                         Xim.Input input = new Xim.Input();
-                        input.RightStickY = up ? (short)speed : (short)-speed;
+                        input.RightStickY = up ? (short)ySpeed : (short)-ySpeed;
+                        input.RightStickX = xSpeed;
                         Xim.SendInput(ref input, 1);
                     }
                 }
@@ -205,6 +219,8 @@ namespace yLinearize
                         Xim.Disconnect();
                         connected = false;
                     }
+                    flipTime = watch.Elapsed;
+                    up = true;
                 }
             }
         }
