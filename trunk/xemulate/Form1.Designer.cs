@@ -1177,11 +1177,12 @@ namespace xEmulate
             // 
             // version
             // 
-            this.version.AutoSize = true;
-            this.version.Location = new System.Drawing.Point(758, 507);
+            this.version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.version.Location = new System.Drawing.Point(708, 2);
             this.version.Name = "version";
-            this.version.Size = new System.Drawing.Size(0, 13);
+            this.version.Size = new System.Drawing.Size(153, 15);
             this.version.TabIndex = 8;
+            this.version.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // X2
             // 
