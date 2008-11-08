@@ -3,10 +3,8 @@
     <PublishUrlHistory>publish\</PublishUrlHistory>
     <InstallUrlHistory>
     </InstallUrlHistory>
-    <SupportUrlHistory>
-    </SupportUrlHistory>
-    <UpdateUrlHistory>
-    </UpdateUrlHistory>
+    <SupportUrlHistory>http://xim360.com</SupportUrlHistory>
+    <UpdateUrlHistory>http://ximtranslator.googlecode.com/svn/trunk/xemulate/publish/</UpdateUrlHistory>
     <BootstrapperUrlHistory>
     </BootstrapperUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>

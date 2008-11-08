@@ -52,7 +52,7 @@ namespace xEmulate
                                                 31075, // Speed
                                                 0.4789, // Exp
                                                 32000, // Cap
-                                                2.5, // Max Speed
+                                                2.9, // Max Speed
                                                 0 // CarryZone
                                                 ),
                                                 new MouseAlgs.PowerFunction(
@@ -65,7 +65,7 @@ namespace xEmulate
                                                 6200, // deadzone
                                                 false, // circularDeadzone
                                                 0, // diagonalCoeff
-                                                0 // smoothing
+                                                0.1 // smoothing
                                             ) // GameSettings
                             ); // Add
 
@@ -75,7 +75,7 @@ namespace xEmulate
                                                0.3775, // Exp
                                                99999, // Cap
                                                99999, // Max Speed
-                                               0 // CarryZone 
+                                               0 // CarryZone
                                                ),
                                                new MouseAlgs.PowerFunction(
                                                24220, // Speed
@@ -95,20 +95,20 @@ namespace xEmulate
                                                19044, // Speed
                                                .4544, // Exp
                                                31000, // Cap
-                                               2.0, // Max Speed
+                                               3.5, // Max Speed
                                                0 // CarryZone 
                                                ),
                                                new MouseAlgs.PowerFunction(
                                                26084, // Speed
                                                .3992, // Exp
                                                31000, // Cap
-                                               2.5, // Max Speed
+                                               2.9, // Max Speed
                                                0 // CarryZone 
                                                ),
                                                7000, // Deadzone
                                                false, //Circular Deadzone
                                                0.35, // diagonalCoeff
-                                               0.3 // Smoothing
+                                               0.25 // Smoothing
                                             ) // GameSettings
                             ); // Add
         }

@@ -12,7 +12,6 @@ namespace xEmulate
         private List<DxI.Key> m_pressedKeys = new List<DxI.Key>(30);
         private List<Mouse.Button> m_pressedMouseButtons = new List<Mouse.Button>(3);
         private List<Joystick.Button> m_pressedJoyButtons = new List<Joystick.Button>(10);
-        //private List<Xna.Input.Buttons> m_pressedXInputButtons = new List<Xna.Input.Buttons>(10);
         private DxI.JoystickState m_currentJoyState = default(DxI.JoystickState);
         private Xna.Input.GamePadState m_currentXInputState = default(Xna.Input.GamePadState);
         private Vector2 m_mouseDelta = new Vector2(0, 0);
@@ -273,7 +272,6 @@ namespace xEmulate
             }
 
             this.m_currentXInputState = state;
-            //m_pressedXInputButtons = buttons;
         }
     }
 }
