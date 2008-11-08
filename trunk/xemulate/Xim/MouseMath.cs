@@ -222,7 +222,6 @@ namespace xEmulate
                 int sign = Math.Sign(delta.X);
 
                 highEndCarry.X = (Math.Abs(delta.X) - pixelCapX) * sign;
-                //lowEndCarry.Y = delta.Y;
                 mouseDelta.X = (short)(gameSettings.XAxis.Cap * sign);
             }
 
@@ -231,7 +230,6 @@ namespace xEmulate
                 int sign = Math.Sign(mouseDelta.Y);
 
                 highEndCarry.Y = (Math.Abs(delta.Y) - pixelCapY) * sign;
-                //lowEndCarry.Y = delta.Y;
                 mouseDelta.Y = (short)(gameSettings.YAxis.Cap * sign);
             }
 
@@ -294,6 +292,7 @@ namespace xEmulate
             {
                 double newLength = mouseDelta.Length;
                 Vector2 absDelta = new Vector2(Math.Abs(mouseDelta.X), Math.Abs(mouseDelta.Y));
+                absDelta.Cap(0, (double)Xim.Stick.Max);
 
                 double association = 0;
                 if (absDelta.X > absDelta.Y)
@@ -301,7 +300,7 @@ namespace xEmulate
                     association = absDelta.Y / absDelta.X;
                     if (association != 0 && !Double.IsNaN(association) && !Double.IsInfinity(association))
                     {
-                        mouseDelta.Y = mouseDelta.Y + mouseDelta.X * (0.5 - association / 2) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
+                        mouseDelta.Y = mouseDelta.Y + mouseDelta.X * (0.333 - association / 3) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
                         mouseDelta.Scale(1 - ((newLength / (double)Xim.Stick.Max) * association * gs.DiagonalCoeff));
                     }
                 }
@@ -310,7 +309,7 @@ namespace xEmulate
                     association = absDelta.X / absDelta.Y;
                     if (association != 0 && !Double.IsNaN(association) && !Double.IsInfinity(association))
                     {
-                        mouseDelta.X = mouseDelta.X + mouseDelta.X * (0.5 - association / 2) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
+                        mouseDelta.X = mouseDelta.X + mouseDelta.X * (0.333 - association / 3) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
                         mouseDelta.Scale(1 - ((newLength / (double)Xim.Stick.Max) * association * gs.DiagonalCoeff));
                     }
                 }

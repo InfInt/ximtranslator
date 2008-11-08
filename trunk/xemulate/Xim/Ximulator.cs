@@ -201,7 +201,7 @@ namespace xEmulate
                         {
                             Cursor.Position = cursorPosition;
                         }
-                        System.Threading.Thread.Sleep(0); 
+                        System.Threading.Thread.Sleep(2); 
                     }
 
                     if (!m_form.ContainsFocus)

@@ -43,7 +43,7 @@ namespace xEmulate
 
             if (!HasAllPrereqs)
             {
-                MessageBox.Show("Xna Framework Dependencies Missing : " + missing );
+                MessageBox.Show("Xna Framework Dependencies Missing : " + missing + Environment.NewLine + "This means that your DirectX is not up to date, You need atleast the DirectX 9.0 Aug 2008 update, which will install the missing files to your windows/system32 directory. " );
             }
             else
             {
