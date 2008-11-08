@@ -41,6 +41,9 @@ namespace xEmulate
 
             this.cbGame.Items.AddRange(GamesManager.GameNames);
 
+            if(System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+                this.version.Text = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+
             SyncUI();
             SetTooltips();
             commandBox.Focus();

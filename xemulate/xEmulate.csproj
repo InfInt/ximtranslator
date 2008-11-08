@@ -40,7 +40,7 @@
     <PublisherName>xEmulate</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>10</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>1.2.8.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -108,6 +108,11 @@
   <ItemGroup>
     <Compile Include="BindingManager.cs" />
     <Compile Include="KeyClasses.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="VarManager.cs" />
     <Compile Include="Xim\MouseAlgs.cs" />
     <Compile Include="ConfigManager.cs" />

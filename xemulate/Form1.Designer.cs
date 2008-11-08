@@ -37,11 +37,17 @@ namespace xEmulate
             this.commandBox = new System.Windows.Forms.TextBox();
             this.cbAutoAnalogDisc = new System.Windows.Forms.CheckBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.rbMouseYNone = new System.Windows.Forms.RadioButton();
             this.rbMouseYLeft = new System.Windows.Forms.RadioButton();
             this.rbMouseYRight = new System.Windows.Forms.RadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.rbMouseXNone = new System.Windows.Forms.RadioButton();
+            this.rbMouseXLeft = new System.Windows.Forms.RadioButton();
+            this.rbMouseXRight = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lbMouseAlgorithm = new System.Windows.Forms.Label();
             this.rbXimCore = new System.Windows.Forms.RadioButton();
@@ -89,11 +95,6 @@ namespace xEmulate
             this.lbTextRate = new System.Windows.Forms.Label();
             this.lbRate = new System.Windows.Forms.Label();
             this.txRate = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.rbMouseXNone = new System.Windows.Forms.RadioButton();
-            this.rbMouseXLeft = new System.Windows.Forms.RadioButton();
-            this.rbMouseXRight = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.calibration = new System.Windows.Forms.Button();
             this.tabOutput = new System.Windows.Forms.TabControl();
@@ -125,9 +126,11 @@ namespace xEmulate
             this.cbRawA = new System.Windows.Forms.CheckBox();
             this.cbRawB = new System.Windows.Forms.CheckBox();
             this.tabControllerOutput = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.version = new System.Windows.Forms.Label();
             this.gbSettings.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.x2Panel.SuspendLayout();
             this.sensTabControl.SuspendLayout();
@@ -138,10 +141,8 @@ namespace xEmulate
             ((System.ComponentModel.ISupportInitialize)(this.sbSpeed2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sbAccel2)).BeginInit();
             this.ximPanel.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.tabOutput.SuspendLayout();
             this.tabRawOutput.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -223,6 +224,17 @@ namespace xEmulate
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "General Settings";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.panel3);
+            this.groupBox1.Controls.Add(this.panel1);
+            this.groupBox1.Location = new System.Drawing.Point(6, 118);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(263, 91);
+            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Mouse Stick";
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.label11);
@@ -278,6 +290,62 @@ namespace xEmulate
             this.rbMouseYRight.Text = "Right";
             this.rbMouseYRight.UseVisualStyleBackColor = true;
             this.rbMouseYRight.CheckedChanged += new System.EventHandler(this.rbMouseYRight_Changed);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Controls.Add(this.rbMouseXNone);
+            this.panel1.Controls.Add(this.rbMouseXLeft);
+            this.panel1.Controls.Add(this.rbMouseXRight);
+            this.panel1.Location = new System.Drawing.Point(6, 19);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(207, 25);
+            this.panel1.TabIndex = 52;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(4, 4);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(36, 13);
+            this.label10.TabIndex = 52;
+            this.label10.Text = "X Axis";
+            // 
+            // rbMouseXNone
+            // 
+            this.rbMouseXNone.AutoSize = true;
+            this.rbMouseXNone.Location = new System.Drawing.Point(153, 2);
+            this.rbMouseXNone.Name = "rbMouseXNone";
+            this.rbMouseXNone.Size = new System.Drawing.Size(51, 17);
+            this.rbMouseXNone.TabIndex = 51;
+            this.rbMouseXNone.TabStop = true;
+            this.rbMouseXNone.Text = "None";
+            this.rbMouseXNone.UseVisualStyleBackColor = true;
+            this.rbMouseXNone.CheckedChanged += new System.EventHandler(this.rbMouseXNone_Changed);
+            // 
+            // rbMouseXLeft
+            // 
+            this.rbMouseXLeft.AutoSize = true;
+            this.rbMouseXLeft.Location = new System.Drawing.Point(48, 2);
+            this.rbMouseXLeft.Name = "rbMouseXLeft";
+            this.rbMouseXLeft.Size = new System.Drawing.Size(43, 17);
+            this.rbMouseXLeft.TabIndex = 48;
+            this.rbMouseXLeft.TabStop = true;
+            this.rbMouseXLeft.Text = "Left";
+            this.rbMouseXLeft.UseVisualStyleBackColor = true;
+            this.rbMouseXLeft.CheckedChanged += new System.EventHandler(this.rbMouseXLeft_Changed);
+            // 
+            // rbMouseXRight
+            // 
+            this.rbMouseXRight.AutoSize = true;
+            this.rbMouseXRight.Location = new System.Drawing.Point(97, 2);
+            this.rbMouseXRight.Name = "rbMouseXRight";
+            this.rbMouseXRight.Size = new System.Drawing.Size(50, 17);
+            this.rbMouseXRight.TabIndex = 49;
+            this.rbMouseXRight.TabStop = true;
+            this.rbMouseXRight.Text = "Right";
+            this.rbMouseXRight.UseVisualStyleBackColor = true;
+            this.rbMouseXRight.CheckedChanged += new System.EventHandler(this.rbMouseXRight_Changed);
             // 
             // panel2
             // 
@@ -773,62 +841,6 @@ namespace xEmulate
             this.txRate.Leave += new System.EventHandler(this.nameMappedSettingTextLeft);
             this.txRate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nameMappedSettingTextReturn);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.rbMouseXNone);
-            this.panel1.Controls.Add(this.rbMouseXLeft);
-            this.panel1.Controls.Add(this.rbMouseXRight);
-            this.panel1.Location = new System.Drawing.Point(6, 19);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(207, 25);
-            this.panel1.TabIndex = 52;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 4);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(36, 13);
-            this.label10.TabIndex = 52;
-            this.label10.Text = "X Axis";
-            // 
-            // rbMouseXNone
-            // 
-            this.rbMouseXNone.AutoSize = true;
-            this.rbMouseXNone.Location = new System.Drawing.Point(153, 2);
-            this.rbMouseXNone.Name = "rbMouseXNone";
-            this.rbMouseXNone.Size = new System.Drawing.Size(51, 17);
-            this.rbMouseXNone.TabIndex = 51;
-            this.rbMouseXNone.TabStop = true;
-            this.rbMouseXNone.Text = "None";
-            this.rbMouseXNone.UseVisualStyleBackColor = true;
-            this.rbMouseXNone.CheckedChanged += new System.EventHandler(this.rbMouseXNone_Changed);
-            // 
-            // rbMouseXLeft
-            // 
-            this.rbMouseXLeft.AutoSize = true;
-            this.rbMouseXLeft.Location = new System.Drawing.Point(48, 2);
-            this.rbMouseXLeft.Name = "rbMouseXLeft";
-            this.rbMouseXLeft.Size = new System.Drawing.Size(43, 17);
-            this.rbMouseXLeft.TabIndex = 48;
-            this.rbMouseXLeft.TabStop = true;
-            this.rbMouseXLeft.Text = "Left";
-            this.rbMouseXLeft.UseVisualStyleBackColor = true;
-            this.rbMouseXLeft.CheckedChanged += new System.EventHandler(this.rbMouseXLeft_Changed);
-            // 
-            // rbMouseXRight
-            // 
-            this.rbMouseXRight.AutoSize = true;
-            this.rbMouseXRight.Location = new System.Drawing.Point(97, 2);
-            this.rbMouseXRight.Name = "rbMouseXRight";
-            this.rbMouseXRight.Size = new System.Drawing.Size(50, 17);
-            this.rbMouseXRight.TabIndex = 49;
-            this.rbMouseXRight.TabStop = true;
-            this.rbMouseXRight.Text = "Right";
-            this.rbMouseXRight.UseVisualStyleBackColor = true;
-            this.rbMouseXRight.CheckedChanged += new System.EventHandler(this.rbMouseXRight_Changed);
-            // 
             // calibration
             // 
             this.calibration.Location = new System.Drawing.Point(447, 389);
@@ -1163,16 +1175,13 @@ namespace xEmulate
             this.tabControllerOutput.Text = "Controller Output";
             this.tabControllerOutput.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // version
             // 
-            this.groupBox1.Controls.Add(this.panel3);
-            this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Location = new System.Drawing.Point(6, 118);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(263, 91);
-            this.groupBox1.TabIndex = 8;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Mouse Stick";
+            this.version.AutoSize = true;
+            this.version.Location = new System.Drawing.Point(758, 507);
+            this.version.Name = "version";
+            this.version.Size = new System.Drawing.Size(0, 13);
+            this.version.TabIndex = 8;
             // 
             // X2
             // 
@@ -1181,6 +1190,7 @@ namespace xEmulate
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(863, 520);
+            this.Controls.Add(this.version);
             this.Controls.Add(this.tabOutput);
             this.Controls.Add(this.calibration);
             this.Controls.Add(this.gbSettings);
@@ -1197,8 +1207,11 @@ namespace xEmulate
             this.Text = "xEmulate";
             this.gbSettings.ResumeLayout(false);
             this.gbSettings.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.x2Panel.ResumeLayout(false);
@@ -1214,12 +1227,9 @@ namespace xEmulate
             ((System.ComponentModel.ISupportInitialize)(this.sbAccel2)).EndInit();
             this.ximPanel.ResumeLayout(false);
             this.ximPanel.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tabOutput.ResumeLayout(false);
             this.tabRawOutput.ResumeLayout(false);
             this.tabRawOutput.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1323,6 +1333,7 @@ namespace xEmulate
         private System.Windows.Forms.TextBox txMouseDpi;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label version;
     }
 }
 
