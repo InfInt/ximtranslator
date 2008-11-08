@@ -3,6 +3,8 @@ Nov 6, 2008
 	
 	- Added a check for XNA dependencies before we reun so we dont crash.
 	
+	- Changed the main loop sleep from 0ms to 1ms, no longer eats CPU cycles( 80% cpu -> 1% cpu cycles )
+	
 Nov 4, 2008
 	- Fixed a bug where if you had a joystick enabled on an analog stick/trigger you could not use autofire for that stick/trigger
 	
