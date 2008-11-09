@@ -12,14 +12,16 @@ namespace xEmulate
         {
             Ut3 = 0,
             Cod4 = 1,
-            Halo3 = 2
+            Halo3 = 2,
+            Gow2 = 3,
         }
 
         public static string[] GameNames = new string[]
         { 
             "Unreal Tournament 3 (ut3) (20 sens, 10 accel)",
             "Call of Duty 4 (cod4) (10 sens)",
-            "Halo 3 (halo3) (10 sens)"
+            "Halo 3 (halo3) (10 sens)",
+            "Gears of War 2(gow2) (High, High, Med)"
         };
 
         private Dictionary<Games, GameSettings> gameSettings;
@@ -111,7 +113,31 @@ namespace xEmulate
                                                0.25 // Smoothing
                                             ) // GameSettings
                             ); // Add
+
+            gameSettings.Add(Games.Gow2, new GameSettings(
+                                               new MouseAlgs.PowerFunction(
+                                               19044, // Speed
+                                               .4544, // Exp
+                                               31000, // Cap
+                                               1.5, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               new MouseAlgs.PowerFunction(
+                                               26084, // Speed
+                                               .3992, // Exp
+                                               31000, // Cap
+                                               1.5, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               7000, // Deadzone
+                                               false, //Circular Deadzone
+                                               0.35, // diagonalCoeff
+                                               0.1 // Smoothing
+                                            ) // GameSettings
+                            ); // Add
         }
+
+
 
         public static GamesManager Instance
         {
