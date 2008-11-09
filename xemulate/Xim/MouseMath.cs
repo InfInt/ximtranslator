@@ -300,7 +300,7 @@ namespace xEmulate
                     association = absDelta.Y / absDelta.X;
                     if (association != 0 && !Double.IsNaN(association) && !Double.IsInfinity(association))
                     {
-                        mouseDelta.Y = mouseDelta.Y + mouseDelta.Y * (0.333 - association / 3) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
+                        //mouseDelta.Y = mouseDelta.Y + mouseDelta.Y * (0.333 - association / 3) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
                         mouseDelta.Scale(1 - ((newLength / (double)Xim.Stick.Max) * association * gs.DiagonalCoeff));
                     }
                 }
@@ -309,7 +309,7 @@ namespace xEmulate
                     association = absDelta.X / absDelta.Y;
                     if (association != 0 && !Double.IsNaN(association) && !Double.IsInfinity(association))
                     {
-                        mouseDelta.X = mouseDelta.X + mouseDelta.X * (0.333 - association / 3) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
+                        //mouseDelta.X = mouseDelta.X + mouseDelta.X * (0.333 - association / 3) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
                         mouseDelta.Scale(1 - ((newLength / (double)Xim.Stick.Max) * association * gs.DiagonalCoeff));
                     }
                 }
