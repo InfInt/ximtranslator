@@ -1,3 +1,8 @@
+Nov 10, 2008
+	
+
+	- Added Analog type keybinds: bind g .righttrigger 16000
+
 Nov 8, 2008
 	- Fixed a bug where the Y axis was being accelerated way too much at high X speeds.
 	

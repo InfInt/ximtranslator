@@ -299,8 +299,23 @@ namespace xEmulate
                 else if (token[0] == '.')
                 {
                     token = token.Substring(1);
+                    String[] subTokens = token.Split(c_spacedelim);
+
+                    if (subTokens.Length == 0)
+                        continue;
+
                     Xim.Button button;
-                    if (m_buttonMap.TryGetValue(token, out button))
+                    Xim.Analog analogButton;
+                    if (subTokens.Length == 2 && m_ximAnalogMap.TryGetValue(subTokens[0], out analogButton))
+                    {
+                        short analogVal = (short)Xim.Stick.Max;
+                        if (subTokens.Length == 2)
+                        {
+                            short.TryParse(subTokens[1], out analogVal);
+                        }
+                        events.Add(new HoldAnalogEvent(analogButton,analogVal));
+                    }
+                    else if (m_buttonMap.TryGetValue(subTokens[0], out button))
                     {
                         events.Add(new HoldEvent(button));
                     }
@@ -308,7 +323,7 @@ namespace xEmulate
                     {
                         // Toggle var events must be applied to bools.
                         VarManager.Var v;
-                        m_varManager.GetVar(token, out v);
+                        m_varManager.GetVar(subTokens[0], out v);
                         if (v.VarType == typeof(bool))
                         {
                             events.Add(new HoldVarEvent(ref v, true));

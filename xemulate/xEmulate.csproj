@@ -40,7 +40,7 @@
     <PublisherName>xEmulate</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>17</ApplicationRevision>
+    <ApplicationRevision>18</ApplicationRevision>
     <ApplicationVersion>1.2.8.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingManager.cs" />
+    <Compile Include="Events\InputEvent.cs" />
     <Compile Include="KeyClasses.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -124,7 +125,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\InputEvent.cs" />
     <Compile Include="Input\CommandParser.cs" />
     <Compile Include="Events\InputEventHandler.cs" />
     <Compile Include="Input\DxInputManager.cs" />
