@@ -66,6 +66,7 @@ namespace xEmulate
         private VarManager.Var m_useXimApiMouseMath;
 
         private MouseMath mouseMath;
+        private BetaMouseMath betaMouseMath;
         private Thread myThread;
 
         public XimDyn ximDyn;
@@ -98,6 +99,7 @@ namespace xEmulate
             m_varManager.GetVar("useximapimousemath", out m_useXimApiMouseMath);
 
             this.mouseMath = new MouseMath();
+            this.betaMouseMath = new BetaMouseMath();
             
             m_utilThread = new UtilThread();
         }
@@ -245,6 +247,7 @@ namespace xEmulate
                         if ((bool)m_useXimApiMouseMath.Value)
                         {
                             this.mouseMath.ProcessMouseMovement(ref input, ref startState);
+                            //this.betaMouseMath.XSoftMouseMovement(ref input, ref startState);
                         }
                         else
                         {
