@@ -40,7 +40,7 @@
     <PublisherName>xEmulate</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>18</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.2.8.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -115,6 +115,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="VarManager.cs" />
+    <Compile Include="Xim\BetaGamesManager.cs" />
+    <Compile Include="Xim\BetaMouseMath.cs" />
     <Compile Include="Xim\MouseAlgs.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Events\EventManager.cs" />
