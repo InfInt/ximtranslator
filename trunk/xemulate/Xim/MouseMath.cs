@@ -44,6 +44,7 @@ namespace xEmulate
         private InputManager inputManager;
         private GamesManager gamesManager;
         private Vector2 lastFrame = new Vector2(0, 0);
+        private double maxVector2Len = Math.Sqrt(26000 * 26000 + 26000 * 26000);
 
         public MouseMath()
         {
@@ -152,7 +153,7 @@ namespace xEmulate
                 speed = (double)m_speed.Value;
                 accel = 1.0 + (double)m_accel.Value;
             }
-            mouseDpi = (int)m_mouseDpi.Value; ;
+            mouseDpi = (int)m_mouseDpi.Value;
             pitch = 1;
             yaw = 1;
         }
@@ -160,8 +161,8 @@ namespace xEmulate
         public void XSoftMouseMovement(ref Xim.Input input, ref Xim.Input startState)
         {
             GamesManager.GameSettings gameSettings = gamesManager.GetGameSettings((GamesManager.Games)m_currentGame.Value);
+            
             // User Values
-
             double speed, accel, yaw, pitch, mouseDpi;
 
             GetUserSettings(out speed, out accel, out mouseDpi, out pitch, out yaw);
@@ -269,6 +270,14 @@ namespace xEmulate
 
             mouseDelta.Cap(-(double)Xim.Stick.Max, (double)Xim.Stick.Max);
 
+            double ratio = mouseDelta.Length / this.maxVector2Len;
+
+            if (mouseDelta.Length > this.maxVector2Len)
+            {
+                mouseDelta.Normalize();
+                mouseDelta.Scale(this.maxVector2Len);
+            }
+
             SetXboxInput(ref input, mouseDelta);
         }
 
@@ -300,7 +309,7 @@ namespace xEmulate
                     association = absDelta.Y / absDelta.X;
                     if (association != 0 && !Double.IsNaN(association) && !Double.IsInfinity(association))
                     {
-                        //mouseDelta.Y = mouseDelta.Y + mouseDelta.Y * (0.333 - association / 3) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
+                        mouseDelta.Y = mouseDelta.Y + mouseDelta.Y * (0.1 - association / 10) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
                         mouseDelta.Scale(1 - ((newLength / (double)Xim.Stick.Max) * association * gs.DiagonalCoeff));
                     }
                 }
@@ -309,7 +318,7 @@ namespace xEmulate
                     association = absDelta.X / absDelta.Y;
                     if (association != 0 && !Double.IsNaN(association) && !Double.IsInfinity(association))
                     {
-                        //mouseDelta.X = mouseDelta.X + mouseDelta.X * (0.333 - association / 3) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
+                        mouseDelta.X = mouseDelta.X + mouseDelta.X * (0.1 - association / 10) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
                         mouseDelta.Scale(1 - ((newLength / (double)Xim.Stick.Max) * association * gs.DiagonalCoeff));
                     }
                 }

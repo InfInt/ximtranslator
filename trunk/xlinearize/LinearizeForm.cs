@@ -29,7 +29,9 @@ namespace Linearize
             {
                 this.watch.Reset();
                 Xim.Input input = new Xim.Input();
-                input.RightStickY = 50;
+                input.LeftTrigger = (short)Xim.Stick.Max;
+                this.xim.SendInput(ref input, 500);
+                input.RightStickY = 0;
                 input.RightStickX = short.Parse(this.mouseInput.Text);
                 this.watch.Start();
                 this.xim.SendInput(ref input, 1);

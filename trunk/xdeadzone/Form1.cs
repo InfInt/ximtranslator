@@ -282,8 +282,9 @@ namespace xdeadzone
                         }
                         input.RightStickX = (short)spot.X;
                         input.RightStickY = (short)spot.Y;
+                        input.LeftTrigger = (short)Xim.Stick.Max;
                         Xim.SendInput(ref input, 30);
-                        Xim.SendInput(ref blankInput, 0);
+                        //Xim.SendInput(ref blankInput, 0);
                     }
                 }
             }

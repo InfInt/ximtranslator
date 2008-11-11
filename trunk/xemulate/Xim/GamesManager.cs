@@ -14,7 +14,7 @@ namespace xEmulate
             Cod4 = 1,
             Halo3 = 2,
             Gow2 = 3,
-            Halo3_tweak = 4,
+            Gta4 = 4,
         }
 
         public static string[] GameNames = new string[]
@@ -22,8 +22,8 @@ namespace xEmulate
             "Unreal Tournament 3 (ut3) (20 sens, 10 accel)",
             "Call of Duty 4 (cod4) (10 sens)",
             "Halo 3 (halo3) (10 sens)",
-            "Gears of War 2(gow2) (High, High, Med)",
-            "Halo 3 (halo3_tweak) (10 sens) - (6000 deadzone"
+            //"(ALPHA) Gears of War 2 (gow2) (High, High, Med)",
+            //"(ALPHA) Grand Theft Auto IV (gta4) (High)",
         };
 
         private Dictionary<Games, GameSettings> gameSettings;
@@ -109,28 +109,6 @@ namespace xEmulate
                                                2.9, // Max Speed
                                                0 // CarryZone 
                                                ),
-                                               7000, // Deadzone
-                                               false, //Circular Deadzone
-                                               0.35, // diagonalCoeff
-                                               0.25 // Smoothing
-                                            ) // GameSettings
-                            ); // Add
-
-            gameSettings.Add(Games.Halo3_tweak, new GameSettings(
-                                               new MouseAlgs.PowerFunction(
-                                               19044, // Speed
-                                               .4544, // Exp
-                                               31000, // Cap
-                                               3.5, // Max Speed
-                                               0 // CarryZone 
-                                               ),
-                                               new MouseAlgs.PowerFunction(
-                                               26084, // Speed
-                                               .3992, // Exp
-                                               31000, // Cap
-                                               2.9, // Max Speed
-                                               0 // CarryZone 
-                                               ),
                                                6000, // Deadzone
                                                false, //Circular Deadzone
                                                0.35, // diagonalCoeff
@@ -140,7 +118,7 @@ namespace xEmulate
 
             gameSettings.Add(Games.Gow2, new GameSettings(
                                                new MouseAlgs.PowerFunction(
-                                               19044, // Speed
+                                               24044, // Speed
                                                .4544, // Exp
                                                31000, // Cap
                                                1.5, // Max Speed
@@ -157,6 +135,28 @@ namespace xEmulate
                                                false, //Circular Deadzone
                                                0.35, // diagonalCoeff
                                                0.1 // Smoothing
+                                            ) // GameSettings
+                            ); // Add
+
+            gameSettings.Add(Games.Gta4, new GameSettings(
+                                               new MouseAlgs.PowerFunction(
+                                               88044, // Speed
+                                               .661, // Exp
+                                               29000, // Cap
+                                               0.8, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               new MouseAlgs.PowerFunction(
+                                               88044, // Speed
+                                               .661, // Exp
+                                               29000, // Cap
+                                               1.5, // Max Speed
+                                               0 // CarryZone 
+                                               ),
+                                               8050, // Deadzone
+                                               false, //Circular Deadzone
+                                               0.35, // diagonalCoeff
+                                               0.2 // Smoothing
                                             ) // GameSettings
                             ); // Add
         }

@@ -17,7 +17,7 @@ namespace xEmulate
         Dictionary<String, Xim.Button> m_xim;
 
         String m_x2DataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\xEmulate";
-        String m_x2MyDocs = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Xim Configs";
+        String m_x2MyDocs = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\xim configs";
                 
         private ConfigManager()
         {

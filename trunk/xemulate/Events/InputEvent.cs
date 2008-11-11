@@ -60,16 +60,23 @@ namespace xEmulate
     class ButtonEvent : InputEvent
     {
         private Xim.Button m_button;
+        private VarManager.Var buttonDownTime;
+        private double m_elapsed = 0;
 
         public ButtonEvent(Xim.Button button)
         {
             m_button = button;
+            VarManager.Instance.GetVar(VarManager.Names.ButtonDownTime, out buttonDownTime);
         }
 
         public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
         {
             Xim.SetButtonState(m_button, Xim.ButtonState.Pressed, ref input);
-            return InputEvent.Status.Complete;
+
+            if (!firstRun)
+                m_elapsed += elapsed;
+
+            return m_elapsed > (double)(int)buttonDownTime.Value ? InputEvent.Status.Complete : InputEvent.Status.Running;
         }
 
         public override string ToString()
@@ -209,6 +216,36 @@ namespace xEmulate
         public override string ToString()
         {
             return "."+ m_button.ToString().ToLower();
+        }
+    }
+
+    /*
+     * Sets the state of a button on the startState, it will not release until it is reset.
+     * */
+    class HoldAnalogEvent : InputEvent
+    {
+        private Xim.Analog m_button;
+        private short analogVal;
+
+        public HoldAnalogEvent(Xim.Analog button, short analogVal)
+        {
+            m_button = button;
+            this.analogVal = analogVal;
+        }
+
+        public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
+        {
+            if (keyStillPressed)
+            {
+                Xim.SetAnalogState(m_button, this.analogVal, ref input);
+            }
+
+            return keyStillPressed ? Status.Running : Status.Complete;
+        }
+
+        public override string ToString()
+        {
+            return "." + m_button.ToString().ToLower() + " " + analogVal.ToString(); ;
         }
     }
 
