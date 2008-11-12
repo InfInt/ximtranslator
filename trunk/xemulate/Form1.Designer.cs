@@ -1182,6 +1182,7 @@ namespace xEmulate
             this.version.Name = "version";
             this.version.Size = new System.Drawing.Size(153, 15);
             this.version.TabIndex = 8;
+            this.version.Text = "Version: 1.2.8.21";
             this.version.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // X2

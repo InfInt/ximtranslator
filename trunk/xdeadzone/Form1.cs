@@ -63,8 +63,9 @@ namespace xdeadzone
         {
             if (myThread.connected)
             {
-                Xim.Disconnect();
                 myThread.connected = false;
+                myThread.going = false;
+                Xim.Disconnect();
                 DoEnabled();
             }
         }
@@ -227,53 +228,55 @@ namespace xdeadzone
                 {
                     if (circular)
                     {
-                        input.RightStickX = deadzone;
-                        Xim.SendInput(ref input, 30);
-                        Xim.SendInput(ref blankInput, 0);
+                        spot.Rotate(Math.PI / 180);
+                        input.RightStickX = (short)(Math.Sign(spot.X) * 6000 + (short)spot.X);
+                        input.RightStickY = (short)(Math.Sign(spot.Y) * 6000 + (short)spot.Y);
+                        Xim.SendInput(ref input, 25);
+                        //Xim.SendInput(ref blankInput, 0);
                     }
                     else
                     {
-                        switch( direction )
+                        switch (direction)
                         {
                             case Dir.Up:
-                                if( spot.Y < deadzone )
+                                if (spot.Y < deadzone)
                                 {
                                     spot.Y = spot.Y + incVal;
                                 }
-                                if( spot.Y >= deadzone )
+                                if (spot.Y >= deadzone)
                                 {
                                     spot.Y = deadzone;
                                     direction = Dir.Right;
                                 }
                                 break;
                             case Dir.Right:
-                                if( spot.X < deadzone )
+                                if (spot.X < deadzone)
                                 {
                                     spot.X = spot.X + incVal;
                                 }
-                                if( spot.X >= deadzone )
+                                if (spot.X >= deadzone)
                                 {
                                     spot.X = deadzone;
                                     direction = Dir.Down;
                                 }
                                 break;
                             case Dir.Down:
-                                if( spot.Y > -deadzone )
+                                if (spot.Y > -deadzone)
                                 {
                                     spot.Y = spot.Y - incVal;
                                 }
-                                if( spot.Y <= -deadzone )
+                                if (spot.Y <= -deadzone)
                                 {
                                     spot.Y = -deadzone;
                                     direction = Dir.Left;
                                 }
                                 break;
                             case Dir.Left:
-                                if( spot.X > -deadzone )
+                                if (spot.X > -deadzone)
                                 {
                                     spot.X = spot.X - incVal;
                                 }
-                                if( spot.X <= -deadzone )
+                                if (spot.X <= -deadzone)
                                 {
                                     spot.X = -deadzone;
                                     direction = Dir.Up;
@@ -286,6 +289,11 @@ namespace xdeadzone
                         Xim.SendInput(ref input, 30);
                         //Xim.SendInput(ref blankInput, 0);
                     }
+                }
+                else
+                {
+                    spot.X = deadzone;
+                    spot.Y = 0;
                 }
             }
             this.ximDyn.Disconnect();

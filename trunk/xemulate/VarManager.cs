@@ -57,6 +57,7 @@ namespace xEmulate
             }
             private Object value;
 
+            public Object Default { get; set; }
             public bool Updated { get; set; }
             public String VarName { get; set; }
             public Type VarType { get; set; }
@@ -137,13 +138,13 @@ namespace xEmulate
             m_vars = new Dictionary<string, Var>();
 
             InitVar(Names.Speed, typeof(double), (double)5, false,"Sensitivity for Game Specific Algorithm", null);
-            InitVar(Names.Speed2, typeof(double), (double)5, false, "Sensitivity for Game Specific Algorithm", null);
-            InitVar(Names.Speed3, typeof(double), (double)5, false, "Sensitivity for Game Specific Algorithm", null);
-            InitVar(Names.Speed4, typeof(double), (double)5, false, "Sensitivity for Game Specific Algorithm", null);
+            InitVar(Names.Speed2, typeof(double), (double)5, false, "Sensitivity2 for Game Specific Algorithm", null);
+            InitVar(Names.Speed3, typeof(double), (double)5, false, "Sensitivity3 for Game Specific Algorithm", null);
+            InitVar(Names.Speed4, typeof(double), (double)5, false, "Sensitivity4 for Game Specific Algorithm", null);
             InitVar(Names.Accel, typeof(double), (double)0, false, "Mouse acceleration for Game Specific Algorithm", null);
-            InitVar(Names.Accel2, typeof(double), (double)0, false, "Mouse acceleration for Game Specific Algorithm", null);
-            InitVar(Names.Accel3, typeof(double), (double)0, false, "Mouse acceleration for Game Specific Algorithm", null);
-            InitVar(Names.Accel4, typeof(double), (double)0, false, "Mouse acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel2, typeof(double), (double)0, false, "Mouse2 acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel3, typeof(double), (double)0, false, "Mouse3 acceleration for Game Specific Algorithm", null);
+            InitVar(Names.Accel4, typeof(double), (double)0, false, "Mouse4 acceleration for Game Specific Algorithm", null);
             InitVar(Names.Sensitivity1, typeof(double), (double)6000, false, "Primary sensitivity as defined by XIM api", null);
             InitVar(Names.Sensitivity2, typeof(double), (double)8500, false, "Alternate sensitivity as defined by XIM api", null);
             InitVar(Names.TransExponent1, typeof(double), (double)0.35, false, "Translation Exponent as defined by XIM api", null);
@@ -162,10 +163,10 @@ namespace xEmulate
             InitVar(Names.AltSens, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
             InitVar(Names.AltSens2, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
             InitVar(Names.AltSens3, typeof(bool), (bool)false, true, "'false' = use sensitivity1 and transexp1, 'true' = use sensitivity2", null);
-            InitVar(Names.CurrentGame, typeof(GamesManager.Games), (GamesManager.Games)GamesManager.Games.Ut3, false, "", null);
+            InitVar(Names.CurrentGame, typeof(GamesManager.Games), (GamesManager.Games)GamesManager.Games.Halo3, false, "Game you are currently playing when using the game specific mouse algorithm", null);
             InitVar(Names.InvertY, typeof(bool), (bool)false, false, "'true' = Invert Y axis during mouse translations", null);
             InitVar(Names.MouseDPI, typeof(int), (int)800, false, "Your mouse DPI", null);
-            InitVar(Names.ButtonDownTime, typeof(int), (int)50, false, "Minimum time to hold a button down", null);
+            InitVar(Names.ButtonDownTime, typeof(int), (int)30, false, "Minimum time to hold a button down", null);
         }
 
         private void InitVar(String varName, Type varType, Object value, bool intern, String info, Enum validValues)
@@ -174,6 +175,7 @@ namespace xEmulate
             var.VarName = varName;
             var.VarType = varType;
             var.Value = value;
+            var.Default = value;
             var.Info = info;
             var.VarValues = validValues;
             var.Internal = intern;
@@ -309,6 +311,15 @@ namespace xEmulate
                 if (v.Internal)
                     continue;
                 varStrings.Add(v.VarName.ToString().ToLower() + " " + v.Value.ToString().ToLower());
+            }
+        }
+
+        public void ListVars()
+        {
+            InfoTextManager.Instance.WriteLine("|| Setting Name || Default Value || Description ||");
+            foreach (Var v in m_vars.Values)
+            {
+                InfoTextManager.Instance.WriteLine("|| "+ v.VarName +" || " + v.Default +" || " + v.Info +" ||");
             }
         }
     }
