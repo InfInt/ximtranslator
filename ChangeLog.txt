@@ -1,5 +1,9 @@
-Nov 10, 2008
+Nov 11, 2008
+	- Fixed a bug that caused Game Specific Algorithm to go haywire at high speeds.
+
+	- Changed the default buttondowntime to 30 from 50.
 	
+Nov 10, 2008
 
 	- Added Analog type keybinds: bind g .righttrigger 16000
 
@@ -8,11 +12,10 @@ Nov 8, 2008
 	
 	- Added Joy11 - 30
 
-
 Nov 6, 2008
 	- Fixed a bug that caused smoothness to not update if changed in the UI
 	
-	- Added a check for XNA dependencies before we reun so we dont crash.
+	- Added a check for XNA dependencies before we run so we dont crash.
 	
 	- Changed the main loop sleep from 0ms to 1ms, no longer eats CPU cycles( 80% cpu -> 1% cpu cycles )
 	

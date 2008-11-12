@@ -32,6 +32,13 @@ namespace Common
             Y *= factor;
         }
 
+        public void Rotate(double angleInRadians)
+        {
+            Vector2 tmp = new Vector2(this);
+            this.X = (short)(tmp.X * Math.Cos(angleInRadians) + tmp.Y * Math.Sin(angleInRadians));
+            this.Y = (short)(tmp.Y * Math.Cos(angleInRadians) - tmp.X * Math.Sin(angleInRadians));          
+        }
+
         public void Add(Vector2 other)
         {
             this.X += other.X;

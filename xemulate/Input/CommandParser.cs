@@ -50,7 +50,7 @@ namespace xEmulate
                 m_bindingManager.UnbindAll();
                 return true;
             }
-            else if (line.StartsWith("unbind "))
+            else if (line.StartsWith("unbind ") || line.StartsWith("unlink "))
             {
                 line = line.Substring(7);
                 int firstSpace = line.IndexOf(' ');
@@ -146,6 +146,10 @@ namespace xEmulate
                         }
                     }
                 }
+            }
+            else if (line.Equals("listvars"))
+            {
+                VarManager.Instance.ListVars();
             }
             else
             {

@@ -165,7 +165,7 @@ namespace xEmulate
                 outputDelta.Scale(this.maxVector2Len);
             }
 
-            //CalcDiag(angVelocity, gameSettings);
+            CalcDiag(angVelocity, gameSettings);
 
             //CalcAveraging(angVelocity, gameSettings);
 

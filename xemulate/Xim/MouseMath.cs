@@ -44,7 +44,6 @@ namespace xEmulate
         private InputManager inputManager;
         private GamesManager gamesManager;
         private Vector2 lastFrame = new Vector2(0, 0);
-        //private double maxVector2Len = Math.Sqrt(26000 * 26000 + 26000 * 26000);
 
         public MouseMath()
         {
@@ -207,12 +206,6 @@ namespace xEmulate
 
             mouseDelta.Add(deadzoneVec);
 
-            // Cap at the linearize formula cap.
-            mouseDelta.CapX(-(double)gameSettings.XAxis.Cap, (double)gameSettings.XAxis.Cap);
-            mouseDelta.CapY(-(double)gameSettings.YAxis.Cap, (double)gameSettings.YAxis.Cap);
-
-            // Post Processing
-
             // pixelCap is the number of pixels per frame that can be processed by the current angular velocity formula.
             // Anything above this value is useless to translate but we can carry the leftover value to the next frame.
             double pixelCapX = Math.Pow((gameSettings.XAxis.GetPixelCapValue(gameSettings.Deadzone) / (userScale * yaw)), (double)1 / accel);
@@ -236,47 +229,51 @@ namespace xEmulate
 
             // pixelsAtMax is the number of pixels we can process when moving at Xim.Stick.Max, if we have moved more than 
             // this number of pixels then we should carry the leftover and use Xim.Stick.Max for our output.
-            double pixelsAtMaxX = Math.Pow((gameSettings.XAxis.MaxSpeed) / (userScale * pitch), 1 / accel);
-            double pixelsAtMaxY = Math.Pow((gameSettings.XAxis.MaxSpeed) / (userScale * yaw), 1 / accel);
-
-            if (Math.Abs(delta.X) > pixelsAtMaxX)
+            if (gameSettings.XAxis.MaxSpeed != -1)
             {
-                InfoTextManager.Instance.WriteLineDebug("CarryX!" + delta.X);
-                int sign = Math.Sign(delta.X);
-                highEndCarry.X = (Math.Abs(delta.X) - pixelsAtMaxX) * sign;
-                mouseDelta.X = ((short)Xim.Stick.Max * sign);
+                double pixelsAtMaxX = Math.Pow((gameSettings.XAxis.MaxSpeed) / (userScale * pitch), 1 / accel);
+                
+                if (Math.Abs(delta.X) > pixelsAtMaxX)
+                {
+                    InfoTextManager.Instance.WriteLineDebug("CarryX!" + delta.X);
+                    int sign = Math.Sign(delta.X);
+                    highEndCarry.X = (Math.Abs(delta.X) - pixelsAtMaxX) * sign;
+                    mouseDelta.X = ((short)Xim.Stick.Max * sign);
+                }
             }
 
-            if (Math.Abs(delta.Y) > pixelsAtMaxY)
+            if (gameSettings.YAxis.MaxSpeed != -1)
             {
-                InfoTextManager.Instance.WriteLineDebug("CarryY!" + delta.Y);
-                int sign = Math.Sign(delta.Y);
-                highEndCarry.Y = (Math.Abs(delta.Y) - pixelsAtMaxY) * sign;
-                mouseDelta.Y = ((short)Xim.Stick.Max * sign);
+                double pixelsAtMaxY = Math.Pow((gameSettings.YAxis.MaxSpeed) / (userScale * yaw), 1 / accel);
+                if (Math.Abs(delta.Y) > pixelsAtMaxY)
+                {
+                    InfoTextManager.Instance.WriteLineDebug("CarryY!" + delta.Y);
+                    int sign = Math.Sign(delta.Y);
+                    highEndCarry.Y = (Math.Abs(delta.Y) - pixelsAtMaxY) * sign;
+                    mouseDelta.Y = ((short)Xim.Stick.Max * sign);
+                }
             }
 
             // Some games ( like UT3 ) have a strange Y step function going on, account for that.
-            if (Math.Abs(mouseDelta.Y) < gameSettings.YAxis.CarryZone)
+            if (gameSettings.XAxis.CarryZone != -1)
             {
-                lowEndCarry.Y = delta.Y;
-                mouseDelta.Y = 0;
+                if (Math.Abs(mouseDelta.X) < gameSettings.XAxis.CarryZone)
+                {
+                    lowEndCarry.X = delta.X;
+                    mouseDelta.X = 0;
+                }
             }
 
-            if (Math.Abs(mouseDelta.X) < gameSettings.XAxis.CarryZone)
+            if (gameSettings.YAxis.CarryZone != -1)
             {
-                lowEndCarry.X = delta.X;
-                mouseDelta.Y = 0;
+                if (Math.Abs(mouseDelta.Y) < gameSettings.YAxis.CarryZone)
+                {
+                    lowEndCarry.Y = delta.Y;
+                    mouseDelta.Y = 0;
+                }
             }
 
             mouseDelta.Cap(-(double)Xim.Stick.Max, (double)Xim.Stick.Max);
-
-            /*double ratio = mouseDelta.Length / this.maxVector2Len;
-
-            if (mouseDelta.Length > this.maxVector2Len)
-            {
-                mouseDelta.Normalize();
-                mouseDelta.Scale(this.maxVector2Len);
-            }*/
 
             SetXboxInput(ref input, mouseDelta);
         }
