@@ -1,6 +1,6 @@
 #summary Most settings are modifiable via the UI, but heres a complete list of settings.
 
-| Setting Name || Default Value || Description ||
+|| Setting Name || Default Value || Description ||
 || speed || 5 || Sensitivity for Game Specific Algorithm ||
 || speed2 || 5 || Sensitivity2 for Game Specific Algorithm ||
 || speed3 || 5 || Sensitivity3 for Game Specific Algorithm ||
