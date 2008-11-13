@@ -18,7 +18,8 @@ namespace xEmulate
         {
             Complete,
             Blocking,
-            Running
+            Running,
+            Break
         }
         /*
          * Return value: True if the event is finished.
@@ -374,6 +375,26 @@ namespace xEmulate
         public override string ToString()
         {
             return this.cmdLine;
+        }
+    }
+
+    /*
+ * Sets the state of a button on the startState, it will not release until it is reset.
+ * */
+    class BreakEvent : InputEvent
+    {
+        public BreakEvent()
+        {
+        }
+
+        public override InputEvent.Status Run(bool firstRun, double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
+        {
+            return keyStillPressed? Status.Complete : Status.Break;
+        }
+
+        public override string ToString()
+        {
+            return ".break";
         }
     }
 

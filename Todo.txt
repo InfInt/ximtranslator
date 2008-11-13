@@ -1,1 +1,2 @@
 dont queue joy binds when 360 is enabled, visa versa
+unbindall on config load.

@@ -409,46 +409,46 @@ namespace XimApi
                     input.A = ToggleState(input.A);
                     break;
                 case Button.B:
-                    input.B = ToggleState(input.A);
+                    input.B = ToggleState(input.B);
                     break;
                 case Button.X:
-                    input.X = ToggleState(input.A);
+                    input.X = ToggleState(input.X);
                     break;
                 case Button.Y:
-                    input.Y = ToggleState(input.A);
+                    input.Y = ToggleState(input.Y);
                     break;
                 case Button.Guide:
-                    input.Guide = ToggleState(input.A);
+                    input.Guide = ToggleState(input.Guide);
                     break;
                 case Button.Back:
-                    input.Back = ToggleState(input.A);
+                    input.Back = ToggleState(input.Back);
                     break;
                 case Button.Down:
-                    input.Down = ToggleState(input.A);
+                    input.Down = ToggleState(input.Down);
                     break;
                 case Button.Up:
-                    input.Up = ToggleState(input.A);
+                    input.Up = ToggleState(input.Up);
                     break;
                 case Button.Left:
-                    input.Left = ToggleState(input.A);
+                    input.Left = ToggleState(input.Left);
                     break;
                 case Button.Right:
-                    input.Right = ToggleState(input.A);
+                    input.Right = ToggleState(input.Right);
                     break;
                 case Button.Start:
-                    input.Start = ToggleState(input.A);
+                    input.Start = ToggleState(input.Start);
                     break;
                 case Button.LeftBumper:
-                    input.LeftBumper = ToggleState(input.A);
+                    input.LeftBumper = ToggleState(input.LeftBumper);
                     break;
                 case Button.RightBumper:
-                    input.RightBumper = ToggleState(input.A);
+                    input.RightBumper = ToggleState(input.RightBumper);
                     break;
                 case Button.LeftStick:
-                    input.LeftStick = ToggleState(input.A);
+                    input.LeftStick = ToggleState(input.LeftStick);
                     break;
                 case Button.RightStick:
-                    input.RightStick = ToggleState(input.A);
+                    input.RightStick = ToggleState(input.RightStick);
                     break;
                 case Button.LeftTrigger:
                     input.LeftTrigger = (short)(Trigger.Max - input.LeftTrigger);
