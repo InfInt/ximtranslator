@@ -14,7 +14,18 @@ namespace Common
 
         public double Length
         {
-            get { return Math.Sqrt(X * X + Y * Y); }
+            get
+            {
+                if (this.Y != 0)
+                    return this.Y / Math.Sin(this.Angle);
+                else
+                    return this.X / Math.Cos(this.Angle);
+            }
+        }
+
+        public double Angle
+        {
+            get { return Math.Atan2(this.Y,this.X); }
         }
 
         public void Normalize()
@@ -22,8 +33,8 @@ namespace Common
             // Vector3.Length property is under length section
             double length = this.Length;
 
-            X /= length;
-            Y /= length;
+            this.X /= length;
+            this.Y /= length;
         }
 
         public void Scale(double factor)
@@ -47,16 +58,14 @@ namespace Common
 
         public void Pow(double e)
         {
-            double mouseVectorLen = Math.Sqrt(this.X * this.X + this.Y * this.Y);
-            mouseVectorLen = Math.Pow(mouseVectorLen, e);
+            double mouseVectorLen = Math.Pow(this.Length, e);
             this.Normalize();
             this.Scale(mouseVectorLen);
         }
 
         public void Log()
         {
-            double mouseVectorLen = Math.Sqrt(this.X * this.X + this.Y * this.Y);
-            mouseVectorLen = Math.Log(mouseVectorLen);
+            double mouseVectorLen = Math.Log(this.Length);
             this.Normalize();
             this.Scale(mouseVectorLen);
         }

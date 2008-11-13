@@ -332,7 +332,7 @@ namespace xEmulate
             }
         }
 
-        private void CalculateMouseToXbox(Vector2 mouseDelta, double sensitivity, int deadzoneFactor, double transExp, double yxratio, double diagonalDampen, bool fCircularDeadzone, ref Vector2 xboxDelta)
+        /*private void CalculateMouseToXbox(Vector2 mouseDelta, double sensitivity, int deadzoneFactor, double transExp, double yxratio, double diagonalDampen, bool fCircularDeadzone, ref Vector2 xboxDelta)
         {
             Vector2 delta = new Vector2(mouseDelta.X, mouseDelta.Y);
 
@@ -360,6 +360,6 @@ namespace xEmulate
 
             xboxDelta.X = delta.X;
             xboxDelta.Y = delta.Y;
-        }
+        }*/
     }
 }

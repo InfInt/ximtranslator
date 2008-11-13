@@ -282,6 +282,10 @@ namespace xEmulate
                 {
                     events.Add(new CommandLineEvent(token));
                 }
+                else if (token == ".break")
+                {
+                    events.Add(new BreakEvent());
+                }
                 else if (token[0] == '+')
                 {
                     token = token.Substring(1);
@@ -317,7 +321,7 @@ namespace xEmulate
                         {
                             short.TryParse(subTokens[1], out analogVal);
                         }
-                        events.Add(new HoldAnalogEvent(analogButton,analogVal));
+                        events.Add(new HoldAnalogEvent(analogButton, analogVal));
                     }
                     else if (m_buttonMap.TryGetValue(subTokens[0], out button))
                     {
@@ -377,7 +381,7 @@ namespace xEmulate
                     {
                         events.Add(new ButtonEvent(button));
                     }
-                } 
+                }
                 else
                 {
                     String[] setTokens = token.Split(c_spacedelim);
@@ -387,7 +391,7 @@ namespace xEmulate
                         if (m_varManager.GetVar(setTokens[0], out v))
                         {
                             SetVarEvent setVarEvent;
-                            if( CreateSetVarEvent(v, setTokens[1], out setVarEvent) )
+                            if (CreateSetVarEvent(v, setTokens[1], out setVarEvent))
                                 events.Add(setVarEvent);
                         }
                     }

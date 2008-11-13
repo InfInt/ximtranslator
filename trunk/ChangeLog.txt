@@ -1,6 +1,18 @@
+Nov 12, 2008
+
+	- Fixed a bug that caused rapid fire to only work for A, and triggers
+
 Nov 11, 2008
 	- Fixed a bug that caused Game Specific Algorithm to go haywire at high speeds.
-
+	- Fixed a number overflow in Vector2.Length
+	
+	- Added ".break" which can be used to skip the remainder of a macro if the button is no longer pressed:
+		* bind 360start .start;wait 2000;.break;guide; 
+		* This functionality was specifically added to help map the 360 controller.  Because on a PC you cannot check if the guide
+		button is pressed, you must 
+		
+	
+	- Tweaked GoW2 game specific.
 	- Changed the default buttondowntime to 30 from 50.
 	
 Nov 10, 2008

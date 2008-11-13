@@ -27,6 +27,7 @@ namespace xEmulate
             m_blocking = false;
         }
 
+
         protected bool Run(double elapsed, bool keyStillPressed, ref Xim.Input input, ref Xim.Input startState)
         {
             Stack<InputEvent> finishedEvents = new Stack<InputEvent>();
@@ -77,10 +78,14 @@ namespace xEmulate
                     {
                         m_currentEvents.Add(nextEvent.Clone());
                     }
+                    else if (status == InputEvent.Status.Break)
+                    {
+                        m_futureEventIndex = m_futureEvents.Count;
+                    }
                 }
             }
 
-            return !(m_currentEvents.Count == 0 && m_futureEventIndex >= m_futureEvents.Count) ;
+            return !(m_currentEvents.Count == 0 && m_futureEventIndex >= m_futureEvents.Count);
         }
 
         public abstract bool Run(double elapsed,

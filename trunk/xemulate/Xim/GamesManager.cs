@@ -23,7 +23,7 @@ namespace xEmulate
             "Call of Duty 4 (cod4) (10 sens)",
             "Halo 3 (halo3) (10 sens)",
             "Gears of War 2 (gow2) (High, High, High)",
-            "(ALPHA) Grand Theft Auto IV (gta4) (High)",
+            "Grand Theft Auto IV (gta4) (High)",
         };
 
         private Dictionary<Games, GameSettings> gameSettings;
@@ -140,6 +140,28 @@ namespace xEmulate
 
             gameSettings.Add(Games.Gta4, new GameSettings(
                                                new MouseAlgs.PowerFunction(
+                                               28000, // Speed
+                                               .8, // Exp
+                                               -1, // Cap
+                                               -1, // Max Speed
+                                               -1 // CarryZone 
+                                               ),
+                                               new MouseAlgs.PowerFunction(
+                                               28000, // Speed
+                                               .8, // Exp
+                                               -1, // Cap
+                                               -1, // Max Speed
+                                               -1 // CarryZone 
+                                               ),
+                                               7400, // Deadzone
+                                               false, //Circular Deadzone
+                                               0.30, // diagonalCoeff
+                                               0.1 // Smoothing
+                                            ) // GameSettings
+                            ); // Add
+
+            /*gameSettings.Add(Games.Gta4, new GameSettings(
+                                               new MouseAlgs.PowerFunction(
                                                88044, // Speed
                                                .661, // Exp
                                                29000, // Cap
@@ -158,7 +180,7 @@ namespace xEmulate
                                                0.35, // diagonalCoeff
                                                0.2 // Smoothing
                                             ) // GameSettings
-                            ); // Add
+                            ); // Add*/
         }
 
 
