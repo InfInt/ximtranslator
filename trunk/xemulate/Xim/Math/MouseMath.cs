@@ -208,23 +208,29 @@ namespace xEmulate
 
             // pixelCap is the number of pixels per frame that can be processed by the current angular velocity formula.
             // Anything above this value is useless to translate but we can carry the leftover value to the next frame.
-            double pixelCapX = Math.Pow((gameSettings.XAxis.GetPixelCapValue(gameSettings.Deadzone) / (userScale * yaw)), (double)1 / accel);
-            double pixelCapY = Math.Pow((gameSettings.YAxis.GetPixelCapValue(gameSettings.Deadzone) / (userScale * pitch)), (double)1 / accel);
 
-            if (Math.Abs(delta.X) > pixelCapX)
+            if (gameSettings.XAxis.Cap != -1)
             {
-                int sign = Math.Sign(delta.X);
+                double pixelCapX = Math.Pow((gameSettings.XAxis.GetPixelCapValue(gameSettings.Deadzone) / (userScale * yaw)), (double)1 / accel);
+                if (Math.Abs(delta.X) > pixelCapX)
+                {
+                    int sign = Math.Sign(delta.X);
 
-                highEndCarry.X = (Math.Abs(delta.X) - pixelCapX) * sign;
-                mouseDelta.X = (short)(gameSettings.XAxis.Cap * sign);
+                    highEndCarry.X = (Math.Abs(delta.X) - pixelCapX) * sign;
+                    mouseDelta.X = (short)(gameSettings.XAxis.Cap * sign);
+                }
             }
 
-            if (Math.Abs(delta.Y) > pixelCapY)
+            if (gameSettings.YAxis.Cap != -1)
             {
-                int sign = Math.Sign(mouseDelta.Y);
+                double pixelCapY = Math.Pow((gameSettings.YAxis.GetPixelCapValue(gameSettings.Deadzone) / (userScale * pitch)), (double)1 / accel);
+                if (Math.Abs(delta.Y) > pixelCapY)
+                {
+                    int sign = Math.Sign(mouseDelta.Y);
 
-                highEndCarry.Y = (Math.Abs(delta.Y) - pixelCapY) * sign;
-                mouseDelta.Y = (short)(gameSettings.YAxis.Cap * sign);
+                    highEndCarry.Y = (Math.Abs(delta.Y) - pixelCapY) * sign;
+                    mouseDelta.Y = (short)(gameSettings.YAxis.Cap * sign);
+                }
             }
 
             // pixelsAtMax is the number of pixels we can process when moving at Xim.Stick.Max, if we have moved more than 

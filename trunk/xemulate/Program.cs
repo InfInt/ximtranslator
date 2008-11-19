@@ -49,7 +49,7 @@ namespace xEmulate
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new X2(args));
+                Application.Run(new xEmulateForm(args));
             }
         }
     }

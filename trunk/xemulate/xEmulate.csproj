@@ -40,7 +40,7 @@
     <PublisherName>xEmulate</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>22</ApplicationRevision>
+    <ApplicationRevision>23</ApplicationRevision>
     <ApplicationVersion>1.2.8.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -109,23 +109,24 @@
     <Compile Include="BindingManager.cs" />
     <Compile Include="Events\InputEvent.cs" />
     <Compile Include="KeyClasses.cs" />
+    <Compile Include="Xim\BetaMath\MouseAlgorithm.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="VarManager.cs" />
-    <Compile Include="Xim\BetaGamesManager.cs" />
-    <Compile Include="Xim\BetaMouseMath.cs" />
-    <Compile Include="Xim\MouseAlgs.cs" />
+    <Compile Include="Xim\BetaMath\BetaGamesManager.cs" />
+    <Compile Include="Xim\BetaMath\BetaMouseMath.cs" />
+    <Compile Include="Xim\Math\MouseAlgs.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="InfoTextManager.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="xEmulateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="xEmulateForm.Designer.cs">
+      <DependentUpon>xEmulateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Input\CommandParser.cs" />
     <Compile Include="Events\InputEventHandler.cs" />
@@ -133,14 +134,14 @@
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Input\RawInputManager.cs" />
     <Compile Include="TextModeManager.cs" />
-    <Compile Include="Xim\GamesManager.cs" />
-    <Compile Include="Xim\MouseMath.cs" />
+    <Compile Include="Xim\Math\GamesManager.cs" />
+    <Compile Include="Xim\Math\MouseMath.cs" />
     <Compile Include="Xim\Ximulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="xEmulateForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>Form1.cs</DependentUpon>
+      <DependentUpon>xEmulateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

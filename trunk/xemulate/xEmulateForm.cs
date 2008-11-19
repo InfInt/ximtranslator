@@ -12,14 +12,17 @@ using XimApi;
 
 namespace xEmulate
 {
-    public partial class X2 : Form
+    public partial class xEmulateForm : Form
     {
         Ximulator m_ximulator;
         CommandParser m_commandParser;
         ConfigManager m_configManager;
         VarManager m_varManager;
 
-        public X2(string[] args)
+        Vector2 drawSticksCenter;
+        int drawSticksSize;
+
+        public xEmulateForm(string[] args)
         {
             InitializeComponent();
 
@@ -43,6 +46,10 @@ namespace xEmulate
 
             if(System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
                 this.version.Text = "Version: "+System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+
+            this.drawSticksCenter = new Vector2(this.mouseDisplayRect.Location.X + this.mouseDisplayRect.Size.Width / 2,
+                                            this.mouseDisplayRect.Location.Y + this.mouseDisplayRect.Size.Height / 2);
+            drawSticksSize = this.mouseDisplayRect.Size.Height;
 
             SyncUI();
             SetTooltips();
@@ -361,6 +368,15 @@ namespace xEmulate
             this.tbRawLY.Text = input.LeftStickY.ToString();
             this.tbRawRX.Text = input.RightStickX.ToString();
             this.tbRawRY.Text = input.RightStickY.ToString();
+
+            this.leftStick.Location = new System.Drawing.Point(
+                                             (int)this.drawSticksCenter.X + (int)(((double)input.LeftStickX / (short)Xim.Stick.Max) * (this.drawSticksSize / 2))
+                                             , (int)this.drawSticksCenter.Y - (int)(((double)input.LeftStickY / (short)Xim.Stick.Max) * (this.drawSticksSize / 2)));
+
+            this.rightStick.Location = new System.Drawing.Point(
+                                             (int)this.drawSticksCenter.X + (int)(((double)input.RightStickX / (short)Xim.Stick.Max) * (this.drawSticksSize / 2))
+                                             , (int)this.drawSticksCenter.Y - (int)(((double)input.RightStickY / (short)Xim.Stick.Max) * (this.drawSticksSize / 2)));
+
         }
 
         private void rbMouseXLeft_Changed(object sender, EventArgs e){ m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickX, VarManager.Sticks.Left); }
@@ -370,7 +386,6 @@ namespace xEmulate
         private void rbMouseYLeft_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.Left); }
         private void rbMouseYRight_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.Right); }
         private void rbMouseYNone_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.None); }
-
     }
 }
         

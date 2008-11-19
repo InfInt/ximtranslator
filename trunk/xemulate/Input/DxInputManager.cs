@@ -14,7 +14,7 @@ namespace xEmulate
         private DxI.Device m_mouse = null;
         private DxI.Device m_joy = null;
         private bool useXInput = false;
-        private X2 form;
+        private xEmulateForm form;
 
         private InputManager inputManager;
 
@@ -28,7 +28,7 @@ namespace xEmulate
             get { return Singleton<DxInputManager>.Instance; }
         }
 
-        public void Init(X2 form)
+        public void Init(xEmulateForm form)
         {
             InfoTextManager.Instance.WriteLine("Initializing DirectInput...");
             this.form = form;
@@ -36,11 +36,7 @@ namespace xEmulate
             m_keyboard.Properties.BufferSize = 20;
             m_keyboard.SetCooperativeLevel(form.Handle,
                                             DxI.CooperativeLevelFlags.Foreground |
-#if DEBUG
                                             DxI.CooperativeLevelFlags.NonExclusive |
-#else
-                                            DxI.CooperativeLevelFlags.Exclusive |
-#endif
                                             DxI.CooperativeLevelFlags.NoWindowsKey);
 
             m_mouse = new DxI.Device(DxI.SystemGuid.Mouse);

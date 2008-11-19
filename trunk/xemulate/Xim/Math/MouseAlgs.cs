@@ -18,12 +18,14 @@ namespace xEmulate
             private AxisAlgorithm alg;
             public int Cap { get; set; }
             public double MaxSpeed { get; set; }
+            public double MinSpeed { get; set; }
             public int CarryZone { get; set; }
 
-            public Algorithm(AxisAlgorithm alg, int cap, double maxspeed, int carryZone)
+            public Algorithm(AxisAlgorithm alg, int cap, double minspeed, double maxspeed, int carryZone)
             {
                 this.alg = alg;
                 this.MaxSpeed = maxspeed;
+                this.MinSpeed = minspeed;
                 this.Cap = cap;
                 this.CarryZone = carryZone;
             }
@@ -36,8 +38,8 @@ namespace xEmulate
 
         public class PowerFunction : Algorithm
         {
-            public PowerFunction(double speed, double exponent, int cap, double maxSpeed, int carryZone)
-                : base(AxisAlgorithm.Pow, cap, maxSpeed, carryZone)
+            public PowerFunction(double speed, double exponent, int cap, double minSpeed, double maxSpeed, int carryZone)
+                : base(AxisAlgorithm.Pow, cap, minSpeed, maxSpeed, carryZone)
             {
                 this.Speed = speed;
                 this.Exp = exponent;
@@ -60,10 +62,31 @@ namespace xEmulate
 
         }
 
+        public class StaticFunction : Algorithm
+        {
+            public StaticFunction(double output, int cap, double minSpeed, double maxSpeed, int carryZone)
+                : base(AxisAlgorithm.Pow, cap, minSpeed, maxSpeed, carryZone)
+            {
+                this.Output = output;
+            }
+            public double Output { get; set; }
+
+            public override double CalcOutputDelta(double inputDelta, double otherAxis)
+            {
+                return Math.Sign(inputDelta)* this.Output;
+            }
+
+            public override double GetPixelCapValue(int deadzone)
+            {
+                return 0;
+            }
+
+        }
+
         public class PolynomialFunction : Algorithm
         {
-            public PolynomialFunction(double x2Factor, double xFactor, double yIntercept, int cap, double maxSpeed, int carryZone)
-                : base(AxisAlgorithm.Pow, cap, maxSpeed, carryZone)
+            public PolynomialFunction(double x2Factor, double xFactor, double yIntercept, int cap, double minSpeed, double minspeed, double maxSpeed, int carryZone)
+                : base(AxisAlgorithm.Pow, cap, minSpeed, maxSpeed, carryZone)
             {
                 this.x2Factor = x2Factor;
                 this.xFactor = xFactor;
@@ -88,8 +111,8 @@ namespace xEmulate
         }
         public class LogFunction : Algorithm
         {
-            public LogFunction(double lnFactor, double offset, int cap, double maxSpeed, int carryZone)
-                : base(AxisAlgorithm.Pow, cap, maxSpeed, carryZone)
+            public LogFunction(double lnFactor, double offset, int cap, double minSpeed, double maxSpeed, int carryZone)
+                : base(AxisAlgorithm.Pow, cap, minSpeed, maxSpeed, carryZone)
             {
                 this.offset = offset;
             }

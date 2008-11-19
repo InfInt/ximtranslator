@@ -14,6 +14,7 @@ namespace Linearize
     {
         XimDyn xim;
         private System.Diagnostics.Stopwatch watch;
+        private int count = 0;
         public LinearizeForm()
         {
             InitializeComponent();
@@ -29,7 +30,7 @@ namespace Linearize
             {
                 this.watch.Reset();
                 Xim.Input input = new Xim.Input();
-                input.LeftTrigger = (short)Xim.Stick.Max;
+                //input.LeftTrigger = (short)Xim.Stick.Max;
                 this.xim.SendInput(ref input, 500);
                 input.RightStickY = 0;
                 input.RightStickX = short.Parse(this.mouseInput.Text);
@@ -38,8 +39,19 @@ namespace Linearize
             }
             else
             {
-                this.outputBox.Text+=Environment.NewLine+" Input: "+this.mouseInput.Text+" \tTime: "+ Math.Round((double)watch.ElapsedMilliseconds) + "\t Revolutions: ";
+                this.count++;
+                this.outputBox.Text += Environment.NewLine + " Input: " + this.mouseInput.Text + " \tTime: " + Math.Round((double)watch.ElapsedMilliseconds) + "\t Revolutions: " + this.count;
+                this.count = 0;
                 this.xim.Disconnect();
+            }
+        }
+
+        private void button1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'n')
+            {
+                this.count++;
+                this.revCount.Text = "Rev Count: " + this.count;
             }
         }
     }
