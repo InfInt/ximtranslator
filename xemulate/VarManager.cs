@@ -40,6 +40,7 @@ namespace xEmulate
             public static string InvertY = "inverty";
             public static string MouseDPI = "mousedpi";
             public static string ButtonDownTime = "buttondowntime";
+            public static string DrivingMode = "drivingmode";
         };
 
         public enum Sticks
@@ -167,6 +168,7 @@ namespace xEmulate
             InitVar(Names.InvertY, typeof(bool), (bool)false, false, "'true' = Invert Y axis during mouse translations", null);
             InitVar(Names.MouseDPI, typeof(int), (int)800, false, "Your mouse DPI", null);
             InitVar(Names.ButtonDownTime, typeof(int), (int)30, false, "Minimum time to hold a button down", null);
+            InitVar(Names.DrivingMode, typeof(bool), (bool)false, false, "Driving Mode, useful for driving with a mouse", null);
         }
 
         private void InitVar(String varName, Type varType, Object value, bool intern, String info, Enum validValues)

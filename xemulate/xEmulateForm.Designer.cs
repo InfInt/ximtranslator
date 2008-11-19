@@ -126,13 +126,14 @@ namespace xEmulate
             this.cbRawA = new System.Windows.Forms.CheckBox();
             this.cbRawB = new System.Windows.Forms.CheckBox();
             this.tabControllerOutput = new System.Windows.Forms.TabPage();
-            this.version = new System.Windows.Forms.Label();
-            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.mouseDisplayRect = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.rightStick = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.leftStick = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.stickOutput = new System.Windows.Forms.TabPage();
             this.shapeContainer2 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.leftStick = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rightStick = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.mouseDisplayRect = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.version = new System.Windows.Forms.Label();
+            this.cbDrivingMode = new System.Windows.Forms.CheckBox();
             this.gbSettings.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -214,6 +215,7 @@ namespace xEmulate
             // 
             // gbSettings
             // 
+            this.gbSettings.Controls.Add(this.cbDrivingMode);
             this.gbSettings.Controls.Add(this.groupBox1);
             this.gbSettings.Controls.Add(this.panel2);
             this.gbSettings.Controls.Add(this.cbAutoAnalogDisc);
@@ -235,9 +237,9 @@ namespace xEmulate
             // 
             this.groupBox1.Controls.Add(this.panel3);
             this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Location = new System.Drawing.Point(6, 118);
+            this.groupBox1.Location = new System.Drawing.Point(6, 137);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(263, 91);
+            this.groupBox1.Size = new System.Drawing.Size(263, 80);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mouse Stick";
@@ -1183,49 +1185,6 @@ namespace xEmulate
             this.tabControllerOutput.Text = "Controller Output";
             this.tabControllerOutput.UseVisualStyleBackColor = true;
             // 
-            // version
-            // 
-            this.version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.version.Location = new System.Drawing.Point(708, 2);
-            this.version.Name = "version";
-            this.version.Size = new System.Drawing.Size(153, 15);
-            this.version.TabIndex = 8;
-            this.version.Text = "Version: 1.2.8.21";
-            this.version.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // rectangleShape2
-            // 
-            this.rectangleShape2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.rectangleShape2.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
-            this.rectangleShape2.Location = new System.Drawing.Point(60, 60);
-            this.rectangleShape2.Name = "rectangleShape2";
-            this.rectangleShape2.Size = new System.Drawing.Size(115, 115);
-            // 
-            // mouseDisplayRect
-            // 
-            this.mouseDisplayRect.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.mouseDisplayRect.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
-            this.mouseDisplayRect.FillColor = System.Drawing.Color.Black;
-            this.mouseDisplayRect.Location = new System.Drawing.Point(4, 4);
-            this.mouseDisplayRect.Name = "rectangleShape1";
-            this.mouseDisplayRect.Size = new System.Drawing.Size(230, 230);
-            // 
-            // rightStick
-            // 
-            this.rightStick.BackColor = System.Drawing.Color.DarkRed;
-            this.rightStick.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
-            this.rightStick.Location = new System.Drawing.Point(102, 101);
-            this.rightStick.Name = "rightStick";
-            this.rightStick.Size = new System.Drawing.Size(5, 5);
-            // 
-            // leftStick
-            // 
-            this.leftStick.BackColor = System.Drawing.Color.DarkGreen;
-            this.leftStick.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
-            this.leftStick.Location = new System.Drawing.Point(103, 101);
-            this.leftStick.Name = "leftStick";
-            this.leftStick.Size = new System.Drawing.Size(5, 5);
-            // 
             // stickOutput
             // 
             this.stickOutput.Controls.Add(this.shapeContainer2);
@@ -1251,7 +1210,61 @@ namespace xEmulate
             this.shapeContainer2.TabIndex = 0;
             this.shapeContainer2.TabStop = false;
             // 
-            // X2
+            // leftStick
+            // 
+            this.leftStick.BackColor = System.Drawing.Color.DarkGreen;
+            this.leftStick.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.leftStick.Location = new System.Drawing.Point(103, 101);
+            this.leftStick.Name = "leftStick";
+            this.leftStick.Size = new System.Drawing.Size(5, 5);
+            // 
+            // rightStick
+            // 
+            this.rightStick.BackColor = System.Drawing.Color.DarkRed;
+            this.rightStick.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rightStick.Location = new System.Drawing.Point(102, 101);
+            this.rightStick.Name = "rightStick";
+            this.rightStick.Size = new System.Drawing.Size(5, 5);
+            // 
+            // rectangleShape2
+            // 
+            this.rectangleShape2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.rectangleShape2.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rectangleShape2.Location = new System.Drawing.Point(60, 60);
+            this.rectangleShape2.Name = "rectangleShape2";
+            this.rectangleShape2.Size = new System.Drawing.Size(115, 115);
+            // 
+            // mouseDisplayRect
+            // 
+            this.mouseDisplayRect.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.mouseDisplayRect.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.mouseDisplayRect.FillColor = System.Drawing.Color.Black;
+            this.mouseDisplayRect.Location = new System.Drawing.Point(4, 4);
+            this.mouseDisplayRect.Name = "rectangleShape1";
+            this.mouseDisplayRect.Size = new System.Drawing.Size(230, 230);
+            // 
+            // version
+            // 
+            this.version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.version.Location = new System.Drawing.Point(708, 2);
+            this.version.Name = "version";
+            this.version.Size = new System.Drawing.Size(153, 15);
+            this.version.TabIndex = 8;
+            this.version.Text = "Version: 1.2.8.21";
+            this.version.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // cbDrivingMode
+            // 
+            this.cbDrivingMode.AutoSize = true;
+            this.cbDrivingMode.Location = new System.Drawing.Point(9, 118);
+            this.cbDrivingMode.Name = "cbDrivingMode";
+            this.cbDrivingMode.Size = new System.Drawing.Size(89, 17);
+            this.cbDrivingMode.TabIndex = 47;
+            this.cbDrivingMode.Text = "Driving Mode";
+            this.cbDrivingMode.UseVisualStyleBackColor = true;
+            this.cbDrivingMode.CheckedChanged += new System.EventHandler(this.cbDrivingMode_CheckedChanged);
+            // 
+            // xEmulateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1271,7 +1284,7 @@ namespace xEmulate
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "X2";
+            this.Name = "xEmulateForm";
             this.Text = "xEmulate";
             this.gbSettings.ResumeLayout(false);
             this.gbSettings.PerformLayout();
@@ -1409,6 +1422,7 @@ namespace xEmulate
         private Microsoft.VisualBasic.PowerPacks.RectangleShape leftStick;
         private System.Windows.Forms.TabPage stickOutput;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer2;
+        private System.Windows.Forms.CheckBox cbDrivingMode;
     }
 }
 

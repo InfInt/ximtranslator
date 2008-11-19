@@ -191,10 +191,10 @@ namespace xEmulate
                                                -1, // Max Speed
                                                -1 // CarryZone 
                                                ),
-                                               8000, // Deadzone
+                                               8960, // Deadzone
                                                false, //Circular Deadzone
                                                0.35, // diagonalCoeff
-                                               0.2 // Smoothing
+                                               0 // Smoothing
                                             ) // GameSettings
                             ); // Add
 

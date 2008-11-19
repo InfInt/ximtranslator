@@ -38,6 +38,7 @@ namespace xEmulate
         private VarManager.Var m_mouseStickY;
         private VarManager.Var m_inverty;
         private VarManager.Var m_mouseDpi;
+        private VarManager.Var m_drivingMode;
         private IntPtr m_mouseSmoothPtr = (IntPtr)0;
 
         private VarManager varManager;
@@ -78,12 +79,18 @@ namespace xEmulate
             this.varManager.GetVar(VarManager.Names.MouseStickY, out m_mouseStickY);
             this.varManager.GetVar(VarManager.Names.InvertY, out m_inverty);
             this.varManager.GetVar(VarManager.Names.MouseDPI, out m_mouseDpi);
+            this.varManager.GetVar(VarManager.Names.DrivingMode, out m_drivingMode);
         }
 
         public void ProcessMouseMovement(ref Xim.Input input, ref Xim.Input startState)
         {
             Vector2 delta;
-            this.inputManager.GetAndResetMouseDelta(out delta);
+            if ((bool)this.m_drivingMode.Value)
+            {
+                this.inputManager.GetMouseDelta(out delta);
+            }
+            else
+                this.inputManager.GetAndResetMouseDelta(out delta);
 
             double sensitivity;
             if ((bool)m_altSens.Value)
@@ -172,15 +179,21 @@ namespace xEmulate
             double userScale = revolutionsperinch * delay / mouseDpi;
 
             Vector2 delta;
-            InputManager.Instance.GetAndResetMouseDelta(out delta);
+            if ((bool)this.m_drivingMode.Value)
+                this.inputManager.GetMouseDelta(out delta);
+            else
+                this.inputManager.GetAndResetMouseDelta(out delta);
 
             delta.Y = -delta.Y;
 
-            delta.Add(highEndCarry);
-            highEndCarry.X = highEndCarry.Y = 0;
+            if (!(bool)this.m_drivingMode.Value)
+            {
+                delta.Add(highEndCarry);
+                highEndCarry.X = highEndCarry.Y = 0;
 
-            delta.Add(lowEndCarry);
-            lowEndCarry.X = lowEndCarry.Y = 0;
+                delta.Add(lowEndCarry);
+                lowEndCarry.X = lowEndCarry.Y = 0;
+            }
 
             if (delta.X == 0 && delta.Y == 0)
                 return;

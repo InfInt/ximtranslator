@@ -347,6 +347,11 @@ namespace xEmulate
             m_varManager.SetVar(VarManager.Names.InvertY, cbInvertY.Checked); 
         }
 
+        private void cbDrivingMode_CheckedChanged(object sender, EventArgs e)
+        {
+            m_varManager.SetVar(VarManager.Names.DrivingMode, cbDrivingMode.Checked); 
+        }
+
         public void UpdateOutputView(Xim.Input input)
         {
             this.cbRawA.Checked = input.A == Xim.ButtonState.Pressed;
