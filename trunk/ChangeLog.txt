@@ -5,7 +5,11 @@ Nov 18, 2008
 		
 		- Added Bioshock 
 		- Added Left For Dead
+		- Added Rainbow 6 - Vegas
+		- Added Orange Box
 		- Added "Stick Output" which gives a visual representation of the RS and LS output.
+		- Added "Driving Mode", the variable is "drivingmode", when set true the mouse movement is not reset per frame.
+		- Added "Detect Joysticks" button, as well as the command "initjoy" which will initialize joysticks if you plug them in after the application is already running.
 
 Nov 14, 2008
 

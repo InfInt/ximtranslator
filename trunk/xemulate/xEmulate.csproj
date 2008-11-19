@@ -40,7 +40,7 @@
     <PublisherName>xEmulate</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>24</ApplicationRevision>
+    <ApplicationRevision>26</ApplicationRevision>
     <ApplicationVersion>1.2.8.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="BindingManager.cs" />
     <Compile Include="Events\InputEvent.cs" />
+    <Compile Include="Input\CommandParser.cs" />
     <Compile Include="KeyClasses.cs" />
     <Compile Include="Xim\BetaMath\MouseAlgorithm.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -128,7 +129,6 @@
     <Compile Include="xEmulateForm.Designer.cs">
       <DependentUpon>xEmulateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Input\CommandParser.cs" />
     <Compile Include="Events\InputEventHandler.cs" />
     <Compile Include="Input\DxInputManager.cs" />
     <Compile Include="Input\InputManager.cs" />

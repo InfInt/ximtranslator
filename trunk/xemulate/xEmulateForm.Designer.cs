@@ -134,6 +134,7 @@ namespace xEmulate
             this.mouseDisplayRect = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.version = new System.Windows.Forms.Label();
             this.cbDrivingMode = new System.Windows.Forms.CheckBox();
+            this.button4 = new System.Windows.Forms.Button();
             this.gbSettings.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -1264,6 +1265,16 @@ namespace xEmulate
             this.cbDrivingMode.UseVisualStyleBackColor = true;
             this.cbDrivingMode.CheckedChanged += new System.EventHandler(this.cbDrivingMode_CheckedChanged);
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(447, 418);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 41);
+            this.button4.TabIndex = 9;
+            this.button4.Text = "Detect Joysticks";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // xEmulateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1271,6 +1282,7 @@ namespace xEmulate
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(863, 520);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.version);
             this.Controls.Add(this.tabOutput);
             this.Controls.Add(this.calibration);
@@ -1423,6 +1435,7 @@ namespace xEmulate
         private System.Windows.Forms.TabPage stickOutput;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer2;
         private System.Windows.Forms.CheckBox cbDrivingMode;
+        private System.Windows.Forms.Button button4;
     }
 }
 
