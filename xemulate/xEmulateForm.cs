@@ -391,6 +391,11 @@ namespace xEmulate
         private void rbMouseYLeft_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.Left); }
         private void rbMouseYRight_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.Right); }
         private void rbMouseYNone_Changed(object sender, EventArgs e) { m_varManager.SetVar<VarManager.Sticks>(VarManager.Names.MouseStickY, VarManager.Sticks.None); }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DxInputManager.Instance.InitJoy();
+        }
     }
 }
         

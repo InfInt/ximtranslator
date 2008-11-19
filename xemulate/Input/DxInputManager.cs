@@ -52,7 +52,12 @@ namespace xEmulate
                                             DxI.CooperativeLevelFlags.Exclusive);
 #endif
 
-            InfoTextManager.Instance.Write("Complete."); 
+            InfoTextManager.Instance.Write("Complete.");
+            InitJoy();
+        }
+
+        public void InitJoy()
+        {
             Xna.Input.GamePadState gamePadState = Xna.Input.GamePad.GetState(Xna.PlayerIndex.One);
             if (gamePadState.IsConnected)
             {
@@ -67,17 +72,21 @@ namespace xEmulate
                     m_joy = new DxI.Device(pad.InstanceGuid);
                     m_joy.SetCooperativeLevel(form, DxI.CooperativeLevelFlags.Background |
 #if DEBUG
- DxI.CooperativeLevelFlags.NonExclusive);
+                                            DxI.CooperativeLevelFlags.NonExclusive);
 #else
-                                            DxI.CooperativeLevelFlags.Exclusive);
+ DxI.CooperativeLevelFlags.Exclusive);
 #endif
                 }
 
 
-                
+
                 if (m_joy != null)
                 {
                     InfoTextManager.Instance.WriteLine("Initialized 1 Joystick");
+                }
+                else
+                {
+                    InfoTextManager.Instance.WriteLine("No Joysticks Found, Joystick functionality disabled");
                 }
             }
         }

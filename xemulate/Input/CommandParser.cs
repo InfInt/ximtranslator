@@ -150,6 +150,12 @@ namespace xEmulate
             else if (line.Equals("listvars"))
             {
                 VarManager.Instance.ListVars();
+                return true;
+            }
+            else if (line.Equals("initjoy"))
+            {
+                DxInputManager.Instance.InitJoy();
+                return true;
             }
             else
             {

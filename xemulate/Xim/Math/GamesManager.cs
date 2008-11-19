@@ -10,24 +10,28 @@ namespace xEmulate
         // Games and GameNames must be in the same order.
         public enum Games
         {
-            Ut3 = 0,
-            Cod4 = 1,
-            Halo3 = 2,
-            Gow2 = 3,
-            Gta4 = 4,
-            L4D = 5,
-            Bio = 6,
+            Bio,
+            Cod4,
+            Gow2,
+            Gta4,
+            HL2,
+            Halo3,
+            L4D,
+            R6v,
+            Ut3,
         }
 
         public static string[] GameNames = new string[]
         { 
-            "Unreal Tournament 3 (ut3) (20 sens, 10 accel)",
+            "Bioshock (bio) (100 sens)",
             "Call of Duty 4 (cod4) (10 sens)",
-            "Halo 3 (halo3) (10 sens)",
             "Gears of War 2 (gow2) (High, High, High)",
             "Grand Theft Auto IV (gta4) (High)",
+            "Half Life 2 - Orange Box (hl2) (Max) (Max)",
+            "Halo 3 (halo3) (10 sens)",
             "Left For Dead (l4d) (Max) (Max)",
-            "Bioshock (bio) (100 sens)",
+            "Rainbow Six - Vegas (r6v) (10 sens)",
+            "Unreal Tournament 3 (ut3) (20 sens, 10 accel)",
         };
 
         private Dictionary<Games, GameSettings> gameSettings;
@@ -174,7 +178,8 @@ namespace xEmulate
                                             ) // GameSettings
                             ); // Add
 
-            gameSettings.Add(Games.L4D, new GameSettings(
+            
+            gameSettings.Add(Games.HL2, new GameSettings(
                                                new MouseAlgs.PowerFunction(
                                                40000, // Speed
                                                1, // Exp
@@ -191,9 +196,35 @@ namespace xEmulate
                                                -1, // Max Speed
                                                -1 // CarryZone 
                                                ),
-                                               8960, // Deadzone
+                                               8960, // Deadzone 
                                                false, //Circular Deadzone
                                                0.35, // diagonalCoeff
+                                               0 // Smoothing
+                                            ) // GameSettings
+                            ); // Add
+            
+            gameSettings.Add(Games.L4D, this.GetGameSettings(Games.HL2));
+
+            gameSettings.Add(Games.R6v, new GameSettings(
+                                               new MouseAlgs.PowerFunction(
+                                               30000, // Speed
+                                               .5, // Exp
+                                               -1, // Cap
+                                               -1, // Min Speed
+                                               -1, // Max Speed
+                                               -1 // CarryZone 
+                                               ),
+                                               new MouseAlgs.PowerFunction(
+                                               60000, // Speed
+                                               .5, // Exp
+                                               -1, // Cap
+                                               -1, // Min Speed
+                                               -1, // Max Speed
+                                               -1 // CarryZone 
+                                               ),
+                                               6800, // Deadzone
+                                               false, //Circular Deadzone
+                                               0.25, // diagonalCoeff
                                                0 // Smoothing
                                             ) // GameSettings
                             ); // Add
