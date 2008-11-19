@@ -81,6 +81,11 @@ namespace xEmulate
             m_mouseDelta = new Vector2(0, 0);
         }
 
+        public void GetMouseDelta(out Vector2 delta)
+        {
+            delta = m_mouseDelta;
+        }
+
         public bool KeyUp(DxI.Key button)
         {
             if (m_pressedKeys.Contains(button))

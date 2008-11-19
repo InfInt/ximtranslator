@@ -127,7 +127,7 @@ namespace xEmulate
                     }
                 }*/
                 Vector2 delta = new Vector2(mouseState.X, mouseState.Y);
-                this.inputManager.SetMouseDelta(delta);
+                this.inputManager.AddMouseDelta(delta);
 
                 this.inputManager.SetAndFirePressedButtons(mouseState, fCreateEvents);
             }

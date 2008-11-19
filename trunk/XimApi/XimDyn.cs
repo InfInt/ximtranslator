@@ -13,22 +13,39 @@ namespace XimApi
     public class XimDyn
     {
         bool fInit;
+        public bool Connected { get; set; }
 
-        public DConnect Connect;
-        public DDisconnect Disconnect;
-        public DSetMode SetMode;
-        public DComputeStickValues ComputeStickValues;
-        public DSendInput SendInput;
-        public DAllocSmoothness AllocSmoothness;
-        public DFreeSmoothness FreeSmoothness;
+        private DConnect FnConnect;
+        private DDisconnect FnDisconnect;
+        private DSetMode FnSetMode;
+        public DComputeStickValues FnComputeStickValues;
+        private DSendInput FnSendInput;
+        private DAllocSmoothness FnAllocSmoothness;
+        private DFreeSmoothness FnFreeSmoothness;
 
         private IntPtr XIMCore;
+        private IntPtr SmoothnessPtr;
         public String ximPath;
 
         private XimDyn()
         {
+            this.Connected = false;
             this.fInit = false;
             this.ximPath = "";
+        }
+
+        ~XimDyn()
+        {
+            if (this.Connected)
+            {
+                this.FnDisconnect();
+                this.Connected = false;
+            }
+
+            if (this.SmoothnessPtr != IntPtr.Zero)
+            {
+                FreeSmoothness();
+            }
         }
 
         public static XimDyn Instance
@@ -97,23 +114,85 @@ namespace XimApi
                 // Load my functions
                 IntPtr procAddr = new IntPtr();
                 if( GetProcAddress("XIMConnect", ref procAddr ))
-                    this.Connect = (DConnect)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DConnect));
+                    this.FnConnect = (DConnect)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DConnect));
                 if (GetProcAddress("XIMDisconnect", ref procAddr))
-                    this.Disconnect = (DDisconnect)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DDisconnect));
+                    this.FnDisconnect = (DDisconnect)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DDisconnect));
                 if (GetProcAddress("XIMSetMode", ref procAddr))
-                    this.SetMode = (DSetMode)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DSetMode));
+                    this.FnSetMode = (DSetMode)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DSetMode));
                 if (GetProcAddress("XIMSendXbox360Input", ref procAddr))
-                    this.SendInput = (DSendInput)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DSendInput));
+                    this.FnSendInput = (DSendInput)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DSendInput));
                 if (GetProcAddress("XIMAllocSmoothness", ref procAddr))
-                    this.AllocSmoothness = (DAllocSmoothness)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DAllocSmoothness));
+                    this.FnAllocSmoothness = (DAllocSmoothness)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DAllocSmoothness));
                 if (GetProcAddress("XIMFreeSmoothness", ref procAddr))
-                    this.FreeSmoothness = (DFreeSmoothness)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DFreeSmoothness));
+                    this.FnFreeSmoothness = (DFreeSmoothness)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DFreeSmoothness));
                 if (GetProcAddress("XIMComputeStickValues", ref procAddr))
-                    this.ComputeStickValues = (DComputeStickValues)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DComputeStickValues));
+                    this.FnComputeStickValues = (DComputeStickValues)Marshal.GetDelegateForFunctionPointer(procAddr, typeof(DComputeStickValues));
 
                 this.fInit = true;
             }
         }
+
+        //XIMDisconnect
+        public Xim.Status Connect()
+        {
+            if (!this.Connected)
+            {
+                Xim.Status status = this.FnConnect();
+                this.Connected = status == Xim.Status.OK;
+                return status;
+            }
+            return Xim.Status.OK;
+        }
+
+        // Disconnect from XIM hardware.
+        public void Disconnect()
+        {
+            if (this.Connected)
+            {
+                this.FnDisconnect();
+                this.Connected = false;
+            }
+        }
+
+        // Set runtime mode option (combined flags).
+        public Xim.Status SetMode(Xim.Mode mode)
+        {
+            if (this.Connected)
+            {
+                return this.FnSetMode(mode);
+            }
+            return Xim.Status.DeviceNotFound;
+        }
+
+        // Send Xbox 360 controller state.
+        // Controller state will persist (latch) until the next call. Method
+        // will not return until state is fully committed to the Xbox 360 controller and
+        // the specified timeout was met.
+        public Xim.Status SendInput(ref Xim.Input input, float timeoutMS)
+        {
+            if (this.Connected)
+            {
+                return this.FnSendInput(ref input, timeoutMS);
+            }
+            return Xim.Status.DeviceNotFound;
+        }
+
+        public IntPtr AllocSmoothness(float intensity, int inputUpdateFrequency, float stickYXRatio, float stickTranslationExponent, float stickSensitivity)
+        {
+            if (this.SmoothnessPtr != IntPtr.Zero)
+            {
+                this.FreeSmoothness();
+            }
+            
+            this.SmoothnessPtr = this.FnAllocSmoothness(intensity, inputUpdateFrequency, stickYXRatio, stickTranslationExponent, stickSensitivity);
+            return this.SmoothnessPtr;
+        }
+
+        public void FreeSmoothness()
+        {
+            this.FnFreeSmoothness(this.SmoothnessPtr);
+        }
+
 
         public void CopyCalibrate()
         {
