@@ -1,6 +1,6 @@
 namespace xEmulate
 {
-    partial class X2
+    partial class xEmulateForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace xEmulate
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(X2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(xEmulateForm));
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.infoText = new System.Windows.Forms.TextBox();
@@ -127,6 +127,12 @@ namespace xEmulate
             this.cbRawB = new System.Windows.Forms.CheckBox();
             this.tabControllerOutput = new System.Windows.Forms.TabPage();
             this.version = new System.Windows.Forms.Label();
+            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.mouseDisplayRect = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rightStick = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.leftStick = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.stickOutput = new System.Windows.Forms.TabPage();
+            this.shapeContainer2 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.gbSettings.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -143,6 +149,7 @@ namespace xEmulate
             this.ximPanel.SuspendLayout();
             this.tabOutput.SuspendLayout();
             this.tabRawOutput.SuspendLayout();
+            this.stickOutput.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -855,6 +862,7 @@ namespace xEmulate
             // 
             this.tabOutput.Controls.Add(this.tabRawOutput);
             this.tabOutput.Controls.Add(this.tabControllerOutput);
+            this.tabOutput.Controls.Add(this.stickOutput);
             this.tabOutput.Location = new System.Drawing.Point(12, 12);
             this.tabOutput.Name = "tabOutput";
             this.tabOutput.SelectedIndex = 0;
@@ -1185,6 +1193,64 @@ namespace xEmulate
             this.version.Text = "Version: 1.2.8.21";
             this.version.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // rectangleShape2
+            // 
+            this.rectangleShape2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.rectangleShape2.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rectangleShape2.Location = new System.Drawing.Point(60, 60);
+            this.rectangleShape2.Name = "rectangleShape2";
+            this.rectangleShape2.Size = new System.Drawing.Size(115, 115);
+            // 
+            // mouseDisplayRect
+            // 
+            this.mouseDisplayRect.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.mouseDisplayRect.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.mouseDisplayRect.FillColor = System.Drawing.Color.Black;
+            this.mouseDisplayRect.Location = new System.Drawing.Point(4, 4);
+            this.mouseDisplayRect.Name = "rectangleShape1";
+            this.mouseDisplayRect.Size = new System.Drawing.Size(230, 230);
+            // 
+            // rightStick
+            // 
+            this.rightStick.BackColor = System.Drawing.Color.DarkRed;
+            this.rightStick.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rightStick.Location = new System.Drawing.Point(102, 101);
+            this.rightStick.Name = "rightStick";
+            this.rightStick.Size = new System.Drawing.Size(5, 5);
+            // 
+            // leftStick
+            // 
+            this.leftStick.BackColor = System.Drawing.Color.DarkGreen;
+            this.leftStick.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.leftStick.Location = new System.Drawing.Point(103, 101);
+            this.leftStick.Name = "leftStick";
+            this.leftStick.Size = new System.Drawing.Size(5, 5);
+            // 
+            // stickOutput
+            // 
+            this.stickOutput.Controls.Add(this.shapeContainer2);
+            this.stickOutput.Location = new System.Drawing.Point(4, 22);
+            this.stickOutput.Name = "stickOutput";
+            this.stickOutput.Padding = new System.Windows.Forms.Padding(3);
+            this.stickOutput.Size = new System.Drawing.Size(291, 245);
+            this.stickOutput.TabIndex = 2;
+            this.stickOutput.Text = "Stick Output";
+            this.stickOutput.UseVisualStyleBackColor = true;
+            // 
+            // shapeContainer2
+            // 
+            this.shapeContainer2.Location = new System.Drawing.Point(3, 3);
+            this.shapeContainer2.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer2.Name = "shapeContainer2";
+            this.shapeContainer2.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.leftStick,
+            this.rightStick,
+            this.rectangleShape2,
+            this.mouseDisplayRect});
+            this.shapeContainer2.Size = new System.Drawing.Size(285, 239);
+            this.shapeContainer2.TabIndex = 0;
+            this.shapeContainer2.TabStop = false;
+            // 
             // X2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1232,6 +1298,7 @@ namespace xEmulate
             this.tabOutput.ResumeLayout(false);
             this.tabRawOutput.ResumeLayout(false);
             this.tabRawOutput.PerformLayout();
+            this.stickOutput.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1336,6 +1403,12 @@ namespace xEmulate
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label version;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape mouseDisplayRect;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rightStick;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape leftStick;
+        private System.Windows.Forms.TabPage stickOutput;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer2;
     }
 }
 

@@ -153,7 +153,7 @@ namespace xEmulate
             InitVar(Names.YXRatio, typeof(double), (double)2.0, false, "YXRatio as defined by XIM api", null);
             InitVar(Names.Rate, typeof(double), (double)60, false, "Rate to process input", null);
             InitVar(Names.TextMode, typeof(bool), (bool)false, false, "Set to true to start textmode", null);
-            InitVar(Names.TextModeRate, typeof(double), (double)20, false, "Rate to process keystrokes when in Text Mode", null);
+            InitVar(Names.TextModeRate, typeof(double), (double)12, false, "Rate to process keystrokes when in Text Mode", null);
             InitVar(Names.Smoothness, typeof(double), (double)0, false, "Smoothness as defined by XIM api", null);
             InitVar(Names.AutoAnalogDisconnect, typeof(bool), (bool)false, false, "'true' = use autoanalogdisconnect, 'false' = don't", null);
             InitVar(Names.CircularDeadzone, typeof(bool), (bool)true, false, "Defines deadzone type: 'true' = circular deadzone, 'false' = square deadzone", null);

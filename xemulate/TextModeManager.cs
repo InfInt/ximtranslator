@@ -25,7 +25,8 @@ namespace xEmulate
 
         private Destination m_current;
         private int m_idleFrame = 0;
-        
+        private bool done = false;
+
         private Queue<Destination> m_keyqueue;
         
         private TextModeManager()
@@ -120,68 +121,76 @@ namespace xEmulate
 
         public void ProcessOutput(double delay, ref Xim.Input input, ref Xim.Input startState)
         {
-            mutex.WaitOne();
+            
+            if (done)
+            {
+                done = false;
+                VarManager.Instance.SetVar(VarManager.Names.TextMode, false);
+                return;
+            }
             input = new Xim.Input();
-
-            if (m_idleFrame < 3)
+            if (m_idleFrame == 0)
             {
                 m_idleFrame++;
-                return;
             }
-            m_idleFrame = 0;
-
-
-            if (m_keyqueue.Count == 0)
+            else if (m_keyqueue.Count != 0)
             {
-                return;
-            }
+                m_idleFrame = 0;
 
-            if (FAtDestination())
-            {
-                if (m_keyqueue.Peek().toPressOnFinished == Xim.Button.Start)
+                mutex.WaitOne();
+
+                if (FAtDestination())
                 {
-                    InfoTextManager.Instance.WriteLine("Sending message and exiting TextMode");
-                    VarManager.Instance.SetVar("textmode", false);
-                }
-                Xim.SetButtonState(m_keyqueue.Peek().toPressOnFinished, Xim.ButtonState.Pressed, ref input);
-                m_keyqueue.Dequeue();
-            }
-            else
-            {
-                Destination d = m_keyqueue.Peek();
-                if (d.coord.X != m_current.coord.X)
-                {
-                    if (d.coord.X > m_current.coord.X)
+                    Xim.SetButtonState(m_keyqueue.Peek().toPressOnFinished, Xim.ButtonState.Pressed, ref input);
+
+                    if (m_keyqueue.Peek().toPressOnFinished == Xim.Button.Start)
                     {
-                        m_current.coord.X++;
-                        input.Down = Xim.ButtonState.Pressed;
+                        InfoTextManager.Instance.WriteLine("Sending message and exiting TextMode");
+                        this.done = true;
+                        m_keyqueue.Clear();
                     }
                     else
                     {
-                        m_current.coord.X--;
-                        input.Up = Xim.ButtonState.Pressed;
+                        m_keyqueue.Dequeue();
                     }
                 }
-                else if (d.coord.Y != m_current.coord.Y)
+                else
                 {
-                    if (d.coord.Y > m_current.coord.Y)
+                    Destination d = m_keyqueue.Peek();
+                    if (d.coord.X != m_current.coord.X)
                     {
-                        m_current.coord.Y++;
-                        input.Right = Xim.ButtonState.Pressed;
+                        if (d.coord.X > m_current.coord.X)
+                        {
+                            m_current.coord.X++;
+                            input.Down = Xim.ButtonState.Pressed;
+                        }
+                        else
+                        {
+                            m_current.coord.X--;
+                            input.Up = Xim.ButtonState.Pressed;
+                        }
                     }
-                    else
+                    else if (d.coord.Y != m_current.coord.Y)
                     {
-                        m_current.coord.Y--;
-                        input.Left = Xim.ButtonState.Pressed;
+                        if (d.coord.Y > m_current.coord.Y)
+                        {
+                            m_current.coord.Y++;
+                            input.Right = Xim.ButtonState.Pressed;
+                        }
+                        else
+                        {
+                            m_current.coord.Y--;
+                            input.Left = Xim.ButtonState.Pressed;
+                        }
+                    }
+                    else if (m_current.shift != m_keyqueue.Peek().shift)
+                    {
+                        m_current.shift = m_keyqueue.Peek().shift;
+                        Xim.SetButtonState(Xim.Button.LeftStick, Xim.ButtonState.Pressed, ref input);
                     }
                 }
-                else if (m_current.shift != m_keyqueue.Peek().shift)
-                {
-                    m_current.shift = m_keyqueue.Peek().shift;
-                    Xim.SetButtonState(Xim.Button.LeftStick, Xim.ButtonState.Pressed, ref input);
-                }
+                mutex.ReleaseMutex();
             }
-            mutex.ReleaseMutex();
         }
 
         private bool FAtDestination()

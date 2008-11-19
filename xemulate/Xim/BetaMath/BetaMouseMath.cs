@@ -38,19 +38,17 @@ namespace xEmulate
         private VarManager.Var m_mouseStickY;
         private VarManager.Var m_inverty;
         private VarManager.Var m_mouseDpi;
-        private IntPtr m_mouseSmoothPtr = (IntPtr)0;
 
         private VarManager varManager;
         private InputManager inputManager;
-        private GamesManager gamesManager;
+        private BetaGamesManager gamesManager;
         private Vector2 lastFrame = new Vector2(0, 0);
-        private double maxVector2Len = 36769; //Math.Sqrt(26000 * 26000 + 26000 * 26000);
 
         public BetaMouseMath()
         {
             this.varManager = VarManager.Instance;
             this.inputManager = InputManager.Instance;
-            this.gamesManager = GamesManager.Instance;
+            this.gamesManager = BetaGamesManager.Instance;
 
             this.varManager.GetVar(VarManager.Names.Speed, out m_speed);
             this.varManager.GetVar(VarManager.Names.Speed2, out m_speed2);
@@ -83,6 +81,7 @@ namespace xEmulate
 
         private static Vector2 lowEndCarry = new Vector2(0, 0);
         private static Vector2 highEndCarry = new Vector2(0, 0);
+        private static Vector2 spot = new Vector2(0.2, 0);
 
         public void GetUserSettings(out double speed, out double accel, out double mouseDpi, out double pitch, out double yaw)
         {
@@ -122,150 +121,135 @@ namespace xEmulate
 
             double userScale = revolutionsperinch * delay / mouseDpi;
 
-            delta.Add(highEndCarry);
-            highEndCarry.X = highEndCarry.Y = 0;
-
-            delta.Add(lowEndCarry);
-            lowEndCarry.X = lowEndCarry.Y = 0;
-
+            
             angularVelocity = new Vector2(delta.X, delta.Y);
 
-            // Transform mouseDelta into Angular Velocity ( revolutions / time ) = delta^accel * sens * delay 
-            angularVelocity.Pow(accel);
-            angularVelocity.Scale(userScale);
+            // Short circuit if we know we have no movement;
+            if (angularVelocity.X != 0 || angularVelocity.Y != 0)
+            {
+                // Transform mouseDelta into Angular Velocity ( revolutions / time ) = delta^accel * sens * delay 
+                angularVelocity.Pow(accel);
+                angularVelocity.Scale(userScale);
 
-            // Factor in user Y:X ratio
-            angularVelocity.X = angularVelocity.X * yaw;
-            angularVelocity.Y = angularVelocity.Y * pitch;
+                // Factor in user Y:X ratio
+                angularVelocity.X = angularVelocity.X * yaw;
+                angularVelocity.Y = angularVelocity.Y * pitch;
+            }
+
+            InfoTextManager.Instance.WriteLine(highEndCarry.X.ToString());
+            angularVelocity.Add(highEndCarry);
+            highEndCarry.X = highEndCarry.Y = 0;
+
+            angularVelocity.Add(lowEndCarry);
+            lowEndCarry.X = lowEndCarry.Y = 0;
         }
 
-        public void XSoftMouseMovement(ref Xim.Input input, ref Xim.Input startState)
+        public void XSoftMouseMovement(double delayInMs, ref Xim.Input input, ref Xim.Input startState)
         {
-            GamesManager.GameSettings gameSettings = gamesManager.GetGameSettings((GamesManager.Games)m_currentGame.Value);
+            BetaGamesManager.GameSettings gameSettings = gamesManager.GetGameSettings((GamesManager.Games)m_currentGame.Value);
 
             // Get the user input
             Vector2 rawDelta;
             InputManager.Instance.GetAndResetMouseDelta(out rawDelta);
             rawDelta.Y = -rawDelta.Y;
 
-            if (rawDelta.X == 0 && rawDelta.Y == 0)
+            Vector2 angVelocity;
+            CalcAngularVelocity(rawDelta, out angVelocity);
+
+            if (angVelocity.X == 0 && angVelocity.Y == 0)
                 return;
 
-            Vector2 angVelocity;
-
-            CalcAngularVelocity(rawDelta, out angVelocity);
+            //angVelocity = new Vector2(spot);
+            //spot.Rotate(Math.PI / 45);
 
             Vector2 outputDelta = new Vector2(angVelocity);
 
-            CalcDelta(outputDelta, gameSettings);
+            CalcDelta(delayInMs, angVelocity, ref outputDelta, gameSettings);
 
-            if (outputDelta.Length > this.maxVector2Len - gameSettings.Deadzone)
+            /*if(outputDelta.X != 0 && outputDelta.Y != 0)
             {
+                double association = 0;
+                double xy = 0;
+                if (Math.Abs(outputDelta.X) > Math.Abs(outputDelta.Y))
+                {
+                    association = Math.Abs(outputDelta.Y / outputDelta.X);
+                    xy = outputDelta.X;
+                }
+                else
+                {
+                    association = Math.Abs(outputDelta.X / outputDelta.Y);
+                    xy = outputDelta.Y;
+                }
+
+                xy = Math.Sqrt(2 * xy * xy);
+
+                double newLen = outputDelta.Length *( 1.0 - association * .30  );
+                
                 outputDelta.Normalize();
-                outputDelta.Scale(this.maxVector2Len);
-            }
-
-            CalcDiag(angVelocity, gameSettings);
-
-            //CalcAveraging(angVelocity, gameSettings);
+                outputDelta.Scale(newLen);
+            }*/
 
             outputDelta.Add(CalcDeadzone(outputDelta, gameSettings));
 
             SetXboxInput(ref input, outputDelta);
         }
-            
-            
-        /* 
-            // Post Processing
 
-            // pixelCap is the number of pixels per frame that can be processed by the current angular velocity formula.
-            // Anything above this value is useless to translate but we can carry the leftover value to the next frame.
-            double pixelCapX = Math.Pow((gameSettings.XAxis.GetPixelCapValue(gameSettings.Deadzone) / (userScale * yaw)), (double)1 / accel);
-            double pixelCapY = Math.Pow((gameSettings.YAxis.GetPixelCapValue(gameSettings.Deadzone) / (userScale * pitch)), (double)1 / accel);
-
-            if (Math.Abs(delta.X) > pixelCapX)
-            {
-                int sign = Math.Sign(delta.X);
-
-                highEndCarry.X = (Math.Abs(delta.X) - pixelCapX) * sign;
-                mouseDelta.X = (short)(gameSettings.XAxis.Cap * sign);
-            }
-
-            if (Math.Abs(delta.Y) > pixelCapY)
-            {
-                int sign = Math.Sign(mouseDelta.Y);
-
-                highEndCarry.Y = (Math.Abs(delta.Y) - pixelCapY) * sign;
-                mouseDelta.Y = (short)(gameSettings.YAxis.Cap * sign);
-            }
-
-            // pixelsAtMax is the number of pixels we can process when moving at Xim.Stick.Max, if we have moved more than 
-            // this number of pixels then we should carry the leftover and use Xim.Stick.Max for our output.
-            double pixelsAtMaxX = Math.Pow((gameSettings.XAxis.MaxSpeed) / (userScale * pitch), 1 / accel);
-            double pixelsAtMaxY = Math.Pow((gameSettings.XAxis.MaxSpeed) / (userScale * yaw), 1 / accel);
-
-            if (Math.Abs(delta.X) > pixelsAtMaxX)
-            {
-                InfoTextManager.Instance.WriteLineDebug("CarryX!" + delta.X);
-                int sign = Math.Sign(delta.X);
-                highEndCarry.X = (Math.Abs(delta.X) - pixelsAtMaxX) * sign;
-                mouseDelta.X = ((short)Xim.Stick.Max * sign);
-            }
-
-            if (Math.Abs(delta.Y) > pixelsAtMaxY)
-            {
-                InfoTextManager.Instance.WriteLineDebug("CarryY!" + delta.Y);
-                int sign = Math.Sign(delta.Y);
-                highEndCarry.Y = (Math.Abs(delta.Y) - pixelsAtMaxY) * sign;
-                mouseDelta.Y = ((short)Xim.Stick.Max * sign);
-            }
-
-            // Some games ( like UT3 ) have a strange Y step function going on, account for that.
-            if (Math.Abs(mouseDelta.Y) < gameSettings.YAxis.CarryZone)
-            {
-                lowEndCarry.Y = delta.Y;
-                mouseDelta.Y = 0;
-            }
-
-            if (Math.Abs(mouseDelta.X) < gameSettings.XAxis.CarryZone)
-            {
-                lowEndCarry.X = delta.X;
-                mouseDelta.Y = 0;
-            }
-
-            mouseDelta.Cap(-(double)Xim.Stick.Max, (double)Xim.Stick.Max);
-
-            double ratio = mouseDelta.Length / this.maxVector2Len;
-
-            if (mouseDelta.Length > this.maxVector2Len)
-            {
-                mouseDelta.Normalize();
-                mouseDelta.Scale(this.maxVector2Len);
-            }
-
-            
-            
-        } * */
-
-        private void CalcDelta(Vector2 mouseDelta, GamesManager.GameSettings gs)
+        private void CalcDelta(double delayInMs, Vector2 angVelocity, ref Vector2 mouseDelta, BetaGamesManager.GameSettings gs)
         {
-            Vector2 mouseDeltaCopy = new Vector2(mouseDelta);
-            mouseDelta.X = gs.XAxis.CalcOutputDelta(mouseDeltaCopy.X, mouseDeltaCopy.Y);
-            mouseDelta.Y = gs.YAxis.CalcOutputDelta(mouseDeltaCopy.Y, mouseDeltaCopy.X);
+            gs.TransAlg.CalcOutputDelta(delayInMs, angVelocity, ref mouseDelta, ref highEndCarry);
         }
+            /*Vector2 absAngVelocity = new Vector2(Math.Abs(angVelocity.X),Math.Abs(angVelocity.Y));
+            MouseAlgs.Algorithm xAlg = gs.XAxis[0];
+            MouseAlgs.Algorithm yAlg = gs.YAxis[0];
+            foreach (MouseAlgs.Algorithm alg in gs.XAxis)
+            {
+                if (absAngVelocity.X < alg.MinSpeed)
+                    break;
 
-        private void CalcAveraging(Vector2 mouseDelta, GamesManager.GameSettings gs)
+                xAlg = alg;
+
+                if (absAngVelocity.X < alg.MaxSpeed)
+                    break;
+            }
+
+            if (absAngVelocity.X > xAlg.MaxSpeed)
+            {
+                highEndCarry.X = Math.Sign(angVelocity.X) * (absAngVelocity.X - xAlg.MaxSpeed);
+                absAngVelocity.X = xAlg.MaxSpeed;
+            }
+
+            foreach (MouseAlgs.Algorithm alg in gs.YAxis)
+            {
+                if (absAngVelocity.Y < alg.MinSpeed)
+                    break;
+
+                yAlg = alg;
+
+                if (Math.Abs(absAngVelocity.Y) < alg.MaxSpeed)
+                    break;
+            }
+
+            if (absAngVelocity.Y > yAlg.MaxSpeed)
+            {
+                highEndCarry.Y = Math.Sign(angVelocity.Y) * (absAngVelocity.Y - yAlg.MaxSpeed);
+                absAngVelocity.Y = yAlg.MaxSpeed;
+            }
+
+            mouseDelta.X = Math.Sign(mouseDelta.X) * xAlg.CalcOutputDelta(absAngVelocity.X, absAngVelocity.Y);
+            mouseDelta.Y = Math.Sign(mouseDelta.Y) * yAlg.CalcOutputDelta(absAngVelocity.Y, absAngVelocity.X);*/
+        //}
+
+        private void CalcAveraging(Vector2 mouseDelta, BetaGamesManager.GameSettings gs)
         {
             mouseDelta.X = (mouseDelta.X + lastFrame.X * gs.Smoothing) / (1 + gs.Smoothing);
             mouseDelta.Y = (mouseDelta.Y + lastFrame.Y * gs.Smoothing) / (1 + gs.Smoothing);
             this.lastFrame = mouseDelta;
         }
 
-        private void CalcDiag(Vector2 mouseDelta, GamesManager.GameSettings gs)
+        private void CalcDiag(Vector2 mouseDelta, BetaGamesManager.GameSettings gs)
         {
             if (gs.DiagonalCoeff != 0)
             {
-                double newLength = mouseDelta.Length;
                 Vector2 absDelta = new Vector2(Math.Abs(mouseDelta.X), Math.Abs(mouseDelta.Y));
                 absDelta.Cap(0, (double)Xim.Stick.Max);
 
@@ -275,8 +259,8 @@ namespace xEmulate
                     association = absDelta.Y / absDelta.X;
                     if (association != 0 && !Double.IsNaN(association) && !Double.IsInfinity(association))
                     {
-                        mouseDelta.Y = mouseDelta.Y + mouseDelta.Y * (0.1 - association / 10) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
-                        mouseDelta.Scale(1 - ((newLength / (double)Xim.Stick.Max) * association * gs.DiagonalCoeff));
+                        //mouseDelta.Y = mouseDelta.Y + mouseDelta.Y * (0.1 - association / 10) * gs.DiagonalCoeff;
+                        mouseDelta.Scale(1 - association * gs.DiagonalCoeff);
                     }
                 }
                 else
@@ -284,15 +268,15 @@ namespace xEmulate
                     association = absDelta.X / absDelta.Y;
                     if (association != 0 && !Double.IsNaN(association) && !Double.IsInfinity(association))
                     {
-                        mouseDelta.X = mouseDelta.X + mouseDelta.X * (0.1 - association / 10) * gs.DiagonalCoeff * (newLength / (double)Xim.Stick.Max);
-                        mouseDelta.Scale(1 - ((newLength / (double)Xim.Stick.Max) * association * gs.DiagonalCoeff));
+                        //mouseDelta.X = mouseDelta.X + mouseDelta.X * (0.1 - association / 10) * gs.DiagonalCoeff;
+                        mouseDelta.Scale(1 - association * gs.DiagonalCoeff);
                     }
                 }
             }
         }
 
 
-        private static Vector2 CalcDeadzone(Vector2 mouseDelta, GamesManager.GameSettings gs)
+        private static Vector2 CalcDeadzone(Vector2 mouseDelta, BetaGamesManager.GameSettings gs)
         {
             Vector2 deadzone = null;
             if (gs.Circular)
@@ -331,35 +315,5 @@ namespace xEmulate
                     break;
             }
         }
-
-        /*private void CalculateMouseToXbox(Vector2 mouseDelta, double sensitivity, int deadzoneFactor, double transExp, double yxratio, double diagonalDampen, bool fCircularDeadzone, ref Vector2 xboxDelta)
-        {
-            Vector2 delta = new Vector2(mouseDelta.X, mouseDelta.Y);
-
-            delta.Y = delta.Y * yxratio;
-
-            Vector2 deadzone = null;
-            if (fCircularDeadzone)
-            {
-                deadzone = new Vector2(delta.X, delta.Y);
-                deadzone.Normalize();
-                deadzone.Scale(deadzoneFactor);
-            }
-            else
-            {
-                deadzone = new Vector2(deadzoneFactor, deadzoneFactor);
-            }
-
-            double mouseVectorLen = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
-            mouseVectorLen = Math.Pow(mouseVectorLen, transExp);
-            delta.Normalize();
-            delta.Scale(mouseVectorLen);
-
-            delta.Scale(sensitivity);
-            delta.Add(deadzone);
-
-            xboxDelta.X = delta.X;
-            xboxDelta.Y = delta.Y;
-        }*/
     }
 }

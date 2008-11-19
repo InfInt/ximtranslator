@@ -89,8 +89,8 @@ namespace xdeadzone
             if (myThread.connected)
             {
                 Xim.Input input = new Xim.Input();
-                input.RightStickX = (short)Xim.Stick.Max;
-                Xim.SendInput(ref input, 200);
+                input.RightStickX = (short)27000;
+                Xim.SendInput(ref input, 100);
                 input.RightStickX = (short)Xim.Stick.Rest;
                 Xim.SendInput(ref input, 20);
             }
@@ -115,7 +115,7 @@ namespace xdeadzone
             if (myThread.connected)
             {
                 Xim.Input input = new Xim.Input();
-                input.RightStickX = -(short)Xim.Stick.Max;
+                input.RightStickX = -(short)27000;
                 Xim.SendInput(ref input, 200);
                 input.RightStickX = -(short)Xim.Stick.Rest;
                 Xim.SendInput(ref input, 20);
@@ -228,9 +228,9 @@ namespace xdeadzone
                 {
                     if (circular)
                     {
-                        spot.Rotate(Math.PI / 180);
-                        input.RightStickX = (short)(Math.Sign(spot.X) * 6000 + (short)spot.X);
-                        input.RightStickY = (short)(Math.Sign(spot.Y) * 6000 + (short)spot.Y);
+                        spot.Rotate(Math.PI / 90);
+                        input.RightStickX = (short)(/*Math.Sign(spot.X) * 9600 +*/ (short)spot.X);
+                        input.RightStickY = (short)(/*Math.Sign(spot.Y) * 9600 +*/ (short)spot.Y);
                         Xim.SendInput(ref input, 25);
                         //Xim.SendInput(ref blankInput, 0);
                     }
@@ -285,7 +285,7 @@ namespace xdeadzone
                         }
                         input.RightStickX = (short)spot.X;
                         input.RightStickY = (short)spot.Y;
-                        input.LeftTrigger = (short)Xim.Stick.Max;
+                        //input.LeftTrigger = (short)Xim.Stick.Max;
                         Xim.SendInput(ref input, 30);
                         //Xim.SendInput(ref blankInput, 0);
                     }

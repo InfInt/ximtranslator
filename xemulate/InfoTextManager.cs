@@ -44,5 +44,18 @@ namespace xEmulate
 #endif
         }
 
+        public void WriteLineDebugCls(String s)
+        {
+#if DEBUG
+            Cls();
+            WriteLine(s);
+#endif
+        }
+
+        public void Cls()
+        {
+            m_textBox.Text = "";
+        }
+
     }
 }

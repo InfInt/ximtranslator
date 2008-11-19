@@ -15,6 +15,8 @@ namespace xEmulate
             Halo3 = 2,
             Gow2 = 3,
             Gta4 = 4,
+            L4D = 5,
+            Bio = 6,
         }
 
         public static string[] GameNames = new string[]
@@ -24,6 +26,8 @@ namespace xEmulate
             "Halo 3 (halo3) (10 sens)",
             "Gears of War 2 (gow2) (High, High, High)",
             "Grand Theft Auto IV (gta4) (High)",
+            "Left For Dead (l4d) (Max) (Max)",
+            "Bioshock (bio) (100 sens)",
         };
 
         private Dictionary<Games, GameSettings> gameSettings;
@@ -56,6 +60,7 @@ namespace xEmulate
                                                 31075, // Speed
                                                 0.4789, // Exp
                                                 32000, // Cap
+                                                -1, // Min Speed
                                                 2.9, // Max Speed
                                                 -1 // CarryZone
                                                 ),
@@ -63,6 +68,7 @@ namespace xEmulate
                                                 31075, // Speed
                                                 0.4789, // Exp
                                                 32000, // Cap
+                                               -1, // Min Speed
                                                 2.5, // Max Speed
                                                 10000 // CarryZone
                                                 ),
@@ -78,6 +84,7 @@ namespace xEmulate
                                                16513, // Speed
                                                0.3775, // Exp
                                                -1, // Cap
+                                               -1, // Min Speed
                                                -1, // Max Speed
                                                -1 // CarryZone
                                                ),
@@ -85,6 +92,7 @@ namespace xEmulate
                                                24220, // Speed
                                                0.4014, // Exp
                                                -1, // Cap
+                                               -1, // Min Speed
                                                -1, // Max Speed
                                                -1 // CarryZone 
                                                ),
@@ -99,6 +107,7 @@ namespace xEmulate
                                                19044, // Speed
                                                .4544, // Exp
                                                31000, // Cap
+                                               -1, // Min Speed
                                                3.5, // Max Speed
                                                -1 // CarryZone 
                                                ),
@@ -106,6 +115,7 @@ namespace xEmulate
                                                26084, // Speed
                                                .3992, // Exp
                                                31000, // Cap
+                                               -1, // Min Speed
                                                2.9, // Max Speed
                                                -1 // CarryZone 
                                                ),
@@ -121,6 +131,7 @@ namespace xEmulate
                                                30000, // Speed
                                                .9, // Exp
                                                -1, // Cap
+                                               -1, // Min Speed
                                                -1, // Max Speed
                                                10000 // CarryZone 
                                                ),
@@ -128,6 +139,7 @@ namespace xEmulate
                                                30000, // Speed
                                                .9, // Exp
                                                -1, // Cap
+                                               -1, // Min Speed
                                                -1, // Max Speed
                                                10000 // CarryZone 
                                                ),
@@ -143,6 +155,7 @@ namespace xEmulate
                                                28000, // Speed
                                                .8, // Exp
                                                -1, // Cap
+                                               -1, // Min Speed
                                                -1, // Max Speed
                                                -1 // CarryZone 
                                                ),
@@ -150,6 +163,7 @@ namespace xEmulate
                                                28000, // Speed
                                                .8, // Exp
                                                -1, // Cap
+                                               -1, // Min Speed
                                                -1, // Max Speed
                                                -1 // CarryZone 
                                                ),
@@ -160,27 +174,53 @@ namespace xEmulate
                                             ) // GameSettings
                             ); // Add
 
-            /*gameSettings.Add(Games.Gta4, new GameSettings(
+            gameSettings.Add(Games.L4D, new GameSettings(
                                                new MouseAlgs.PowerFunction(
-                                               88044, // Speed
-                                               .661, // Exp
-                                               29000, // Cap
-                                               0.8, // Max Speed
+                                               40000, // Speed
+                                               1, // Exp
+                                               -1, // Cap
+                                               -1, // Min Speed
+                                               -1, // Max Speed
                                                -1 // CarryZone 
                                                ),
                                                new MouseAlgs.PowerFunction(
-                                               88044, // Speed
-                                               .661, // Exp
-                                               29000, // Cap
-                                               1.5, // Max Speed
+                                               40000, // Speed
+                                               1, // Exp
+                                               -1, // Cap
+                                               -1, // Min Speed
+                                               -1, // Max Speed
                                                -1 // CarryZone 
                                                ),
-                                               8050, // Deadzone
+                                               8000, // Deadzone
                                                false, //Circular Deadzone
                                                0.35, // diagonalCoeff
                                                0.2 // Smoothing
                                             ) // GameSettings
-                            ); // Add*/
+                            ); // Add
+
+            gameSettings.Add(Games.Bio, new GameSettings(
+                                               new MouseAlgs.PowerFunction(
+                                               28000, // Speed
+                                               .8, // Exp
+                                               -1, // Cap
+                                               -1, // Min Speed
+                                               -1, // Max Speed
+                                               8000 // CarryZone 
+                                               ),
+                                               new MouseAlgs.PowerFunction(
+                                               45000, // Speed
+                                               .8, // Exp
+                                               -1, // Cap
+                                               -1, // Min Speed
+                                               -1, // Max Speed
+                                               8000 // CarryZone 
+                                               ),
+                                               5500, // Deadzone
+                                               false, //Circular Deadzone
+                                               0.30, // diagonalCoeff
+                                               0.1 // Smoothing
+                                            ) // GameSettings
+                            ); // Add
         }
 
 

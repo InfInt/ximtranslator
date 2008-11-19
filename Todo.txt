@@ -1,2 +1,2 @@
 dont queue joy binds when 360 is enabled, visa versa
-unbindall on config load.
+if you push an analog stick right and hold it, it keeps reporting right

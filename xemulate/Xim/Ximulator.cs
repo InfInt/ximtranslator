@@ -55,7 +55,7 @@ namespace xEmulate
        
         private Queue<Vector2> m_prevMouseStates;
         
-        private X2 m_form;
+        private xEmulateForm m_form;
         private bool m_connected = false;
         private bool m_fXimRunning = false;
 
@@ -77,7 +77,7 @@ namespace xEmulate
                 myThread.Abort();
         }
 
-        public Ximulator(X2 form)
+        public Ximulator(xEmulateForm form)
         {
             this.ximDyn = XimDyn.Instance;
 
@@ -237,20 +237,24 @@ namespace xEmulate
                         {
                             m_textModeManager.Reset();
                             m_textMode.Value = false;
-                            bTextMode = false;
                             Log("Exiting Text Mode");
                         }
+
+                        bTextMode = (bool)m_textMode.Value;
                     }
                     else
                     {
+                        bTextMode = (bool)m_textMode.Value;
+
                         m_eventManager.ProcessEvents(delay, ref input, ref startState);
                         if ((bool)m_useXimApiMouseMath.Value)
                         {
                             this.mouseMath.ProcessMouseMovement(ref input, ref startState);
-                            //this.betaMouseMath.XSoftMouseMovement(ref input, ref startState);
+                            
                         }
                         else
                         {
+                            //this.betaMouseMath.XSoftMouseMovement(delay, ref input, ref startState);
                             this.mouseMath.XSoftMouseMovement(ref input, ref startState);
                         }
                         m_eventManager.ProcessLinks(delay, ref input, ref startState);
