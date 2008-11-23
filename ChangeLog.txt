@@ -1,8 +1,15 @@
+Nov 20, 2008
+
+		- Fixed a bug in Driving Mode that made it hard to play with.
+		
+		- Added RightStick and LeftStick to the raw output area.
+
 Nov 18, 2008
-	
+
 		- Fixed a bug that caused game specific algorithms to go haywire when an acceleration of 0 was used.
 		- Fixed a bug in Vector2 that caused small vectors not to act properly
-		
+		- Fixed a bug that caused xEmulate to use max cpu when it was running but did not have window focus, it behaves a bit better in this scenario now :)
+
 		- Added Bioshock 
 		- Added Left For Dead
 		- Added Rainbow 6 - Vegas

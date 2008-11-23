@@ -209,6 +209,7 @@ namespace xEmulate
                     if (!m_form.ContainsFocus)
                     {
                         m_inputManager.ClearInput();
+                        System.Threading.Thread.Sleep(100); 
                         continue;
                     }
                     else
