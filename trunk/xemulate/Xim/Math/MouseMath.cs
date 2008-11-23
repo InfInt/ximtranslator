@@ -45,6 +45,7 @@ namespace xEmulate
         private InputManager inputManager;
         private GamesManager gamesManager;
         private Vector2 lastFrame = new Vector2(0, 0);
+        private Vector2 lastFrameMaxVals = new Vector2(0, 0);
 
         public MouseMath()
         {
@@ -85,12 +86,7 @@ namespace xEmulate
         public void ProcessMouseMovement(ref Xim.Input input, ref Xim.Input startState)
         {
             Vector2 delta;
-            if ((bool)this.m_drivingMode.Value)
-            {
-                this.inputManager.GetMouseDelta(out delta);
-            }
-            else
-                this.inputManager.GetAndResetMouseDelta(out delta);
+            GetMouseDelta(out delta);
 
             double sensitivity;
             if ((bool)m_altSens.Value)
@@ -130,6 +126,8 @@ namespace xEmulate
             // Dont set the xbox controller unless we have moved the mouse, this allows analog controllers to work :)
             if (delta.X == 0 && delta.Y == 0)
                 return;
+
+            SaveDrivingModeData(new Vector2(deltaX, deltaY), delta);
 
             SetXboxInput(ref input, new Vector2(deltaX, deltaY));
         }
@@ -179,21 +177,7 @@ namespace xEmulate
             double userScale = revolutionsperinch * delay / mouseDpi;
 
             Vector2 delta;
-            if ((bool)this.m_drivingMode.Value)
-                this.inputManager.GetMouseDelta(out delta);
-            else
-                this.inputManager.GetAndResetMouseDelta(out delta);
-
-            delta.Y = -delta.Y;
-
-            if (!(bool)this.m_drivingMode.Value)
-            {
-                delta.Add(highEndCarry);
-                highEndCarry.X = highEndCarry.Y = 0;
-
-                delta.Add(lowEndCarry);
-                lowEndCarry.X = lowEndCarry.Y = 0;
-            }
+            GetMouseDelta(out delta);
 
             if (delta.X == 0 && delta.Y == 0)
                 return;
@@ -294,7 +278,56 @@ namespace xEmulate
 
             mouseDelta.Cap(-(double)Xim.Stick.Max, (double)Xim.Stick.Max);
 
+            SaveDrivingModeData(mouseDelta, delta);
+
             SetXboxInput(ref input, mouseDelta);
+        }
+
+        private void GetMouseDelta(out Vector2 delta)
+        {
+            if ((bool)this.m_drivingMode.Value)
+            {
+                this.inputManager.GetMouseDelta(out delta);
+            }
+            else
+                this.inputManager.GetAndResetMouseDelta(out delta);
+
+            if ((bool)this.m_drivingMode.Value)
+            {
+                if (Math.Sign(this.lastFrameMaxVals.X) == Math.Sign(delta.X))
+                {
+                    if (Math.Abs(this.lastFrameMaxVals.X) < Math.Abs(delta.X))
+                        delta.X = lastFrameMaxVals.X;
+                }
+
+                if (Math.Sign(this.lastFrameMaxVals.Y) == Math.Sign(delta.Y))
+                {
+                    if (Math.Abs(this.lastFrameMaxVals.Y) < Math.Abs(delta.Y))
+                        delta.Y = lastFrameMaxVals.Y;
+                }
+
+                this.inputManager.SetMouseDelta(delta);
+            }
+            else
+            {
+                delta.Add(highEndCarry);
+                highEndCarry.X = highEndCarry.Y = 0;
+
+                delta.Add(lowEndCarry);
+                lowEndCarry.X = lowEndCarry.Y = 0;
+            }
+        }
+
+        private void SaveDrivingModeData(Vector2 outputDelta, Vector2 delta)
+        {
+            if ((bool)this.m_drivingMode.Value)
+            {
+                if (Math.Abs(outputDelta.X) >= (short)Xim.Stick.Max)
+                    lastFrameMaxVals.X = delta.X;
+
+                if (Math.Abs(outputDelta.Y) >= (short)Xim.Stick.Max)
+                    lastFrameMaxVals.Y = delta.Y;
+            }
         }
 
         private void CalcDelta(Vector2 mouseDelta, GamesManager.GameSettings gs)
@@ -360,7 +393,7 @@ namespace xEmulate
 
         private void SetXboxInput(ref Xim.Input input, Vector2 mouseDelta)
         {
-            int sign = ((bool)m_inverty.Value) ? -1 : 1;
+            int sign = ((bool)m_inverty.Value) ? 1 : -1;
             switch ((VarManager.Sticks)m_mouseStickX.Value)
             {
                 case VarManager.Sticks.Left:

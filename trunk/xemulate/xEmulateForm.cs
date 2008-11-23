@@ -74,6 +74,7 @@ namespace xEmulate
             SetToolTip(txTransExponent1);
             SetToolTip(txYxRatio);
             SetToolTip(cbInvertY);
+            SetToolTip(cbDrivingMode);
 
             toolTip1.SetToolTip(cbAutoAnalogDisc, "Autoanalogdisconnect... yea it does something");
             toolTip1.SetToolTip(rbCircular, "Use a circular deadzone when translating mouse movement.");
@@ -367,6 +368,8 @@ namespace xEmulate
             this.cbRawDRight.Checked = input.Right == Xim.ButtonState.Pressed;
             this.cbRawRBumper.Checked = input.RightBumper == Xim.ButtonState.Pressed;
             this.cbRawLBumper.Checked = input.LeftBumper == Xim.ButtonState.Pressed;
+            this.cbRawRightStick.Checked = input.RightStick == Xim.ButtonState.Pressed;
+            this.cbRawLeftStick.Checked = input.LeftStick == Xim.ButtonState.Pressed;
             this.tbRawLTrigger.Text = input.LeftTrigger.ToString();
             this.tbRawRTrigger.Text = input.RightTrigger.ToString();
             this.tbRawLX.Text = input.LeftStickX.ToString();

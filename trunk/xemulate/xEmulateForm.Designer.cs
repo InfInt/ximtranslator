@@ -37,6 +37,7 @@ namespace xEmulate
             this.commandBox = new System.Windows.Forms.TextBox();
             this.cbAutoAnalogDisc = new System.Windows.Forms.CheckBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
+            this.cbDrivingMode = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
@@ -99,6 +100,8 @@ namespace xEmulate
             this.calibration = new System.Windows.Forms.Button();
             this.tabOutput = new System.Windows.Forms.TabControl();
             this.tabRawOutput = new System.Windows.Forms.TabPage();
+            this.cbRawLeftStick = new System.Windows.Forms.CheckBox();
+            this.cbRawRightStick = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tbRawLTrigger = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -133,7 +136,6 @@ namespace xEmulate
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.mouseDisplayRect = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.version = new System.Windows.Forms.Label();
-            this.cbDrivingMode = new System.Windows.Forms.CheckBox();
             this.button4 = new System.Windows.Forms.Button();
             this.gbSettings.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -233,6 +235,17 @@ namespace xEmulate
             this.gbSettings.TabIndex = 5;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "General Settings";
+            // 
+            // cbDrivingMode
+            // 
+            this.cbDrivingMode.AutoSize = true;
+            this.cbDrivingMode.Location = new System.Drawing.Point(9, 118);
+            this.cbDrivingMode.Name = "cbDrivingMode";
+            this.cbDrivingMode.Size = new System.Drawing.Size(89, 17);
+            this.cbDrivingMode.TabIndex = 47;
+            this.cbDrivingMode.Text = "Driving Mode";
+            this.cbDrivingMode.UseVisualStyleBackColor = true;
+            this.cbDrivingMode.CheckedChanged += new System.EventHandler(this.cbDrivingMode_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -874,6 +887,8 @@ namespace xEmulate
             // 
             // tabRawOutput
             // 
+            this.tabRawOutput.Controls.Add(this.cbRawLeftStick);
+            this.tabRawOutput.Controls.Add(this.cbRawRightStick);
             this.tabRawOutput.Controls.Add(this.label8);
             this.tabRawOutput.Controls.Add(this.tbRawLTrigger);
             this.tabRawOutput.Controls.Add(this.label7);
@@ -907,6 +922,29 @@ namespace xEmulate
             this.tabRawOutput.TabIndex = 1;
             this.tabRawOutput.Text = "Raw Output";
             this.tabRawOutput.UseVisualStyleBackColor = true;
+            // 
+            // cbRawLeftStick
+            // 
+            this.cbRawLeftStick.AutoSize = true;
+            this.cbRawLeftStick.Enabled = false;
+            this.cbRawLeftStick.Location = new System.Drawing.Point(51, 143);
+            this.cbRawLeftStick.Name = "cbRawLeftStick";
+            this.cbRawLeftStick.Size = new System.Drawing.Size(71, 17);
+            this.cbRawLeftStick.TabIndex = 26;
+            this.cbRawLeftStick.Text = "Left Stick";
+            this.cbRawLeftStick.UseVisualStyleBackColor = true;
+            // 
+            // cbRawRightStick
+            // 
+            this.cbRawRightStick.AutoSize = true;
+            this.cbRawRightStick.Enabled = false;
+            this.cbRawRightStick.Location = new System.Drawing.Point(126, 212);
+            this.cbRawRightStick.Name = "cbRawRightStick";
+            this.cbRawRightStick.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cbRawRightStick.Size = new System.Drawing.Size(78, 17);
+            this.cbRawRightStick.TabIndex = 25;
+            this.cbRawRightStick.Text = "Right Stick";
+            this.cbRawRightStick.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
@@ -1011,7 +1049,7 @@ namespace xEmulate
             // 
             this.label2.AutoSize = true;
             this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(44, 201);
+            this.label2.Location = new System.Drawing.Point(44, 222);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 13);
             this.label2.TabIndex = 8;
@@ -1021,7 +1059,7 @@ namespace xEmulate
             // 
             this.cbRawDUp.AutoSize = true;
             this.cbRawDUp.Enabled = false;
-            this.cbRawDUp.Location = new System.Drawing.Point(54, 149);
+            this.cbRawDUp.Location = new System.Drawing.Point(54, 170);
             this.cbRawDUp.Name = "cbRawDUp";
             this.cbRawDUp.Size = new System.Drawing.Size(15, 14);
             this.cbRawDUp.TabIndex = 14;
@@ -1031,7 +1069,7 @@ namespace xEmulate
             // 
             this.cbRawDLeft.AutoSize = true;
             this.cbRawDLeft.Enabled = false;
-            this.cbRawDLeft.Location = new System.Drawing.Point(38, 167);
+            this.cbRawDLeft.Location = new System.Drawing.Point(38, 188);
             this.cbRawDLeft.Name = "cbRawDLeft";
             this.cbRawDLeft.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.cbRawDLeft.Size = new System.Drawing.Size(15, 14);
@@ -1042,7 +1080,7 @@ namespace xEmulate
             // 
             this.cbRawDDown.AutoSize = true;
             this.cbRawDDown.Enabled = false;
-            this.cbRawDDown.Location = new System.Drawing.Point(54, 184);
+            this.cbRawDDown.Location = new System.Drawing.Point(54, 205);
             this.cbRawDDown.Name = "cbRawDDown";
             this.cbRawDDown.Size = new System.Drawing.Size(15, 14);
             this.cbRawDDown.TabIndex = 12;
@@ -1052,7 +1090,7 @@ namespace xEmulate
             // 
             this.cbRawDRight.AutoSize = true;
             this.cbRawDRight.Enabled = false;
-            this.cbRawDRight.Location = new System.Drawing.Point(71, 167);
+            this.cbRawDRight.Location = new System.Drawing.Point(71, 188);
             this.cbRawDRight.Name = "cbRawDRight";
             this.cbRawDRight.Size = new System.Drawing.Size(15, 14);
             this.cbRawDRight.TabIndex = 11;
@@ -1251,19 +1289,8 @@ namespace xEmulate
             this.version.Name = "version";
             this.version.Size = new System.Drawing.Size(153, 15);
             this.version.TabIndex = 8;
-            this.version.Text = "Version: 1.2.8.21";
+            this.version.Text = "Version: 1.2.8.26";
             this.version.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // cbDrivingMode
-            // 
-            this.cbDrivingMode.AutoSize = true;
-            this.cbDrivingMode.Location = new System.Drawing.Point(9, 118);
-            this.cbDrivingMode.Name = "cbDrivingMode";
-            this.cbDrivingMode.Size = new System.Drawing.Size(89, 17);
-            this.cbDrivingMode.TabIndex = 47;
-            this.cbDrivingMode.Text = "Driving Mode";
-            this.cbDrivingMode.UseVisualStyleBackColor = true;
-            this.cbDrivingMode.CheckedChanged += new System.EventHandler(this.cbDrivingMode_CheckedChanged);
             // 
             // button4
             // 
@@ -1436,6 +1463,8 @@ namespace xEmulate
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer2;
         private System.Windows.Forms.CheckBox cbDrivingMode;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.CheckBox cbRawRightStick;
+        private System.Windows.Forms.CheckBox cbRawLeftStick;
     }
 }
 

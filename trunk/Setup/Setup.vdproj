@@ -136,37 +136,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_26F734CB30BF7B27726863629EFDB7D7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2B346D4D6E49DC8A171AC3E07B202720"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_739E29642B0413167A2BE70B2E4DEDD9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6343A90B5852704A39357747B8FAA2AC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BCE3037791FB4D0C9789E16E4BAA1358"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AB805AC3D7654466AFA6C29CB187A263"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -185,6 +155,36 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_0CBAA2F24DD27E1CE1008361C5C1DEB0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_26F734CB30BF7B27726863629EFDB7D7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2B346D4D6E49DC8A171AC3E07B202720"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6343A90B5852704A39357747B8FAA2AC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BCE3037791FB4D0C9789E16E4BAA1358"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AB805AC3D7654466AFA6C29CB187A263"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -693,14 +693,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:xEmulate"
-        "ProductCode" = "8:{11E9F66B-506B-4DFB-8C4C-894FBB88F7D9}"
-        "PackageCode" = "8:{B1A58D42-8D18-4A02-8BBC-ED66771C72CB}"
+        "ProductCode" = "8:{E8843CA8-A910-4761-AAC9-6A621A436F10}"
+        "PackageCode" = "8:{9F0AB1D0-FA6F-4ACB-B380-39C01816EEE4}"
         "UpgradeCode" = "8:{06C1EC59-F269-4AAE-8514-F112FD176E53}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.02.07"
+        "ProductVersion" = "8:2.8.26"
         "Manufacturer" = "8:."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.xim360.com"
