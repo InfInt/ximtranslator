@@ -157,6 +157,11 @@ namespace xEmulate
                 DxInputManager.Instance.InitJoy();
                 return true;
             }
+            else if (line.Equals("joycaps"))
+            {
+                DxInputManager.Instance.OutputJoyCaps();
+                return true;
+            }
             else
             {
                 if (line.IndexOf(' ') == -1 && m_varManager.IsVar(line))

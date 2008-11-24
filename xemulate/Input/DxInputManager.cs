@@ -78,8 +78,6 @@ namespace xEmulate
 #endif
                 }
 
-
-
                 if (m_joy != null)
                 {
                     InfoTextManager.Instance.WriteLine("Initialized 1 Joystick");
@@ -132,7 +130,7 @@ namespace xEmulate
 
                     foreach (DxI.BufferedData data in buffData)
                     {
-                        
+                        js
                     }
                 }*/
                 Vector2 delta = new Vector2(mouseState.X, mouseState.Y);
@@ -188,6 +186,45 @@ namespace xEmulate
             m_mouse.Unacquire();
             if (m_joy != null)
                 m_joy.Unacquire();
+        }
+
+        public void OutputJoyCaps()
+        {
+            if (m_joy != null)
+            {
+                DxI.JoystickState js;
+                if( GetJoyState(out js) )
+                {
+                    DxI.DeviceCaps caps = m_joy.Caps;
+
+                    InfoTextManager infoMan = InfoTextManager.Instance;
+                    
+
+                    infoMan.WriteLine("Joystick Caps: ");
+                    infoMan.WriteLine(" Type: " + caps.DeviceType);
+                    infoMan.WriteLine(" Axes: " + caps.NumberAxes);
+                    infoMan.WriteLine(" Buttons: " + caps.NumberButtons);
+                    infoMan.WriteLine(" PoV: " + caps.NumberPointOfViews);
+                    infoMan.WriteLine(" Ax:" + js.AX);
+                    infoMan.Write(" Ay:" + js.AY);
+                    infoMan.Write(" Az:" + js.AZ);
+                    infoMan.Write(" ARx:" + js.ARx);
+                    infoMan.Write(" ARy:" + js.ARy);
+                    infoMan.Write(" ARz:" + js.ARz);
+                    infoMan.WriteLine(" Fx:" + js.FX);
+                    infoMan.Write(" Fy:" + js.FY);
+                    infoMan.Write(" Fz:" + js.FZ);
+                    infoMan.Write(" FRx:" + js.FRx);
+                    infoMan.Write(" FRy:" + js.FRy);
+                    infoMan.Write(" FRz:" + js.FRz);
+                    infoMan.WriteLine(" X:" + js.X);
+                    infoMan.Write(" Y:" + js.Y);
+                    infoMan.Write(" Z:" + js.Z);
+                    infoMan.Write(" Rx:" + js.Rx);
+                    infoMan.Write(" Ry:" + js.Ry);
+                    infoMan.Write(" Rz:" + js.Rz);
+                }
+            }
         }
 
         public DxI.Key[] GetPressedKeys()
