@@ -199,7 +199,6 @@ namespace xEmulate
 
                     InfoTextManager infoMan = InfoTextManager.Instance;
                     
-
                     infoMan.WriteLine("Joystick Caps: ");
                     infoMan.WriteLine(" Type: " + caps.DeviceType);
                     infoMan.WriteLine(" Axes: " + caps.NumberAxes);
@@ -217,6 +216,12 @@ namespace xEmulate
                     infoMan.Write(" FRx:" + js.FRx);
                     infoMan.Write(" FRy:" + js.FRy);
                     infoMan.Write(" FRz:" + js.FRz);
+                    infoMan.WriteLine(" Vx:" + js.VX);
+                    infoMan.Write(" Vy:" + js.VY);
+                    infoMan.Write(" Vz:" + js.VZ);
+                    infoMan.Write(" VRx:" + js.VRx);
+                    infoMan.Write(" VRy:" + js.VRy);
+                    infoMan.Write(" VRz:" + js.VRz);
                     infoMan.WriteLine(" X:" + js.X);
                     infoMan.Write(" Y:" + js.Y);
                     infoMan.Write(" Z:" + js.Z);
