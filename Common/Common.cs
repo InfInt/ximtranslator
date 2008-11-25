@@ -84,6 +84,8 @@ namespace Common
             JoyRx,
             JoyRy,
             JoyRz,
+            JoySlider0,
+            JoySlider1,
             JoyPosX,
             JoyPosY,
             JoyPosZ,
