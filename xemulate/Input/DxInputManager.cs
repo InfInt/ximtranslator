@@ -74,7 +74,7 @@ namespace xEmulate
 #if DEBUG
                                             DxI.CooperativeLevelFlags.NonExclusive);
 #else
- DxI.CooperativeLevelFlags.Exclusive);
+                                            DxI.CooperativeLevelFlags.Exclusive);
 #endif
                 }
 
@@ -190,44 +190,32 @@ namespace xEmulate
 
         public void OutputJoyCaps()
         {
-            if (m_joy != null)
+            if (m_joy == null)
+            {
+                InfoTextManager.Instance.WriteLine("No DirectInput devices available");
+            }
+            else
             {
                 DxI.JoystickState js;
-                if( GetJoyState(out js) )
+                if (GetJoyState(out js))
                 {
                     DxI.DeviceCaps caps = m_joy.Caps;
 
                     InfoTextManager infoMan = InfoTextManager.Instance;
-                    
+
                     infoMan.WriteLine("Joystick Caps: ");
-                    infoMan.WriteLine(" Type: " + caps.DeviceType);
-                    infoMan.WriteLine(" Axes: " + caps.NumberAxes);
-                    infoMan.WriteLine(" Buttons: " + caps.NumberButtons);
-                    infoMan.WriteLine(" PoV: " + caps.NumberPointOfViews);
-                    infoMan.WriteLine(" Ax:" + js.AX);
-                    infoMan.Write(" Ay:" + js.AY);
-                    infoMan.Write(" Az:" + js.AZ);
-                    infoMan.Write(" ARx:" + js.ARx);
-                    infoMan.Write(" ARy:" + js.ARy);
-                    infoMan.Write(" ARz:" + js.ARz);
-                    infoMan.WriteLine(" Fx:" + js.FX);
-                    infoMan.Write(" Fy:" + js.FY);
-                    infoMan.Write(" Fz:" + js.FZ);
-                    infoMan.Write(" FRx:" + js.FRx);
-                    infoMan.Write(" FRy:" + js.FRy);
-                    infoMan.Write(" FRz:" + js.FRz);
-                    infoMan.WriteLine(" Vx:" + js.VX);
-                    infoMan.Write(" Vy:" + js.VY);
-                    infoMan.Write(" Vz:" + js.VZ);
-                    infoMan.Write(" VRx:" + js.VRx);
-                    infoMan.Write(" VRy:" + js.VRy);
-                    infoMan.Write(" VRz:" + js.VRz);
-                    infoMan.WriteLine(" X:" + js.X);
+                    infoMan.WriteLine("Type: " + caps.DeviceType);
+                    infoMan.WriteLine("Axes: " + caps.NumberAxes);
+                    infoMan.WriteLine("Buttons: " + caps.NumberButtons);
+                    infoMan.WriteLine("PoV: " + caps.NumberPointOfViews);
+                    infoMan.WriteLine("X:" + js.X);
                     infoMan.Write(" Y:" + js.Y);
                     infoMan.Write(" Z:" + js.Z);
                     infoMan.Write(" Rx:" + js.Rx);
                     infoMan.Write(" Ry:" + js.Ry);
-                    infoMan.Write(" Rz:" + js.Rz);
+                    infoMan.Write("Rz:" + js.Rz);
+                    infoMan.WriteLine("Slider[0]: " + js.GetSlider()[0]);
+                    infoMan.Write(" Slider[1]: " + js.GetSlider()[1]);
                 }
             }
         }
