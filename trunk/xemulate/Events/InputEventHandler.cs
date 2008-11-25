@@ -195,6 +195,34 @@ namespace xEmulate
                 case Joystick.Analog.JoyZ:
                     analogVal = pressedState.joyState.Z;
                     break;
+                case Joystick.Analog.JoySlider0:
+                    {
+                        int[] sliders = pressedState.joyState.GetSlider();
+                        if (sliders != null && sliders.Length != 0)
+                        {
+                            analogVal = pressedState.joyState.GetSlider()[0];
+                        }
+                        else
+                        {
+                            InfoTextManager.Instance.WriteLine("There is an active bind for Slider0 but no sliders are available on this controller");
+                            return false;
+                        }
+                    }
+                    break;
+                case Joystick.Analog.JoySlider1:
+                    {
+                        int[] sliders = pressedState.joyState.GetSlider();
+                        if (sliders != null && sliders.Length != 0)
+                        {
+                            analogVal = pressedState.joyState.GetSlider()[1];
+                        }
+                        else
+                        {
+                            InfoTextManager.Instance.WriteLine("There is an active bind for Slider1 but no sliders are available on this controller");
+                            return false;
+                        }
+                    }
+                    break;
                 default:
                     return false;
             }
