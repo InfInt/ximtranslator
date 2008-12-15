@@ -238,7 +238,7 @@ namespace xEmulate
         {
             if (keyStillPressed)
             {
-                Xim.SetAnalogState(m_button, this.analogVal, ref input);
+                Xim.AddAnalogValue(m_button, this.analogVal, ref input);
             }
 
             return keyStillPressed ? Status.Running : Status.Complete;
