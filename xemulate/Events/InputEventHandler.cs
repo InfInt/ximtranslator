@@ -204,7 +204,7 @@ namespace xEmulate
                         }
                         else
                         {
-                            InfoTextManager.Instance.WriteLine("There is an active bind for Slider0 but no sliders are available on this controller");
+                            InfoTextManager.Instance.WriteLine("There is an active bind for Slider0 but no sliders are available on this controller.  This is usually caused by using joy binds when 360 binds should be used.");
                             return false;
                         }
                     }
@@ -218,7 +218,7 @@ namespace xEmulate
                         }
                         else
                         {
-                            InfoTextManager.Instance.WriteLine("There is an active bind for Slider1 but no sliders are available on this controller");
+                            InfoTextManager.Instance.WriteLine("There is an active bind for Slider1 but no sliders are available on this controller. This is usually caused by using joy binds when 360 binds should be used.");
                             return false;
                         }
                     }
