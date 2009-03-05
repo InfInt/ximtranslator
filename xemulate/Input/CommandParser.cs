@@ -57,14 +57,21 @@ namespace xEmulate
                 if (firstSpace == -1)
                     firstSpace = line.Length;
                 String key = line.Substring(0, firstSpace);
+                String linkKey = "link" + key;
 
                 if (key == line)
                 {
                     // Just display the current bind for that key if one exists.
-                    if (m_bindingManager.IsKey(key) || m_bindingManager.IsAnalogKey(key) || m_bindingManager.IsLinkKey(key))
+                    if (m_bindingManager.IsKey(key) || m_bindingManager.IsAnalogKey(key))
                     {
                         m_bindingManager.Unbind(key);
                         this.ParseLine("bind " + key);
+                        return true;
+                    }
+                    else if (m_bindingManager.IsLinkKey(linkKey))
+                    {
+                        m_bindingManager.Unbind(linkKey);
+                        this.ParseLine("bind " + linkKey);
                         return true;
                     }
                 }
